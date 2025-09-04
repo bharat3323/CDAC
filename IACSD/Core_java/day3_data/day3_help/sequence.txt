@@ -1,0 +1,149 @@
+Today's topics
+0. Assignment status | any doubts in assignments ?
+1. Revision with code samples
+1.5 Constructor chaining
+2. Packages and setting classpath
+3. Access Specifiers
+4. Arrays
+5. static keyword (If time permits !)
+
+1. Revise with code sample
+Consider this  Box class & TestBox class 
+p.s.v. main(...)
+	{	
+	Box b1;
+	b1=new Box(10,15,16);	
+	System.out.println(b1);// Box@123456	
+	//System.out.println(b1.width);//javac err
+	System.out.println(b1.getBoxDimensions());//10.0 .....
+	System.out.println("Vol of the Box "+b1.getVolume());
+	Box b2=b1;//copy of refs
+	System.out.println(b2);//Box@123456
+	System.out.println(b2.getBoxDimensions());//same dims	
+	b1=null;  //any objects marked for GC ? NO
+	//System.out.println(b1.getBoxDimensions()); //NPE
+	System.out.println(b2.getBoxDimensions());//10.0 ....	
+	System.out.println("code continues 1");
+	b2=null; //any objects marked for GC ? yes : 1st box
+	//System.out.println(b2.getBoxDimensions());//NPE
+	System.out.println("code continues 2");
+	Box b3=new Box(1,2,3);
+      b3=new Box(2,3,4); //any objects marked for GC ? box(1,2,3)
+  }
+}
+
+1.5 Constructor chaining 
+ - this keyword
+
+Objective 
+In Tester class , customer wants to place order for a cube
+sop("Enter side of cube");
+Box cube=new Box(sc.nextDouble());
+
+
+2.  Packages , Access specifiers & classpath
+
+
+
+Refer : "day3 notes"
+Objective 
+Add Box class under the package : com.cdac.core
+Add TestBox under the package : com.cdac.tester
+Compile it again , solver errors and run the same.
+Steps 
+2.1 Arrange the classes under <src> as per the packaged hierarchy
+2.2 compile from <src> 
+javac -d ..\bin com\cdac\tester\TestBox.java
+2.3 How will you run it ?
+from <bin>
+java com.cdac.tester.TestBox
+
+2.3 What is a classpath (CLASSPATH) ?
+It's Java specific environment variable.
+Used by JVM's classloader , to load the classes from anywhere.
+What should be the value - Top of the packaged class hierarchy
+eg - <day3.1>\bin
+Different ways of setting the classapth 
+1- set env variable
+OR
+2. at command line.
+
+3. Access specifiers in detail
+Set it up & confirm the table.
+
+3. Java Arrays
+Refer : "day3 .pdf"
+
+
+Objective
+3.1 Create Array of primitive types
+Accept number of data samples(of type double) from User(using Scanner)
+Create suitable array & display it using for-loop , to confirm default values.
+Accept data from User(scanner) & store it in the array.
+
+
+
+
+
+
+
+
+Display array data using for-each loop
+for-each loop(enhanced for loop)
+syntax
+for (dataType varName : array)
+{ body of for each loop }
+
+
+
+
+for-each limitations
+1. Can only iterate from 1st element to last element , with step size +1
+2. Works on a copy of array elements
+(can't be used for modifying array elements).
+
+
+To display array contents w/o attaching any loop
+Use - java.util.Arrays class
+ - Utility class for array handling
+ - Contains static methods
+
+Method
+public static String toString(byte[] bytes);
+public static String toString(int[] bytes);
+public static String toString(double[] bytes);
+
+Can pass any primitive type of array to it.
+
+3.2 Array of references
+Objective 
+Create a tester class  : TestBoxArray :in the  package "arrays" package
+Ask user(client) , how many boxes to make ?
+Box[] boxes=new Box[sc.nextInt()]; //size=5 , objs : 1 array object
+
+Accept Box dimensions.
+Store these details suitably.
+for(int i=0;i<boxess.length;i++)
+{
+  sop(....);
+  boxes[i]=new Box(....);
+}
+
+Display box details n volume using for-each loop
+for(Box b : boxes) //b =boxes[0]....b=boxes[boxes.length-1]
+ {
+   sop(b.getDims() +" vol "+b.getVolume());
+}
+
+//how many objects are marked for GC ? 0
+boxes=null;
+//how many objects are marked for GC ? 6 (assuming array size=5)
+
+
+
+4. Use static keyword
+ - Refer to day3 pdf.
+
+
+
+ 

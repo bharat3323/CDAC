@@ -1,0 +1,6 @@
+This is My Data i am writing into file 
+ This is Names of Students
+Ram
+This is My Data i am writing into file 
+ This is Names of Students
+seeta

@@ -1,0 +1,25 @@
+# Ignore large/unnecessary files
+*.zip
+*.7z
+*.pdf
+*.rar
+
+# IDE / editor settings
+.vscode/
+.idea/
+*.iml
+
+# Build files
+*.class
+*.exe
+*.dll
+*.o
+*.out
+*.jar
+target/
+bin/
+build/
+
+# Python cache
+__pycache__/
+*.pyc

@@ -1,0 +1,46 @@
+ 🔹 Basic Array Lab Assignments
+
+1. Array Input & Output**
+
+   * Take `n` elements from the user and display them.
+
+2. Sum & Average of Array**
+
+   * Input marks of `n` students, find total & average.
+
+3. Find Maximum and Minimum**
+
+   * Input array and print the largest & smallest element.
+
+4. Search an Element (Linear Search)**
+
+   * Input an array and search if a number exists.
+
+5. Reverse Array**
+
+   * Reverse an array and display the result.
+
+---
+
+## 🔹 Intermediate Array Lab Assignments
+
+6. Count Even and Odd Numbers**
+
+   * Count how many even and odd numbers are in the array.
+
+7. Sort Array (Ascending & Descending)**
+
+   * Implement a simple bubble sort.
+
+8.Second Largest Element**
+
+   * Find the second largest number without sorting.
+
+9. Frequency of Each Element**
+
+   * Count how many times each element occurs.
+
+10. Merge Two Arrays**
+
+* Take two arrays and merge them into a third array.
+

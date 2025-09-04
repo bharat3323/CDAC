@@ -1,0 +1,88 @@
+Template:
+Templates are the foundation of generic programming, which involves writing code in a way that is independent of any particular type.
+
+
+Templates can be represented in two ways:
+
+Function templates
+Class templates
+
+Function Templates:
+We can define a template for a function. For example, if we have an add() function, we can create versions of the add function for adding the int, float or double type values.
+
+
+Function Template
+Generic functions use the concept of a function template. Generic functions define a set of operations that can be applied to the various types of data.
+The type of the data that the function will operate on depends on the type of the data passed as a parameter.
+For example, Quick sorting algorithm is implemented using a generic function, it can be implemented to an array of integers or array of floats.
+A Generic function is created by using the keyword template. The template defines what function will do.
+example:
+ #include <iostream>  
+using namespace std;  
+template<class T> T add(T &a,T &b)  
+{  
+    T result = a+b;  
+    return result;  
+      
+}  
+int main()  
+{  
+  int i =2;  
+  int j =3;  
+  float m = 2.3;  
+  float n = 1.2;  
+  cout<<"Addition of i and j is :"<<add(i,j);  
+  cout<<'\n';  
+  cout<<"Addition of m and n is :"<<add(m,n);  
+  return 0;  
+}  
+
+
+
+
+Class Template:
+
+We can define a template for a class. For example, a class template can be created for the array class that can accept the array of various types such as int array, float array or double array.
+Class Template can also be defined similarly to the Function Template. When a class uses the concept of Template, then the class is known as generic class.
+
+
+Syntax
+template<class Ttype>  
+class class_name  
+{  
+  .  
+  .  
+}  
+Ttype is a placeholder name which will be determined when the class is instantiated. We can define more than one generic data type using a comma-separated list. The Ttype can be used inside the class body.
+
+Now, we create an instance of a class
+
+class_name<type> ob;  
+where class_name: It is the name of the class.
+
+type: It is the type of the data that the class is operating on.
+
+ob: It is the name of the object.
+
+#include <iostream>  
+using namespace std;  
+template<class T>  
+class A   
+{  
+    public:  
+    T num1 = 5;  
+    T num2 = 6;  
+    void add()  
+    {  
+        std::cout << "Addition of num1 and num2 : " << num1+num2<<std::endl;  
+    }  
+      
+};  
+  
+int main()  
+{  
+    A<int> d;  
+    d.add();  
+    return 0;  
+}  
+

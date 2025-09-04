@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+
+using namespace std; 
+class Shape {
+public:
+    virtual double area() const {
+        return 0.0;
+    }
+
+    virtual string getName() const {
+        return "Shape";
+    }
+
+    virtual ~Shape() {}
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+
+    string getName() const override {
+        return "Circle";
+    }
+};
+
+class Rectangle : public Shape {
+private:
+    double width;
+    double height;
+
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    double area() const override {
+        return width * height;
+    }
+
+    string getName() const override {
+        return "Rectangle";
+    }
+};
+
+class Triangle : public Shape{
+private:
+    double base;
+    double height;
+public:
+    Triangle(double b, double h): base(b), height(h) {}
+
+    double area() const override{
+        return 0.5 * base * height;
+    }
+
+    string getName() const override{
+        return "Triangle";
+    }
+};
+
+int main() {
+    Shape* shape1 = new Circle(5.0);
+    Shape* shape2 = new Rectangle(4.0, 6.0);
+    Shape* shape3 = new Triangle(3.0, 8.0);
+    Shape* shapes[] = {shape1, shape2, shape3};
+
+    for (int i = 0; i < 3; ++i) {
+        cout << "Shape: " << shapes[i]->getName() << endl;
+        cout << "Area: " << shapes[i]->area() << endl;
+        cout << endl;
+    }
+
+    delete shape1;
+    delete shape2;
+    delete shape3;
+
+    return 0;
+}

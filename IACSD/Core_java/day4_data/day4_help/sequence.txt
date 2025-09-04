@@ -1,0 +1,297 @@
+Today's topics
+
+1. Any doubts / questions ?
+Revise package & setting classpath
+
+2. static keyword in java.
+3. Enter Inheritance
+Apply inheritance to real world practical scenario
+4. Enter polymorphism (If time permits !)
+
+
+
+1. Solve 
+Emp - id:int , name : String, salary: double , deptId:int
+- Ensure tight encapsulation 
+- Add paramterized constructor
+- Add getters n setters
+
+Solve 
+Accept emp based organization size from client.
+sop("Enter org size");
+Emp[] emps=new Emp[sc.nextInt()];
+Accept emp details from the client & save them
+for(int i=0;i<emps.length;i++)
+{
+  sop("Enter emp details - id nm salary dept_id");
+  emps[i]=new Emp(sc.nextInt(),sc.next(), sc.nextDouble(), sc.nextInt());
+}
+
+Print sum of salary of all employees.
+double totalSalary=0;
+for(Emp e : emps) //e=emps[0]..... 
+{
+ totalSalary += e.getSalary();
+}
+sop("Total Salary "+totalSalary);
+
+
+Lab work - 
+Accept dept id and salary raise (in %)  from the client 
+Apply it to all emps working in specified dept.
+Display salaries of all emps , after raise
+Display name of the emp with max salary.
+
+
+
+2. static keyword usages.
+- Generate & assign emp id in auto increment manner (id range : 1000 onwards)
+
+Solve - 
+add non static method in Box class
+to test equality of 2 boxes.
+
+
+Solve 
+- Create BoxUtils class
+ - add static method to test equality of 2 boxes.
+
+package com.utils;
+class BoxUtils
+{
+ //add a static method to test equality of 2 boxes.
+ public static boolean isEqual(Box box1,Box box2)
+{
+  return box1.getWidth() == box2.getWidth() && .....
+}
+
+}
+
+import static com.util.BoxUtils.isEqual;
+How to call  it from Tester class ?
+p.s.v.main(String[] args)
+{
+  Box b1=new Box(....);
+  Box b2=new Box(....);
+  sop(isEqual(b1,b2));
+
+}
+
+ //add a static method in the Box class , to test equality of 2 boxes.
+public class Box {
+//width ,depth , height : double , private
+//constructor
+//static method
+public static boolean isEqual(Box box1,Box box2)
+{
+   return box1.width == box2.width && .....
+}
+}
+
+
+3. Enter Inheritance
+- Refer to day 4 PDF
+Objectives
+3.1 Test constructor invocation in multi level inheritance hierarchy
+A <--- B <--- C
+
+4. Small Case study 
+Develop EventOrganizer application.
+4.1 Prompt user for event capacity.
+sop("Enter event capacity");
+4.2 Create suitable data structure to hold the event participant details
+Person[] participants=new Person[sc.nextInt()];//100
+boolean exit=false
+int counter=0;
+4.3 Create Menu based application , with the options below
+Options
+1. Register Student -
+i/p : student details
+if(counter < participants.length)
+{
+  sop("enter student details");
+  participants[counter]=new Student(....);
+counter++;
+  sop("success mesg !");
+}
+else 
+ ....
+
+
+2. Register Faculty -
+i/p : faculty details
+if(counter < participants.length)
+{
+  sop("enter faculty details");
+  participants[counter]=new Faculty(....);//indirect ref. - up casting
+counter++;
+  sop("success mesg !");
+}
+else 
+ ....
+
+3. Display all participant details , using  for-each
+{s1,s2,s3,f1,f2,s4,s5,null,null...,null}
+for (Person p : participants)
+ if(p != null) {
+  sop(p.getDetails());
+}
+
+4. Display specific participant details
+i/p : seat no
+0. Exit
+(More options will be added later)
+
+
+5. Design
+Person-Student-Faculty scenario.
+Can you apply inheritance to it ?
+Person -- firstName,lastName
+Student --firstName,lastName,graduation year,course,fees,marks
+Faculty -- firstName,lastName,years of experience , sme(subject matter expertise)
+
+6.  Identify constructors , in the inheritance hierarchy
+7.  Create a simple tester app to create student n faculty objects. Test constructor invocation.
+
+
+8.  Display details of student and faculty
+     How ?
+
+Add common functionality in the super class
+- public String getDetails() {...}
+Modify the inherited behavior (when required) in the subclasses.
+
+Enter Polymorphism
+ - same name BUT changing behavior
+2 forms of polymorphism
+1. Compile time polymorphism
+ - early binding
+ - Java compiler resolves which method is to be called - statically
+ (Meaning - javac resolves the method binding using type of the reference)
+
+ - Achived by method oveloading
+ Rules 
+ - Overloaded methods can exist in the same class as well as in the inheritance hierarchy.
+ - same method name
+ - different method arguments
+ - ret type is ignored.
+ - private , static or final methods can be overloaded .
+ 
+
+2. Run time polymorphism
+ - late binding
+ - Java run time resolves the method to be called on which object.
+(Meaning - It resolves the method binding using type of the actual object)
+ - achieved by method overriding
+ Rules 
+- Can only exist in the inheritance hierarchy.
+- same method name
+- same method argument list
+- Return can be same or co-variant
+(co-variant ret type means - sub type of the return type of the super class method)
+ - Java does not support "virtual" keyword
+- Meaning all java methods are implicitly virtual .
+- private , static , final or overloaded methods can not be overridden to achieve run time polymorphism.
+ - overriding form of the method can not restrict the access specifier.
+- overriding form of the method can not add any NEW or BROADER CHECKED exceptions.
+
+eg - Shape anyShape=new Rectangle(....); //indirect referencin example - since type of the ref n type of the object is different. - up casting - done automatically by javac. 
+       sop(anyShape.area());//JVM - resolves it by type of object(i.e Rectangle)
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9. Any better (more standard alternative?)
+java.lang.Object class Method
+public String toString() : Rets the String containing Fully Qualified(F.Q) className@hashCode
+hashCode : address of the object in the heap.
+Is it useful in a practical scenario ??? NO !
+So instead of adding new functionality in sub classes (eg : getDetails() in Person , Student,Faculty) can we override toString itself ?
+
+What's the need of overriding toString ?
+To replace hashCode(address) returning version by the actual details.
+
+Override toString in the inheritance hierarchy n test it.
+
+4.4 Add a new method "study" in Student class & "teach" in Faculty class
+Option 5 : User i/p : seat no
+Check if seat no is valid .
+In case of valid seat no  ,if it's a Student , invoke study method , if it's a Faculty invoke teach method
+
+When is down casting required ?
+Any problems ?
+
+Solution : instanceof : keyword in java
+refer to : readme
+eg : Object <----Emp <---Mgr <---SalesMgr, HRMgr
+Object <---- Emp <--- Worker <--TempWorker
+
+Emp e=new SalesMgr(......);
+e instanceof SalesMgr :
+e instanceof HRMgr :
+e instanceof Worker :
+e instanceof Mgr :
+e instanceof TempWorker :
+e instanceof Emp :
+e instanceof Object :
+e=null
+e instanceof SalesMgr :
+e instanceof HRMgr
+e instanceof WorkerMgr
+e instanceof Mgr
+e instanceof TempWorker
+e instanceof Emp
+e instanceof Object :
+
+
+Important Summary statement 
+Javac resolves the method binding(early) by -type of the reference variable
+JVM resolves the method binding(late) by - type of the object (that it's pointing to)
+
+5. When is downcasting required ?
+In the indirect referencing(super class reference -> sub class object eg - Person p=new Student(....);) and invoking sub class specific functionality (eg -((Student) p).study()) 
+
+Any problems in wrong down casting - JVM throws the exception - java.lang.ClassCastException
+(error message - Faculty can't be cast to a Student or vice versa)
+Solution : instanceof : keyword in java
+refer to : readme 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

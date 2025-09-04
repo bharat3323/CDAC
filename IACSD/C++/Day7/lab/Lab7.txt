@@ -1,0 +1,53 @@
+Assignments on STL and File IO
+
+1:Create an application for storing int values in vector.
+  Create menu drivin app for following menu;
+  1:add 2:show all 3:search 4:sort 5:reverse 6:clear
+
+2:Create an application for storing user information in vector.
+  (Hint:User class with data member userid,name,email,pwd)
+  Create Menu Driven app
+  1:add user
+  2:display all users
+  3:search user
+  4:change pwd
+  5:delete all
+
+3:Create an application using set .
+  Accept name of city from user and store in set
+  Create Menu drivien app
+  1:add city
+  2:display  all city
+  3: serach city
+
+4:Create an application using map for storing key and value
+   key:int
+   value:Account type
+   Create Account class with actid ,name,balance
+   Create Menu driven app
+   1:Add Account
+   2:Display all
+   3:Search account by actid;
+   4:Remove all
+
+5: Create an File IO application for basic operation 
+   1:Write file:accept data from user and store in file
+   2:Read file:display line by line
+   3:copy data from one file into another file
+
+6: Create CRUD Shop Application Using  File
+   Write class Product with data member prdid,name,qty,price;
+    Menus:
+    1:Add Prd
+    2:Display Prds
+    3:Search Prd
+    4:Update/Modify prd
+    5:delete prd
+    
+ 7:Create Student class in namespace CDAC namespace .
+    Create another Student class in IACSD namespace.
+    Try to access both student classes using namespace
+
+ 
+  
+  

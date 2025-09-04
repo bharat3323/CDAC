@@ -1,0 +1,10 @@
+Assignment: Inline Functions in C++
+Task
+
+Write a program using inline functions to calculate:
+
+Area of a square (side × side)
+
+Area of a rectangle (length × breadth)
+
+Area of a circle (π × r × r, use π = 3.14159)

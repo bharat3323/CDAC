@@ -1,0 +1,47 @@
+
+🔹 Basic Template Assignments
+Function Template – Swap
+ Write a function template swapValues() that swaps two variables of any type.
+
+
+Test with int, double, and string.
+
+
+Function Template – Maximum
+ Write a function template findMax() that returns the maximum of two values.
+
+
+Test with int, float, and char.
+  3: Class Template – Box
+ Implement a class template Box<T> that stores one value of any type and provides          getValue() and setValue() methods.
+
+
+Class Template – Calculator
+ Create a class template Calculator<T> with functions:
+
+
+add(), subtract(), multiply(), divide().
+ Test with int and double.
+
+
+Function Template – Array Sum
+ Write a function template sumArray() that accepts an array of any type and returns the sum of its elements.
+
+
+   6: Class Template – Stack
+ Implement a class template Stack<T> with functions:
+
+
+push(), pop(), peek(), isEmpty().
+ Test with int and string.
+
+
+7Class Template – Queue
+ Implement a class template Queue<T> with functions:
+enqueue(), dequeue(), front(), isEmpty().
+
+
+
+
+
+

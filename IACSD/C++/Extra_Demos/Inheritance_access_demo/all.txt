@@ -1,0 +1,5 @@
+| Base Member   | Public Inheritance | Protected Inheritance | Private Inheritance |
+| ------------- | ------------------ | --------------------- | ------------------- |
+| **public      | public             | protected             | private             |
+| **protected   | protected          | protected             | private             |
+| **private     | not accessible     | not accessible        | not accessible      |

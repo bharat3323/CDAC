@@ -1,0 +1,204 @@
+Refer : <slides>/PPTDay1
+
+
+Objective 1 :  Create a java appln to display welcome message on the console.
+
+Steps 
+How to compile ?
+OPen cmd prompt : in <src>
+javac -d ..\bin HelloWorld.java
+It produces .class file/s under <bin>
+
+How to run   java program(application)?
+ cd ..\bin
+java HelloWorld userName
+Produces greeting message.
+
+
+
+Objective 2 :  Write Java application , to say hello to user. User name will be supplied as command line argument.
+
+(eg : java SayHello Madhura
+O/P Hello , Madhura !)
+
+3. JDK , JRE & JVM (refer to diagram - JDK vs JRE vs JVM)
+
+4. Naming conventions in Java 
+1. For the class  names-  1st letter of 1st word must start with upper case & then follow camel case notation.
+eg : HelloWorld
+2. For data members or methods(functions) -  1st letter of 1st word must start with lower case  & then follow camel case notation
+eg : performanceIndex
+calculateSalary()
+
+3. constants -- all uppercase.
+eg : PI
+
+5. Rules on Identifiers
+
+1. Identifiers must start with a letter, a currency character ($), or a connecting character such as the underscore ( _ ),  cannot start with a number!
+2. Can't use a Java keyword as an identifier. 
+3. They are Case sensitive 
+
+
+6. Legal Access specifiers for data members n methods
+private : visible within the same class
+default(package private) --no access modifier ---visible within same package
+protected : accessible withing the same package & accessible to sub classess via inheritance
+public : accessible from anywhere.
+
+
+
+7. Legal class level access specifiers - 
+1. default(scope=current package only)
+2. public (scope=accessible form any where)
+
+
+
+Objective 3 : Accept 2 numbers as cmd line args , add them & display the result.
+
+
+
+Explore Java API documentation (java docs)
+java.lang  is the default package  name.
+In java.lang package , Integer is a built in class 
+It's method -
+
+To parse (convert) the string -> int , use 
+java.lang.Integer class's static method
+
+public static int parseInt(String s) throws NumberFormatException
+Input (i/p) - String
+Output (o/p) - int 
+It will raise run time error , in case of un parseable integers.
+
+Hint 
+Refer to java docs for any explanation of classes/methods..
+
+8. Introduce Scanner class from java.util package
+
+Steps for attaching scanner , to accept inputs from User.(UI)
+ 
+What is Scanner ?
+A class (java.util.Scanner)  that represents text based parser(It has inherent small ~ 1K buffer)
+It can parse text data from any source --Console input,Text file , socket, string
+
+Steps for using Scanner
+
+1. import java.util.*; or import java.util.Scanner;
+2. Create instance of Scanner class(object)  using Scanner class constructor
+public  Scanner (InputStream in)
+System.in --- standard input (stdin)
+usage -- Scanner sc=new Scanner(System.in);
+
+3. Some methods of the Scanner class , to check data type 
+public boolean hasNextInt(),
+public boolean hasNextByte(),
+public boolean hasNextLong()
+
+4. To actually read n parse data
+public int nextInt() throws InputMismatchException
+public double nextDouble() throws InputMismatchException
+public String next() throws InputMismatchException
+
+public boolean nextBoolean() throws InputMismatchException
+public String nextLine() throws InputMismatchException
+
+5. Before terminating application close scanner.
+public void close();
+
+
+Objective 4 : Accept 2 double values as user input ,divide them & display the result.
+data type : double
+
+Objective 5 : Accept 2 int values as user input n compare them
+If num1 < num2 , display mesg (1st no is < 2nd no)
+If num1 > num2 , display mesg (1st no is > 2nd no)
+If num1 == num2 , display mesg (1st no is same as 2nd no)
+
+Objective 6 : Accept begin n end value from user(using scanner)
+Print all odd numbers in the range.
+
+Objective 7 : (while , switch-case)
+Write java application , to accept month no from user , using Scanner
+(Range 1-12 => Jan -Dec)
+Display the name of a season accordingly
+11,12,1,2 : Winter
+3,4,5,6 : Summer
+7,8,9,10 : Monsoon
+The program should exit , with error message , if user enters the invalid month no)
+
+Objective 9: Write java application to accept int(emp id) , double(salary) , emp's first name(string) , is permanent :  boolean from Scanner & display the same using printf
+
+9. Basic rules 
+1. Java compiler doesn't allow accessing of un initialized data members.
+Test it !
+
+2. A java source file can have more than one non public class(default)
+NOTE : All access specifiers in java : private , default(no modifier) , protected , public
+Legal Access specifiers for classes : default(no modifier) OR public
+
+3. Files with no public classes(default scoped) can have a name that does not match with any of the classes in the file .
+Test it !
+ 
+4. There can be only one public class per source code file.
+
+5. If there is a public class in a file, the name of the file must match the name
+of the public class. 
+For example, a class declared as public class Example {....}
+must be in a source code file named Example.java.
+
+10. Java Data Types 
+refer to diagram from the slide
+
+1. primitive data types 
+boolean,char,byte,short,long,float,double
+
+eg : 25
+Hex : 0x19
+Binary representation : 0001 1001
+
+eg : -25 
+2's complement = 1's complement + 1
+
+1110 0110  1's complement
+              1
+-------------
+1110 0111
+
+Byte range : -2^7 --- 2^7-1 (-128  127)
+
+
+2. reference types
+class type , array type , interface type
+
+Pointers vs java references
+ Pointer arithmatic is not allowed in java.
+reference --- holds internal representation of address (equivalent to object pointer in c++)
+
+Conversions regarding primitive types
+
+Automatic conversions(widening ) ---Automatic promotions
+byte--->short--->int---> long--->float--->double
+char ---> int
+
+long --->float ---is considered automatic type of conversion(since float data type can hold larger range of values than long data type)
+
+
+Rules ---
+src & destination - must be compatible, typically dest data type must be able to store larger magnitude of values than  that of src data type.
+
+1. Any arithmetic operation involving byte or short  :  automatically promoted to int
+
+2. int & long ---> long
+3. long & float ---> float
+4. byte,short......& float & double----> double
+
+Narrowing conversion --- forced conversion(type-casting) --applied by programmer
+eg --- 
+double ---> int 
+float --> long
+double ---> float 
+....
+
+
+Revise operators & control structures from : PPTDay1

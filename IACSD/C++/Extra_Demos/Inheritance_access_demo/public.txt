@@ -1,0 +1,17 @@
+   Base
++------------------+
+| public: pub      | --> stays public
+| protected: prot  | --> stays protected
+| private: priv    | --> not accessible
++------------------+
+        |
+        v  (public inheritance)
++------------------+
+|   Derived        |
+| public: pub      |
+| protected: prot  |
++------------------+
+
+✔️ Public → Public
+✔️ Protected → Protected
+❌ Private → Not accessible

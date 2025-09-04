@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "cmath": "cpp",
+        "array": "cpp",
+        "random": "cpp",
+        "limits": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+    "git.ignoreLimitWarning": true
+}
