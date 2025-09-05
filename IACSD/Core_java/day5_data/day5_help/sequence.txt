@@ -1,0 +1,260 @@
+Today's topics
+1. Revise 
+- Inheritance & constructor invocation
+- polymorphism types
+
+
+2. Solve examples of compile time polymorphism
+method overloading
+
+3. Solve example of run time polymorphism
+ - Banking assignment
+ - get account summary
+
+4. Object class API
+ - toString
+
+5. Java Annotations
+
+6. Complete Event Organizer App
+
+7. Downcasting , ClassCastException , instanceof checking
+
+8. Abstraction
+ - abstract classes
+  
+ 
+
+Important Summary statement 
+Javac resolves the method binding(early) by -type of the reference variable
+JVM resolves the method binding(late) by - type of the object (that it's pointing to)
+
+
+eg . BankAccount account=new SavingAccount(.....);//implicit conversion - up casting
+      account.withdraw(500);//withdraw : sav acct
+      account=new CurrentAccount(....);//up casting
+      account.withdraw(300);//withdraw : curnt account
+
+
+
+1. Revise Inheritance 
+ - Discuss Banking Assignment
+ 
+
+2. How are we getting event participant details currently?
+Person : getDetails
+Student & Faculty - overriding methods
+
+Person p1 =new Student(....);
+p1.getDetails();
+Person p2 =new Faculty(....);
+p2.getDetails();
+
+--------------Revision over ----------------------------------------
+Better or more standard alternative to get state of any object in Java ?
+
+Use - java.lang.Object (is universal super class of all java classes , including arrays)
+ class 
+Method
+public String toString() : Returns the String containing Fully Qualified(F.Q) className@hashCode
+hashCode : address of the object in the heap.
+
+eg : Person p =new Faculty(....);
+sop(p.toString());//com.org.Faculty@123456
+
+Is it useful in a practical scenario ?
+Test it !
+
+So instead of adding new functionality in sub classes (eg : getDetails() in Person , Student,Faculty) can we override toString itself ?
+
+What's the need of overriding toString ?
+To replace hashCode(address) returning version by the actual details of the state of object.
+
+Override toString in the inheritance hierarchy & test it.
+
+
+Java Annotations
+Annotation - is a markup or more information meant for Java Tools (compile time - javac | run time - JVM)
+They can appear at 
+- class level 
+- field level
+- method level 
+- method arg level
+- method ret type level
+
+Annotations are internally created as Java Interfaces.
+In addition to built in annotations , prog can create custom annotations
+
+eg of compile time built in annotation
+@Override - method level annotation
+Meaning - To tell javac , following is the overriding form of the method
+(so that if there are any mistakes in it , java will detect the errors early & give error !)
+mandatory or optional ? optional BUT recommended !!!
+
+3.  
+Simple case study to apply 
+-array of references ,  inheritance , up casting , run time polymorphism , down casting ,  ClassCastException , instanceof checking
+
+Problem statement 
+ - Create Menu based Java application  , to organize an event  for  Students , Faculties (later can add Guest Speaker , Center Head , Alumni etc....)
+
+Initially solve 1-4 options.
+
+1. Prompt user for the event capacity.
+2 Create suitable data structure to hold the participant details
+3 Options
+1. Register Student -
+i/p : student details
+
+2. Register Faculty -
+i/p : faculty details
+
+3. Display all participant details (use  for-each)
+
+4. Display specific participant details
+i/p : seat no
+
+5. Student Evaluation By Faculty
+i/p : faculty seat no , student name , student grade (A+ , A , B+ , B , C+ , C)
+
+6. Feedback submission By student
+i/p : student seat no , faculty name, feedback comment
+
+0. Exit
+
+4. Can you add , new functionality (methods ) in a sub class ?
+- Answer with examples (Hint - anything in your Banking assignment ???)
+
+
+
+ 
+
+In Event organizer app - 
+
+Add a new method "submitFeedback" in Student class 
+- i/ps : faculty name, feedback comment
+
+Add a new method  "evaluateStudent" in Faculty class
+- i/ps : student name , student grade (A+ , A , B+ , B , C+ , C)
+
+Add 5th option
+5. Student Evaluation By Faculty
+i/p : faculty seat no , student name , student grade (A+ , A , B+ , B , C+ , C)
+
+- Check if seat no is valid(within the range) .
+In case of valid seat no  ,if it's a Faculty  , invoke method 
+
+6. Feedback submission By student
+i/p : student seat no , faculty name, feedback comment
+- Check if seat no is valid(within the range) .
+In case of valid seat no  ,if it's a student  , invoke method 
+
+
+
+When is down casting required ?
+In indirect referencing (eg. Person p=new Student(...)) , when super class reference is referring to sub class object & trying to access sub class specific functionality (eg. submitFeedBack) , downcasting is essential !
+Without it - javac error.
+
+eg.
+Person p=new Student(...);
+p.submitFeedBack(...);//javac err : since javac resolves it by type of ref -> Person & Person class DOES NOT have :  submitFeedBack
+
+Soln - apply down casting explicitly.
+BUT illegal type casting leads to run time error  - java.lang.ClassCastException
+
+To avoid this exception , perform run time type checking first.
+Ways 
+1. instanceof keyword
+OR
+2. Use Java Reflection API (getClass -- later)
+
+instanceof keyword 
+- Runtime binary operator
+- Used for run time comparison (RTTI)
+Syntax 
+objectRef instanceof Type(class | sub class | interface)
+
+Returns  
+true - if & only if , objectRef is referring to the instace of the specified type.
+otherwise false.
+Returns  false - in case null also.
+
+
+Refer to : readme | pdf (for more details)
+
+Solve - 
+eg : Object <----Emp <---Mgr <---SalesMgr, HRMgr
+Object <---- Emp <--- Worker <--TempWorker
+
+Emp e=new SalesMgr(......);
+e instanceof SalesMgr : true
+e instanceof HRMgr : false
+e instanceof Worker : false
+e instanceof Mgr : true
+e instanceof TempWorker : f
+e instanceof Emp : t
+e instanceof Object : t
+e=null
+e instanceof SalesMgr : f
+e instanceof HRMgr
+e instanceof WorkerMgr
+e instanceof Mgr
+e instanceof TempWorker
+e instanceof Emp
+e instanceof Object : f
+
+
+
+5. When is downcasting required ?
+In the indirect referencing(super class reference -> sub class object eg - Person p=new Student(....);) and invoking sub class specific functionality (eg -((Student) p).study()) 
+
+Any problems in wrong down casting - JVM throws the exception - java.lang.ClassCastException
+(error message - Faculty can't be cast to a Student or vice versa)
+Solution : instanceof : keyword in java
+refer to : readme 
+
+
+6. Enter abstraction
+
+What is abstraction ?
+It is one of the important aspect of OOP , to hide actual implementation from the end user.
+Real world examples - driving a vehicle ,using ATM , laptop.....
+Encapsulation already offers abstraction.
+End user just needs to know , how to invoke a particular a method & not its internal implementation.
+
+For complete abstraction -
+java uses "abstract" keyword.
+1. abstract methods
+- It implies methods with declaration only
+eg - In Shape class , you have no clue regarding its area computation , so declare it as the abstract method. (WHAT : is to be done - specifications)
+public abstract double computeArea();
+
+Can you declare the methods with -
+private abstract
+final abstract
+static abstract 
+- javac error
+
+Rules
+1. Must declare abatract method/s , in the abstract class.
+eg : public abstract class Shape {
+ ..... 
+ //abstract method 
+  public abstract double computeArea();
+
+}
+
+2. Can not create instance of the abstract class BUT can create abstract super class reference pointing to concrete (non abstract) sub class instance.
+eg : 
+Shape shape=new Shape(...);//javc error - on RHS
+Shape shape=new Circle(...);//works !
+
+3. Can abstract class contain a parametrized constructor ?
+ - Yes ! (will be used for initializing sub class object)
+
+4. Can you declare an abstract class , without ANY of the abstract methods ?
+ - Yes
+eg - Event Adapater classes or HttpServlet 
+
+5. Abstract classes can contain concrete methods
+- represents partial abstraction.

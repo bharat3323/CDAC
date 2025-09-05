@@ -1,0 +1,10 @@
+{s1,f1,s2,s3,f2, null.....null}
+
+Sample data - 
+
+a1 b1 2024 DAC 123456 77
+a2 b2 15 Java,Node,Microservice
+a3 b3 2024 DMC 223456 80
+a4 b4 2023 DAC 123456 82
+a5 b5 10 Python,ML
+

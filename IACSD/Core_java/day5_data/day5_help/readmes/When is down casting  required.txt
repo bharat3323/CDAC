@@ -1,0 +1,68 @@
+When is down casting  required ?
+
+ In the indirect referencing(super class ref --> sub class object
+ eg - Person p =new Student(....);
+) while invoking sub class specific functionality.
+eg - sop(p);//toString : not required , Person alrdy has toString , JVM - run time poly - calls Student's toString
+     //  p.feedback();//javac error ! , since feedback() method not found - Person class
+//use explicit cast - down casting
+ ((Student)p).feedback();//no err , calls Student's feedback()
+
+p=new Faculty(....);//up casting
+sop(p);//no errs ! , JVM - invokes Faculty's toString
+((Student)p).feedback();//run time error - java.lang.ClassCastException -
+Faculty can not be cast into a Student .
+
+Soln - 
+1. use instanceof keyword 
+OR
+2. use Java Reflection
+
+instanceof - keyword in Java
+Operator - to check Run time type info in Java 
+used for run time type comparisons
+
+syntax 
+
+reference instanceof Class|Subclass | Interface | null
+rets - true | false
+
+Person p =new Student(....);
+if(p instanceof Student) {
+ ((Student)p).feedback();
+}
+//{s1,s2,f1,gs1,gs2,s3,f2.....}
+seat no : 2
+//p=new Faculty(...);
+if(p instanceof Student) {
+((Student)p).feedback();
+} else if (p instanceof Faculty) {
+ ((Faculty)p).evaluate();
+} else {
+   ((GuestSpeaker)p).jobPlacements();
+}
+
+Standard Practice -
+Always use instanceof checking before down casting , to avoid ClassCastException
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
