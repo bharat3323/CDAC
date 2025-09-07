@@ -1,0 +1,43 @@
+Main objective :Run time polymorphism achieved using interfaces
+
+Create Java application for fixed stack & growable stack based on Stack interface , for storing customer details
+
+Customer has : id(int), name (string) , address(string)
+Provide suitable constructor & toString
+
+Steps
+package com.cdac.core - 
+1.1  Create Customer class
+1.2 Stack interface -- push & pop functionality for Customer reference. 
+Declare STACK_SIZE as a constant. 
+1.3 Create implementation class of Stack interface - FixedStack (array based)
+ - In case of stack full , print error message "Stack Overflow"
+ - In case of empty stack , print error message "Stack Underflow"
+
+1.4 Create another implementation class of Stack interface -  GrowableStack 
+ - has to be array based again.
+
+1.5 
+Create Tester class : TestStacks
+
+Display Menu
+
+Note : Must use 1 switch-case only. 
+You won't need any complex nested control structures.
+Once user selects either fixed or growable stack , user shouldn't be allowed to change the selection of the stack.
+
+Options 
+1 - Choose Fixed Stack
+
+2 - Choose Growable Stack
+
+3 - Push data 
+Input  : Accept customer details & store these details in the earlier chosen stack or give error mesg : NO stack chosen !!!
+In case user has chosen fixed stack , & stack is full error message should be displayed
+In case of growable stack , it should be able to save customer details without getting error.
+
+4 - Pop data  & display the same (from the earlier chosen stack or give error mesg : NO stack chosen !!!)
+No inputs are required : pop customer details from the top of the stack
+
+5 -- Exit
+

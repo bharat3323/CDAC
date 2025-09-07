@@ -1,4 +1,5 @@
 package com.tester;
+
 import java.util.Scanner;
 import com.banking.core.*;
 
@@ -30,7 +31,9 @@ public class TestBank {
 					+"3. Display Account details\n"
 					+"4. Deposit Money\n"
 					+"5. Withdraw Money\n"
-					+"6. Exit\n");
+					+"6. Amount with intrest\n"
+					+"7. Withdraw overdraft\n"
+					+"8. Exit\n");
 			System.out.println("Enter your choice: ");
 			ch = sc.nextInt();
 			
@@ -109,9 +112,42 @@ public class TestBank {
 				}
 				
 				break;
-				
 			
 			case 6: 
+				//applyInterest() method is not in the parent class access method from the child calss asavingaccount we have to do downcasting!!!
+				System.out.println("Enter the Account number: ");
+				int accno=sc.nextInt();
+				boolean found =false;
+				for(BankAccount b: bank) {
+					if(b!=null && b.getAccountNumber()==accno) {
+						found=true;
+						if(b instanceof SavingAccount) {
+						System.out.println(((SavingAccount) b).applyInterest()); //safe downcast
+						System.out.println("Interest Applied !!!");
+				}else {
+					System.out.println("This is not the Saving Account!!!");
+				}break;
+					}
+				}
+				if(!found) {
+					System.out.println("Account not found!!!");
+				}
+				break;
+				
+			case 7: 
+				System.out.println("Enter the account No: ");
+				int acno=sc.nextInt();
+				for(BankAccount b: bank) {
+					if(b!=null && b.getAccountNumber()==acno) {
+						System.out.println("Enter the WithAmt: ");
+						System.out.println(b.withdraw(sc.nextDouble()));
+					}
+				}
+				break ;
+				
+				
+			
+			case 8: 
 				exit = true;
 				break;
 			
@@ -126,8 +162,5 @@ public class TestBank {
 		
 		
 }
-		
-	}
 
-		
-
+}

@@ -1,0 +1,353 @@
+Today's topics
+1. Revise polymorphism with code samples
+2. Revise abstraction with Abstract methods and classes
+3. Java Interfaces and implementation classes.
+4. Enter Exception Handling
+
+1. Solve 
+Consider same Fruits based hierarchy(Mango , Apple, Orange , Alphonso)
+Can you apply inheritance?
+Fruit : super class
+public String taste()
+{
+ return "No specific taste";
+}
+Mango extends Fruit
+{
+@Override
+public String taste()
+{
+  return "sweet";
+}
+}
+Orange extends Fruit
+{
+ @Override
+public String taste()
+{
+  return "sour";
+}
+ public void juice() {
+  sop("extracting orange juice");
+}
+}
+Alphonso extends Mango
+{
+   @Override
+public String taste()
+{
+  return "very sweet ";
+}
+public void pulp() {
+ sop("Extracting pulp ...");
+}
+}
+Apple extends Fruit 
+{
+    @Override
+  public String taste()
+ {
+   return "sweet n sour";
+ }   
+public void jam() {
+ sop("Making Apple Jam...");
+}
+}
+Solve
+What will happen ?
+Fruit f=new Mango();//up casting - auto / implicitly by javac
+sop(f.taste());//sweet : run time poly (Dynamic method dispatch)
+f=new Orange(...);
+sop(f.taste());//sour
+f=new Alphonso(); // up casting
+sop(f.taste());//D.M .D - very sweet
+f.pulp(); //javac error - since Fruit class doesn;t have : pulp 
+((Alphonso)f).pulp();//no error !
+f=new Apple();
+f.pulp();//javac error !
+((Alphonso)f).pulp();//no javac error , run time err - ClassCastException
+solution ???????????
+
+
+if(f instanceof Apple)
+ ((Apple)f).jam();
+ else if (f instanceof Alphonso)
+  ((Alphonso)f).pulp();
+ else if (f instanceof Orange)
+  ((Orange)f).juic()
+ else
+ sop("invalid fruit !!!!!!!!!!!");
+
+
+2. Revise and apply Abstraction Using Abstract methods & abstract classes 
+eg : Shapes scenario
+Objective - Create different types of bounded shapes . Display their area , perimeter and details using for-each loop.
+1. BoundedShape -- x,y (state) : tight encapsulation
+Add suitable constructor
+Behavior : toString(to return details)
+
+2. Circle -- x,y,radius
+Behaviour : computeArea & computePerimeter ,  toString (to return details)
+
+3. Rectangle -- x,y,w,h
+Behaviour : computeArea & computePerimeter   toString (to return details)
+
+
+4. Create a TestShapes application with main method
+Create bounded shapes using dynamic initialization of array.
+Eg - {c1,r1,c2,r2}
+
+
+
+
+
+(First look at dynamic initialization of array of primitive types and then create array of references) 
+Display their details n computed area using single for-each loop.
+
+
+final - keyword in Java
+ - represents a constant.
+Usage
+
+1. final primtive type 
+- immutable , read only constant
+eg.final int DATA=12345;
+DATA++; //javac error !
+
+2. final reference type of variable
+- constant pointer (can't be reassigned )
+eg .final  BankAccount account=new SavingAccount(...);
+    account =new CurrentAccount(...);//javac error
+
+3. final methods
+ - can't be overridden.
+eg . Object class methods - wait , notify , notifyAll
+
+4. final classes
+- can't be extended.
+eg . String , StringBuilder , StringBuffer.
+
+2.2 Abstraction using interfaces
+Refer to pdf for more details
+
+What is an interface ? 
+- It's a blue print | logical template | specification for creating classes.
+
+Why Interfaces ?
+1. Provides 100 % abstraction
+2. Allows Loose coupling .
+ - Provides clear separation between specification (WHAT) and the implementation (HOW)
+eg . In Collection Framework - supports List functionality.
+List - interface (add , insert , remove, search , sort.....)
+Implementation classes - ArrayList , LinkedList , Vector
+
+3. Allows multiple inheritance
+ - i.e an interface can extend form multiple super interfaces
+- a class can implement multiple interfaces
+
+Syntax ?
+default(no modifier) | public interface NameOfInterface extends Super interfaces {
+ 1. data members - public static final -  keywords are added implicitly by javac
+ 2. methods - public abstract -  keywords are added implicitly by javac
+ 3. default methods - having default method implementation
+ 4. static methods
+ 5. private methods
+ 6. nested interfaces - implicitly public static
+ 7. nested class - implicitly public static
+ 8. nested enum - implicitly public static
+ 9. nested custom annotation - implicitly public static
+}
+
+Syntax of implementation class
+default | public  class NameOfClass extends SuperClass implements interfaces
+{
+  1. To create a concrete implementation class 
+   - must implement all the abstract methods from the interfaces.
+
+}
+
+When to use extends keyword ?
+ - sub class extends super class
+ - sub interface extends super interfaces
+
+When to use implements  keyword  ?
+ - a class implements interfaces
+
+Can a class implement multiple interfaces ?  YES
+Can a class extend from  multiple super classes ? NO
+Can an interface extend from  multiple super interfaces ? YES
+Developing interfaces alone ,is it  sufficient or not ? NO
+Can you create interface instance ? NO
+
+What is the meaning of the term interface instance ? 
+eg - Connection instance | Comparator instance 
+=> implememtation class instance.
+
+Can a super classs reference DIRECTLY refer to ANY sub class instance ? YES
+(eg - BankAccount myAccount=new SavingsAccount(...);)
+
+Can such super class ref access COMPLETE Details of the sub class directly ? NO
+
+To invoke sub class specific  functionality , what will you do ?  - explicit down casting
+
+In case of wrong down casting , what will happen ? ClassCastException
+
+Any solution ? - instanceof
+
+Can you achieve indirect referencing using interfaces ? YES
+ 
+Can interface reference DIRECTLY (without type casting) refer to ANY implementation class instance - YES
+eg : Bank - interface
+It has core banking methods - openAccount , closeAccount , withdraw,deposit etc
+implementation  classes : BOI , HDFC , ICICI
+Bank myBank=new Bank(); //javac error : RHS
+myBank=new HDFC(....); 
+myBank.openAccount(....);
+myBank=new ICICI(....);
+myBank.openAccount(...);
+Now suppose HDFC bank  added a new service - to manage Portfolios of the bank customers.
+
+Bank myBank;
+myBank=new HDFC(....);
+myBank.managePortfolio(....);//javac error ! - managePortfolio is not present Bank interface.
+Any problem & any solution ?
+((HDFC)myBank).managePortfolio();//works !
+
+myBank =new BOI(...);
+((HDFC)myBank).managePortfolio();//class cast exc.
+if (myBank instanceof HDFC)
+ ((HDFC)myBank).managePortfolio();
+else 
+ sop("not supporting the service!!!!!");
+
+
+
+Types of interface
+1. Regular interface
+2. Marker(Tag) interface 
+ - empty interface 
+ - no data members & no methods
+eg . Serializable , Remote , Cloneable ... 
+ - Supply a run time marker (special info) to JVM
+
+3. Functional interface
+ - used in functional programming 
+ - It has exactly single abstract method (SAM) - functional method
+   - It can be substitutted by a lambda expression
+ - Uses optional annotation
+ @FunctionalInterface
+
+Solve 
+Refer to "day6_data\day6_help\interfaces_help\about interfaces.png"
+ Refer to Payment scenario.
+Create Payement interface , its implementation classes
+Create a demo (main) class
+ - Supply both payment options
+ - single for-each loop 
+ - invoke common methods (pay & getDetails)
+  - invoke specific (to imple class) methods. (set daily limit , link bank account)
+
+
+
+
+
+
+
+
+
+
+
+2. Exception Handling
+Refer to readme
+
+What is exception ? 
+ - Run time error detected by JVM
+
+2.1 Why exception handling ?
+1. To continue with the program execution , even after run time errorss(eg :invalid inputs,Business Logic(B.L) failures,validation failures, file not found, invalid casting....)
+2. To separate business logic (B.L  in try block) from error handling logic(catch block)
+3. To avoid un necessary checking with boolean conditions.
+
+2.2 Flow of exception handling
+
+Eg. Consider a Trigger of the  Run time error 
+In case of  int div by 0 - JVM creates n throws the exception to the code.
+Keyword used - throw 
+Typical syntax : throw Throwable instance;
+In above case it uses -
+throw new ArithmeticException("/ by 0");
+
+Then JVM chks ---MATCHING catch clause
+If it exists -- control enters catch block n then continues there after , in the normal manner
+If it doesn't exist -- JVM supplies a default handler , which  aborts the code , printing useful information.
+
+NOTE -
+Currently "throw" keyword : is used by JVM to raise system exception (eg : ArithmeticException, ArrayIndexOutOfBoundsException, NullPointerException,ClassCastException,IOException, SocketException, SQLException etc)
+Later , programmer  will use the same “throw" keyword to raise custom exception .
+
+2.3 Inheritance hierarchy of exception handling classes
+Refer to the diagram
+
+2.4 try-catch syntax. 
+Solve which ones are legal ?
+try {....} catch (ArithmeticException e ){..} : 
+try {....} : 
+try {....} catch (ArithmeticException e ){..}  catch (NullPointerException e) {..} catch(Exception e) {catch-all} : 
+
+try {....} catch(Exception e) {....} catch (ArithmeticException e ){..}  catch (NullPointerException e) {..} : 
+try {....} catch (ArithmeticException | NullPointerException e ){..}  catch(Exception e) {....} : 
+
+try {....} catch(Exception e){...} finally {...} : 
+try {....} finally {...} catch(Exception e){..} : 
+try {....} finally {...} : 
+try {....} catch(ArithmeticException e){...} finally {...} : 
+
+2.5 checked vs un checked exceptions
+Java has created checked vs unchecked exceptions because:
+ - Some errors(like unable to connect to DB , file read error ) must be handled explicitly 
+   These are considered as checked exceptions
+
+ - Some other errors  are largely programming mistakes that should not clutter code with try-catch block
+  These are considered as unchecked exceptions.
+ 
+ javac forces the handling of checked exceptions upon programmer and does not force the handling of unchecked exceptions
+
+ who doesn't differentiate between checked vs un checked exceptions --JVM
+(Meaning : If there exists un handled checked or un checked exception : JVM will still abort code
+
+ who differentiates :  javac 
+
+2 ways of satisfying javac in case of checked exceptions
+ - actual handling : try-catch
+ OR
+ - use throws keyword :
+  - for delegating the exception handling to the caller 
+
+
+2.6 throw vs throws (keywords used in exception handling)
+throw :keyword used to  raise the  exception(JVM uses it to throw system/built-in exception  , Programmer uses it to throw custom exception), 
+It appears in method definition.
+syntax : throw Throwable instance;
+throws : keyword meant for javac , appears in method declaration 
+eg : public void show() throws IOException,InterruptedException
+{
+ ......
+}
+Meaning : show() : may throw the exception(indicates the possibility) , current method is NOT handling the exception/s
+so its' caller should handle.
+
+When is adding "throws" keyword mandatory ?
+Choose correct option -
+1.	In case of unhandled checked exceptions
+2.	In case of handled checked exceptions
+3.	In case of unhandled unchecked exceptions
+4.	In case of handled unchecked exceptions
+Option - 
+What will happen otherwise?
+Javac error !
+
+
+
+
+
+

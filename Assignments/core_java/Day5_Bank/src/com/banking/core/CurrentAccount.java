@@ -22,9 +22,6 @@ public class CurrentAccount extends BankAccount {
 	    }
 	}
 
-
-
-
 	
 	public String toString() {
 		return getAccountNumber() + " | " + getCustomerName()+" | "+getBalance()+" | "+getPhoneNumber();
