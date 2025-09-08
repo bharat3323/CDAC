@@ -1,0 +1,272 @@
+Today's topics
+1. Any questions ?
+2. Enter Exception Handling 
+3. String Handling (Introduction)
+
+1. Answer this 
+When to use extends keyword ?
+When to use implements  keyword  ?
+Can a class implement multiple interfaces ?  
+Can a class extend from  multiple super classes ? 
+Can an interface extend from  multiple super interfaces ? 
+Developing interfaces alone , sufficient or not ? 
+Can you create interface instance ? 
+What is the meaning of the term interface instance ? 
+eg - Connection instance | Comparator instance 
+ 
+Can interface reference DIRECTLY (w/o type casting) refer to ANY implementation class instance ? 
+eg : Given Printer interface , implemented by ConsolePrinter , FilePrinter and NetworkPrinter
+Printer interface - void print(String message);
+FilePrinter class has added - openFile & closeFile methods
+
+Solve (What will happen ?)
+Printer p=new ConsolePrinter();//up casting - no javac error
+p.print();//run time poly. (D.M.D) - JVM - invokes print : ConsolePrinter
+p=new FilePrinter();//up casting
+p.print();////run time poly. (D.M.D) - JVM - invokes print : FilePrinter
+//p.openFile();//javac error
+//p.closeFile();//javac error
+//soln - explicit down casting
+((FilePrinter)p).openFile();//no error , openFile:FilePrinter
+p.print();
+((FilePrinter)p).closeFile();
+p=new NetworkPrinter();
+((FilePrinter)p).openFile();//ClassCastException 
+if (p inastanceof FilePrinter) {
+ ((FilePrinter)p).openFile();
+  p.print();
+ ((FilePrinter)p).closeFile();
+} else if (p instanceof NetworkPrinter) {
+  ((NetworkPrinter)p).openConnection();
+  p.print();
+   ((NetworkPrinter)p).closeConnection();
+} else
+ p.print();
+
+2. Exception Handling
+Refer to PDF
+
+What is exception ? 
+ - Run time error detected by JVM
+
+2.1 Why exception handling ?
+1. To continue with the program execution , even after run time errorss(eg :invalid inputs,Business Logic(B.L) failures,validation failures, file not found, invalid casting....)
+2. To separate business logic (B.L  in try block) from error handling logic(catch block)
+3. To avoid un necessary checking with boolean conditions.
+
+2.2 Flow of exception handling
+
+Eg. Consider a Trigger of the  Run time error 
+In case of  int div by 0 - JVM creates n throws the exception to the code.
+Keyword used - throw 
+Typical syntax : throw Throwable instance;
+In above case it uses -
+throw new ArithmeticException("/ by 0");
+
+Then JVM chks ---MATCHING catch clause
+If it exists -- control enters catch block & then continues there after , in the normal manner
+If it doesn't exist -- JVM supplies a default handler , which  aborts the code , printing useful information.
+
+NOTE -
+Currently "throw" keyword : is used by JVM to raise system exception (eg : ArithmeticException, ArrayIndexOutOfBoundsException, NullPointerException,ClassCastException,IOException, SocketException, SQLException etc)
+Later , programmer  will use the same “throw" keyword to raise custom exception .
+
+2.3 Inheritance hierarchy of exception handling classes
+Refer to the diagram
+
+2.4 try-catch syntax. 
+Solve which ones are legal ?
+try {....} catch (ArithmeticException e ){..} : legal
+try {....} : illegal
+try {....} catch (ArithmeticException e ){..}  catch (NullPointerException e) {..} catch(Exception e) {catch-all} : legal
+
+try {....} catch(Exception e) {....} catch (ArithmeticException e ){..}  catch (NullPointerException e) {..} : illegal
+try {....} catch (ArithmeticException | NullPointerException e ){..}  catch(Exception e) {....} : legal
+
+try {....} catch(Exception e){...} finally {...} : legal 
+try {....} finally {...} catch(Exception e){..} : illegal
+try {....} finally {...} : legal
+try {....} catch(ArithmeticException e){...} finally {...} : legal
+
+2.5 checked vs un checked exceptions
+Java has created checked vs unchecked exceptions because:
+ - Some errors(like unable to connect to DB , file read error ) must be handled explicitly 
+   These are considered as checked exceptions
+
+ - Some other errors  are largely programming mistakes that should not clutter code with try-catch block
+  These are considered as unchecked exceptions.
+ 
+ javac forces the handling of checked exceptions upon programmer and does not force the handling of unchecked exceptions
+
+ who doesn't differentiate between checked vs un checked exceptions --JVM
+(Meaning : If there exists un handled checked or un checked exception : JVM will still abort code
+
+ who differentiates :  javac 
+
+2 ways of satisfying javac in case of checked exceptions
+ - actual handling : try-catch
+ OR
+ - use throws keyword :
+  - for delegating the exception handling to the caller 
+
+
+2.6 throw vs throws (keywords used in exception handling)
+throw :keyword used to  raise the  exception(JVM uses it to throw system/built-in exception  , Programmer uses it to throw custom exception), 
+It appears in method definition.
+syntax : throw Throwable instance;
+eg . in case of accessing array , outside its bounds
+JVM calls - throw new ArrayIndexOutOfBounds("index 10 length 10");
+
+
+
+
+2.7 API of Throwable class
+public String getMessage() - returns error message
+public String toString() - Returns name of exception class & error message
+public void printStackTrace() - prints name of exception class , error message & entire stack trace on the console.
+
+throws : keyword meant for javac 
+- appears in method declaration 
+eg : public void show() throws IOException,InterruptedException
+{
+ ......
+}
+Meaning : show() : may throw the exception(indicates the possibility) , current method is NOT handling the exception/s
+so its' caller should handle.
+
+
+When is adding "throws" keyword mandatory ?
+Choose correct option -
+1.	In case of unhandled checked exceptions
+2.	In case of handled checked exceptions
+3.	In case of unhandled unchecked exceptions
+4.	In case of handled unchecked exceptions
+Option - 1
+
+What will happen otherwise?
+Javac error !
+
+2.7 finally - a keyword in exception handling.
+It represents a block which is  always executed
+(i.e in case of no exception as well as exception or even before a method returns) 
+Only case in which it doesn’t get called is -  JVM termination(System.exit(0))
+Typical use case  : cleaning up of non java resources(eg :  File handle, socket , db connection, standard  input )
+
+set up a demo of finally 
+Use – Test5.java 
+2.8 
+try-with-resources
+Added since JDK 1.7
+Newly added interface - java.lang.AutoCloseable
+Represents auto closeable objects.
+Method - void close() throws Exception
+JVM automatically calls close() on the resources , opened in the try-with-resources block.
+
+syntax - 
+try(Create AutoCloseable object/s)
+{......} //JVM - calls close() auto matically
+
+
+2.9  Custom exception (user defined exceptions)
+
+Objective : Accept speed of a vehicle from user (scanner) --running on a highway
+min speed : 30
+max speed : 80
+In case of speed outside the range --Programmer will have to detect the error , create instance of user defined exception class & explicitly throw custom exception to the code. 
+The alteration in flow will be managed by JVM.
+Steps
+1.Create custom exception class : extends Throwable/Error/Exception/RuntimeException....
+eg : public class SpeedOutOfRangeException extends Exception{
+  public SpeedOutOfRangeException(String errorMessg) {
+    super(errorMessg);
+  }
+}
+1.1  Add parameterised constructor : to initialize an  error message
+(i.e to call super class's parameterised ctor)
+
+java.lang.Exception(String errMesg)
+What will happen otherwise ?
+Excpetion object's error mesg will be initialized to - null
+
+2. Create a separate class  for adding validation rules
+eg :  VehicleValidations
+2.1 add a static method for validation of the speed
+
+3. Create Main class  for  UI using scanner 
+—Accept the speed n simply call validateSpeed of the VehicleValidations class
+
+4. New Objective (Lab exercise)
+PUC : Accept pollution level(1-100)  from user (scanner)
+If level > 20 %
+send alert : by  throwing suitable exception 
+
+
+3. String Handling
+Refer to the overview diagram.
+
+3.1 Immutability of strings
+3.2 == vs equals method
+3.3 literal strings vs non literal string
+3.4 String class API
+
+
+
+
+
+
+
+
+
+2.7 finally - a keyword in exception handling.
+It represents a block which is  always executed
+(i.e in case of no exception as well as exception or even before a method returns) 
+Only case in which it doesn’t get called is -  JVM termination(System.exit(0))
+Typical use case  : cleaning up of non java resources(eg :  File handle, socket , db connection, standard  input )
+
+set up a demo of finally 
+Use – Test5.java 
+2.8 
+try-with-resources syntax 
+Added since JDK 1.7
+Newly added interface - java.lang.AutoCloseable
+Represents auto closeable objects.
+Method - public void close() throws Exception
+JVM automatically calls close() on the resources , opened in the try-with-resources block.
+syntax - try(Create AutoCloseable object/s)
+{......} //JVM - calls close() auto matically
+2.9  Custom exceptions
+Objective : Accept speed of a vehicle from user (scanner) --running on a highway
+min speed : 30
+max speed : 80
+In case of speed outside the range --Programmer will have to detect the error , create instance of user defined exception class n explicitly throw custom exception to the code. 
+The alteration in flow will be managed by JVM.
+Steps
+1.Create custom exception class : extends Throwable/Error/Exception/RuntimeExc....
+eg : public class SpeedOutOfRangeException extends Exception{
+}
+1.1  Add parameterised constructor : to initialize an  error message
+(i.e to call super class's parameterised ctor)
+
+java.lang.Exception(String errMesg)
+What will happen otherwise ?
+Excpetion object's err mesg will be inited to - null
+
+2. Create a separate class  for adding validation rules
+eg :  VehicleValidations
+2.1 add a static method for validation of the speed
+
+3. Create Tester for  UI using scanner 
+—Accept the speed n simply call validateSpeed of the VehicleValidations class
+
+4. New Objective (Lab exercise)
+PUC : Accept pollution level(1-100)  from user (scanner)
+If level > 20 %
+send alert : by  throwing suitable exception 
+3. String Handling
+Refer to the overview diagram.
+
+3.1 Immutability of strings
+3.2 == vs equals method
+3.3 literal strings vs non literal string
+3.4 String class API
+
