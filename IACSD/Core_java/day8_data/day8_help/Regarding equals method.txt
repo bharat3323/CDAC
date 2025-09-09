@@ -1,0 +1,31 @@
+Regarding "equals" method
+
+Object class has defined
+public boolean equals(Object anotherObject)
+ - It's reflexive , symmetric & transitive
+ - Returns true if & only if both references (this & anotherObject) are referring to the same object in heap (i.e based upon reference equlity , works same as == operator)
+
+java.lang.String class has overridden this equals method , to replace reference equality by content equality.
+(i.e when will s1.equals(s2) return true ?
+ - if & only if both strings have the same char sequence , in a case sensitive manner)
+- In practical scenarios , use equals to check string equality
+
+public boolean equalsIgnoreCase(String anotherString)
+ - returns true if n only if , 2 strings have the same char sequence , in a case insensitive manner)
+
+BankAccount a1=new SavingAccount(101,....);
+BankAccount a2=new SavingAccount(101,.....);
+sop(a1==a2);//f 
+sop(a1.equals(a2));//f (if n only if 2 accounts have same acc no)
+UID of BankAccount - account no.
+Lab work - override equals method in BankAccount class , to replace ref equality by UID equality.
+
+
+
+
+
+
+ 
+
+
+

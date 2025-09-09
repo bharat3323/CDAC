@@ -1,0 +1,394 @@
+Today's topics
+1. abstract class vs interface
+2. Revise
+ - checked vs un checked exception
+ - custom exception (use case : insufficient balance , during withdraw)
+3. String Handling 
+ - String , StringBuilder , StringBuffer
+ - special attention to equals method
+4. Date Time Handling
+ - Legacy API (Date , SimpleDateFormat
+ -  Modern Java (Java 8 onwards) : LocalDate, LocalTime , LocalDateTime
+5. var-args
+
+Revision
+javac forces handling of the checked exc upon the prog
+- otherwise javac error !
+
+2 ways -
+1. try -catch
+OR
+throws 
+
+throw vs throws
+
+
+custom exception (use case : insufficient balance , during withdraw)
+
+SavingAccount : 
+ - public void withdraw(double amount) throws InsufficientBalException
+{
+   BankValidations.validateBalance(balance-amount);
+   balance -= amount;
+   
+}
+
+BankValidations - class
+public static void validateBalance(double balance) throws InsufficientBalException
+ 
+{
+ if (balance < SAVING_MIN_BALANCE)
+  throw new InsufficientBalException("Insufficient funds !!!!!!");
+}
+
+Template of Main class 
+
+try (Scanner sc=new Scanner(...)) {
+  1. array init (Data structure init)
+  2. counter , exit =false
+  while(!exit)
+  {
+    sop(options);
+    try {
+      switch-case
+    } catch-all
+  }
+}
+
+
+After revision - 
+
+1. String Handling
+Refer to the overview diagram.
+
+1.1 Immutability of strings
+1.2 == vs equals method
+1.3 literal strings vs non literal string
+1.4 String class API
+
+public String intern()
+- When you call intern (eg . s1.intern())
+ - JVM checks if the same string(content wise equal )is already present in the SCP 
+ - if yes - JVM returns existing literal string reference to the caller.
+ - if no - JVM adds this string object to the pool n returns its reference
+eg . String s1="hello"; //s1 ---> literal string
+      String s2=new String ("hello");  //s2 -> non literal 
+      String s3=s2.intern(); //s3 --> alrdy existing literal string
+       s1==s2 : f
+       s1==s3 : t
+
+Some of the methods - 
+charAt,compareTo,contains,isEmpty , isBlank,copyValueOf,format,valueOf,getBytes,toCharArray,toLowerCase,indexOf,lastIndexOf,split,replace,startsWith,endsWith,length,intern,trim,strip,stripLeading(),stripTrailing() 
+
+
+String class methods
+
+1. public int charAt(int index)
+ - returns char at the specified index.
+
+2. public boolean contains(CharSequence String|StringBuilder|StringBuffer)
+ - returns true if string contains specified char sequence
+
+3. public int indexOf(int ch)
+  - return index of 1st occurrence of the specified char , otherwise   	returns -1
+
+   - public int indexOf(String s)
+   return index of 1st occurrence of the specified sub string , otherwise   	returns -1
+
+   public int lastIndexOf(int ch)
+  - return index of last occurrence of the specified char , otherwise   	returns -1
+
+   - public int lastindexOf(String s)
+   return index of last occurrence of the specified sub string , otherwise   	returns -1
+
+4. For the lexicographical comparison (compare using uni code values of the chars in the string)
+public int compareTo(String anotherString)
+eg : s1.compareTo(s2)
+ - Returns
+ < 0  if s1 < s2 (based upon unicode value)
+ 0 if s1.equals(s2) : true
+ >0  if s1 > s2 (based upon unicode value)
+
+Use case - sorting the strings.
+Important NOTE 
+String class has implemented - java.lang.Comparable<String> interface
+Comparable<T>  interface -
+T - type of the element 
+ public int compareTo (T anotherElement)
+
+Refer - "regular expression examples.txt"
+
+1.5 StringBuilder API
+java.lang.StringBuilder
+ Constructors
+1. StringBuilder() - Creates empty StringBuilder ,with 
+  length=0, initial capacity=16
+
+2. StringBuilder(int initCapacity) - Creates empty StringBuilder ,with 
+  length=0, specified initial capacity.
+
+3. StringBuilder(String str) - Creates non-empty StringBuilder ,with 
+  length=str.length(), initial capacity=str.length() + 16
+
+Any of the methods of StringBuilder(eg - append , insert , delete) , that modify the contents
+ - will modify the contents of EXISTING StringBuilder
+
+- length() , capacity()
+
+- after init capacity is over , JVM typcially uses the formula for allocating the  additional memory dynamically.
+ new capacity=(initial capa * 2) +2
+
+2. Date/Time Handling in Java(legacy API)
+
+API
+1. java.util.Date
+ -A class that represents system date & time , till the millisecond precision
+
+Constructor
+1.Date() --- creates Date class instance representing system date, current date.(till ms precision)
+2.Date(long msec) --- creates Date class instance representing a date for msecs elapsed after epoch(=1st Jan 1970)
+eg : Date d1=new Date(1000);
+3. Methods 
+-toString,before,after,equals,compareTo
+
+4. 
+For parsing(String-->Date) & formatting (Date --> String)
+1. Create an instance of the class - java.text.SimpleDateFormat
+ (extends from DateFormat class)
+Constructor : public SimpleDateFormat(String pattern)
+pre defined characters in pattern
+y --year
+MM -- month in digit(1-12)
+MMM -- month in abbrevation(Jan,Feb...)
+MMMM ---complete month name
+d -day
+
+h- Hour
+m --minute
+s -- second
+eg : SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy , hh:mm:ss");
+OR 
+SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy"); 
+
+
+2. Parsing (use inherited method from DateFormat class)
+public Date parse(String s) throws ParseException
+ParseException - checked exception ,thrown in case of un parseable date.
+
+3. Formatting (use inherited API from DateFormat class)
+public String format(Date d)
+Formats the Date as per specified pattern in SimpleDateFormat
+
+
+OR
+
+2. Use  - java.util.GregorianCalendar class can be used.
+It's a sub class of java.util.Calendar class.(abstract super class)
+
+Uses -
+month range from  0-11
+Overloaded constructors - 
+GregorianCalendar(int yr,int mon,int date);
+GregorianCalendar(int yr,int mon,int date,int hr,int min,int sec);
+
+
+
+Disadvantages of the Legacy Date / Time API -
+1  java.util.Date : has limited no of constructors (majority are deprecated)
+2. For simple parsing n formatting , one has to use - SimpleDateFormat , as extra class
+3  In case of invalid values of day/month -- API doesn't throw the exception 
+- confusing API
+4. Date & Calendar classes are inherently thread un safe(mutable)
+
+
+Java 8(Modern Java)  Date n Time handling APIs
+
+java.time 
+- a new package is introduced
+
+1. LocalDate :A class that represents  Date 
+ (immutable)using default pattern (yr-mon-day) : yyyy-MM-dd : inherently thread safe.
+
+API 
+1.1 public static LocalDate now()
+Returns the current date from the system clock in the default time-zone.
+eg : LocalDate curntDate=LocalDate.now();
+
+1.2 How to parse from a String --> LocalDate ?
+public static LocalDate parse(CharSequence text) throws DateTimeParseException (un checked exception)
+
+arg : CharSequence interface(i/f) implemented by - String , StringBuilder , StringBuffer classes
+Returns -  an instance of LocalDate from a text string with default pattern - yyyy-MM-dd (yr-mon-day)
+
+throws - DateTimeParseException (un checked exception) in case of unparseable or invalid dates.
+eg : LocalDate dt=LocalDate.parse(sc.next());
+
+1.3 How to create LocalDate from yr , mon n day ?
+public static LocalDate of(int yr,int month,int day)
+eg - LocalDate date=LocalDate.of(2023,2,21);
+
+
+1.4 non static (instance) Methods of LocalDate: 
+- reading H.W
+isBefore,isAfter,isEqual,compareTo,toString,plus,minus
+
+ 
+2. java.time.LocalTime :
+An immutable class to represent time in default pattern - (hr:min:sec) 
+(HH:mm:ss)
+It is inherently thread safe.
+
+3.  java.time.LocalDateTime 
+It's an immutable  class representing Date & Time  (Time Stamp) , without TimeZone
+It's inherently thrd safe.
+eg : sop("curnt time stamp "+LocalDateTime.now());
+
+
+
+Example: 2025-09-08T21:45:30
+
+
+Does not store or represent a time-zone (for that use ZonedDateTime).
+
+API Methods -
+1.  Creating a LocalDateTime
+// Current date & time
+LocalDateTime now = LocalDateTime.now();
+
+2.  Specific date & time
+LocalDateTime ldt = LocalDateTime.of(2025, 9, 8, 21, 45, 30);
+
+3. From LocalDate and LocalTime
+LocalDate date = LocalDate.of(2025, 9, 8);
+LocalTime time = LocalTime.of(21, 45);
+LocalDateTime combined = LocalDateTime.of(date, time);
+
+4.  Getting Components
+int year = now.getYear();           // 2025
+Month month = now.getMonth();       // SEPTEMBER
+int day = now.getDayOfMonth();      // 8
+int hour = now.getHour();           // 21
+int minute = now.getMinute();       // 45
+
+5.  Modifying Date/Time
+
+LocalDateTime is immutable, so all modifications return a new object.
+
+LocalDateTime plusDays = now.plusDays(5);
+LocalDateTime minusHours = now.minusHours(3);
+LocalDateTime nextMonth = now.plusMonths(1);
+
+6.  Comparing
+LocalDateTime a = LocalDateTime.of(2025, 1, 1, 10, 0);
+LocalDateTime b = LocalDateTime.of(2025, 1, 1, 12, 0);
+
+System.out.println(a.isBefore(b)); // true
+System.out.println(a.isAfter(b));  // false
+
+7.  Formatting & Parsing
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+String formatted = now.format(formatter);
+System.out.println(formatted); // e.g. "08-09-2025 21:45"
+
+LocalDateTime parsed = LocalDateTime.parse("08-09-2025 21:45", formatter);
+System.out.println(parsed); // 2025-09-08T21:45
+
+
+
+5. Varargs in Java (...)
+
+What it is ?
+
+Variable-number of  arguments allows  you to pass zero or more values of the same type into a method.
+
+Introduced in Java 5.
+
+Declared using ... (ellipsis) after the type.
+
+Syntax
+returnType methodName(type... varName) {
+    // varName is an array inside the method
+}
+
+
+
+Rules of Varargs
+
+Only one varargs parameter is allowed in a method.
+
+It must be the last parameter in the method signature.
+
+Varargs can take zero arguments (acts like an empty array).
+
+At runtime, varargs are just arrays.
+
+It can be used with primitive as well as reference types.
+
+Why Use Varargs?
+
+Avoids method overloading with multiple signatures.
+
+Cleaner, more readable code.
+
+Example: instead of writing print(String a), print(String a, String b), … you just write one print(String... values).
+
+
+
+
+
+e.g. 
+void doStuff(int... x) {
+.....
+ } 
+
+Solve  : 
+ref.doStuff();
+int[] ints={1,2,3,4};
+ref.doStuff(ints);
+ref.doStuff(20,34,56);
+
+
+Another example 
+void doStuff2(char c, int... x) {..... } 
+
+
+Solve - 
+ ref.doStuff2('a',1,2,3,5);
+ref.doStuff2();
+
+
+class Test {
+void doStuff3(Animal... animals) { 
+   for(Animal a : animals)
+     sop(a.getName());
+} 
+}
+
+Solve 
+Test ref=new Test();
+ref.doStuff3();
+Animal animals[]={new Cat(),new Dog(),new Horse()}; 
+ref.doStuff3(animals);
+Animal a1=new Horse(); 
+Animal a2=new Cat(); 
+Animal a3=new Dog();
+ref.doStuff3(a1,a2,a3);
+
+
+
+Solve 
+void doStuff4(int x...) {....} 
+void doStuff5(int... x, char... y) {...} 
+void doStuff6(String... s, byte b) { } 
+
+
+
+
+
+
+
+
+
+
+
