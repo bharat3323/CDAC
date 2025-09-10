@@ -1,0 +1,126 @@
+Regex in Java – Summary
+
+
+ Key Classes
+
+Pattern → compiled representation of regex.
+
+Matcher → engine that applies regex to a text.
+
+PatternSyntaxException → thrown if regex is invalid.
+
+ Basic Usage
+import java.util.regex.*;
+
+public class RegexDemo {
+    public static void main(String[] args) {
+        String text = "Hello123";
+
+        Pattern p = Pattern.compile("\\d+");   // regex for digits
+        Matcher m = p.matcher(text);
+
+        while (m.find()) {
+            System.out.println(m.group());     // 123
+        }
+    }
+}
+
+
+Or directly:
+
+"Hello123".matches(".*\\d+.*"); // true
+
+ Common Metacharacters
+Regex	Meaning
+.	Any character (except newline)
+^	Start of string
+$	End of string
+\\d	Digit (0–9)
+\\D	Non-digit
+\\w	Word char (a–z, A–Z, 0–9, _)
+\\W	Non-word char
+\\s	Whitespace (space, tab, newline)
+\\S	Non-whitespace
+
+
+ Quantifiers
+Regex	Meaning
+*	0 or more
++	1 or more
+?	0 or 1 (optional)
+{n}	Exactly n
+{n,}	At least n
+{n,m}	Between n and m
+
+ Character Classes
+Regex	Meaning
+[abc]	a, b, or c
+[^abc]	Not a, b, or c
+[a-z]	Any lowercase letter
+[A-Z]	Any uppercase letter
+[0-9]	Any digit
+[a-zA-Z0-9]	Any alphanumeric
+
+
+ Groups and Alternation
+Regex	Meaning
+(abc)	Grouping
+`a	b`
+(?:...)	Non-capturing group
+
+
+ Lookaheads & Lookbehinds
+Regex	Meaning
+(?=...)	Positive lookahead (must be followed by …)
+(?!...)	Negative lookahead (must not be followed by …)
+(?<=...)	Positive lookbehind
+(?<!...)	Negative lookbehind
+
+
+ Anchors
+Regex	Meaning
+^	Start of string
+$	End of string
+\\b	Word boundary
+\\B	Non-word boundary
+
+
+ Useful Examples
+
+Email →
+
+^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$
+
+
+Phone (10 digits) →
+
+^\\d{10}$
+
+
+Aadhaar (12 digits, not starting with 0/1) →
+
+^[2-9]\\d{11}$
+
+
+Strong Password (5–20 chars, at least 1 digit, 1 lowercase, 1 uppercase, 1 special) →
+
+^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$*]).{5,20}$
+
+
+
+ String API vs Pattern/Matcher
+
+Quick check:
+
+"hello".matches("h.*o"); // true
+
+
+Search/replace:
+
+"abc123".replaceAll("\\d", "X"); // abcXXX
+
+
+Split:
+
+String[] parts = "one,two,three".split(",");
+

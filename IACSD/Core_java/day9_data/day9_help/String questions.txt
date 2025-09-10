@@ -1,0 +1,71 @@
+Q 1 :  Solve
+	 String s=new String("hello");//"hello" : SCP , s -> non literal
+		String s1=s.concat(" abc !"); //" abc!" - scp , s1-> hello abc!
+		System.out.println(s);//hello
+		System.out.println(s1);//hello abc!
+		s=s.concat("12345");//
+		System.out.println(s);//hello12345
+		System.out.println(s.toUpperCase());//upper cased
+		System.out.println(s);//lower cased
+		String s2=s.replace('l', 't');
+		System.out.println(s);//orig
+		System.out.println(s2);//replaced
+		s.append(3456); //javac error
+
+Q 2 : Solve
+
+		String s1=new String("testing strings");
+		String s2=new String("testing strings");
+		String s3=new String("Testing Strings");
+		System.out.println(s1==s2);//f
+		System.out.println(s1.equals(s2));//t
+		System.out.println(s1==s3);//f
+		System.out.println(s1.equals(s3));//f
+		System.out.println(s1.equalsIgnoreCase(s3));//t
+
+What will you use in the practical environment. to chk equality of 2 strings ? == OR equals
+- equals
+
+
+
+Q 2.5 : Solve
+
+		Object s1=new String("testing strings");//up casting
+		Object s2=new String("testing strings");//up casting
+		Object s3=new String("Testing Strings");//upcasting
+		System.out.println(s1==s2);//f
+		System.out.println(s1.equals(s2));//t
+		System.out.println(s1==s3);//f
+		System.out.println(s1.equals(s3));//f
+		System.out.println(s1.equalsIgnoreCase(s3));//javac err !!!!!
+
+
+
+
+Q 3 : Solve
+		String s1=new String("Hello");
+		String s2=s1.intern();
+		System.out.println(s1==s2);//f
+		String s3=s1.toUpperCase();
+		String s4=s3.intern();
+		String s5="HELLO";
+		System.out.println(s3==s4);//t
+		System.out.println(s3==s5);//t
+
+
+
+
+Q 4 : Solve
+		String s1 = "Hello Students";
+		String s2 = new String(s1);
+		String s3 = s1.toUpperCase();
+		String s4 = s2.intern();
+		String s5 = s3.intern();
+
+		String s6 = "HELLO STUDENTS";
+		System.out.println(s1 == s2);
+		System.out.println(s1 == s4);
+		System.out.println(s5 == s6);
+		System.out.println(s3 == s5);
+
+

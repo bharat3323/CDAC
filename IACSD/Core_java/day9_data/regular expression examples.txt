@@ -1,0 +1,12 @@
+Indian phone nos  -  "^[6-9]\\d{9}$"
+
+aadhar card - "^[2-9]{1}[0-9]{11}$"
+
+email -   "^[a-z][a-z0-9._-]*@[a-z]+\\.(com|org|net)$"
+
+
+strong password - "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$*]).{8,20}$"
+
+
+email -   "^[a-z][a-z0-9._-]*@[a-z]+\\.(com|org|net)$"
+

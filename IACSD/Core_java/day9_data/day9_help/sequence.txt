@@ -1,0 +1,161 @@
+Today's topics
+0.Revise Strings & Legacy Date API with code samples
+1.Modern Date Time API
+2. Variable no of arguments in Java
+3. Enum (enumeration)
+4.Wrapper classes , auto boxing , auto un boxing
+5. Customer management system – case study intro.
+
+
+1. Solve 
+"day9_help\String questions.txt"
+String class API -
+public String intern()
+When you call intern() - JVM checks if the SAME String already exists in the SCP(by calling equals)
+If it already exists -then JVM  does not add any string to the pool , 
+Method Returns : reference from literal string pool(SCP)
+doesn't exist -- adds(moves) non literal string object to SCP n returns its reference.
+
+2. Modern Date Time Handling in Java 
+ - Refer "day9_help\Java 8 Date n Time related APIs.txt"
+
+Solve 
+Accept product manufacture date from user
+Accept no of days - in which product expires
+Print product expiry date.
+
+
+
+3. Var Args 
+ - Refer "day9_help\readme_varargs.txt"
+
+
+4. Enumeration in Java (enum)
+Solve 
+Create an enum to store fixed set of colors – RED,GREEN,BLUE
+Write a tester – Display available colors
+Accept (scanner) a color from user , convert it to enum n display using toString
+
+Refer - "day9_help\enums\regarding enums.txt"
+
+
+javac compiles enum into a final class which extends from java.lang.Enum.
+
+What does javac implicitly adds to the enum ?
+1. Creates  a final class which extends from java.lang.Enum.
+2. enum constants are added as - data members
+ public static final Enum type constants
+3. Adds static init block to init these constants
+4. Adds 2 methods
+4.1 public static Enum[] values() 
+ - to iterate over the enum constants easily
+4.2 A method to parse (string ->enum)
+ - public static Enum valueOf(String constName) throws IllegalArgumentException  (un checked exception) 
+ - JVM throws this exception in case of invalid constant name
+
+5. Add private constructor , to init
+ - name of the constant
+ - ordinal (position 0-n-1 , counter from left to right
+6. Important methods inherited from super class Enum
+public String name()
+public int ordinal()
+public String toString() - returns name of the constant
+
+7. Enum implements , 2 important interfaces
+ - Comparable , Serializable
+
+8. You can override 
+ -toString
+9. Can't override
+ - equals & compareTo  (since they are declared as final methods)
+
+
+5. Wrapper classes 
+Refer to Readme n diagram
+
+What is it ?
+ - Wrapper is class that wraps(holds) a primitive value
+ - Declared in java.lang package.
+
+Why - 
+- Java generics & collections support only reference types & not primitive types. So in order to convert primitive -> reference use wrapper classes.
+
+- Supports useful API for parsing String -> primitive type , checking for digits , white space etc....
+
+Refer to inheritance hierarchy.
+
+Terms
+1. Boxing - conversion from primtive -> wrapper
+ - How
+ - Using wrapper class's ctor (eg . Integer(int i)) - deprecated !
+ - Using wrapper class's valueOf methods
+ eg Integer class
+ public static Integer valueOf(int i);
+ Usage - Integer intRef=Integer.valueOf(100);
+
+2. Un boxing - conversion from wrapper -> primitive 
+How - Using Wrapper class methods
+ eg - public byte byteValue();
+public double doubleValue();
+public int intValue();
+...
+Usage - Double d1=Double.valueOf(23.45);//boxing
+            double d=d1.doubleValue();
+
+3. JDK 1.5 introduced - auto conversions (done by javac)
+auto boxing - auto conversion from primitive -> wrapper
+auto un boxing - auto conversion from wrapper to primitive
+
+All numeric wrapper class are immutable.(implicitly thread safe)
+
+For numeric wrappers 
+- JVM implicitly creates a cache (pool) in the heap's special area.
+Range of these cached values : -128 --- 127
+
+Is Java purely object oriented ?
+NO
+Why
+ - It does support primitive types also , for the purpose efficiency
+ - All features of OOP ar not supported
+  eg . Multiple inheritance via class.
+
+BUT 
+Can Object type of reference DIRECTLY (w/o type casting) refer to ANY data type (including primitives: auto boxing -> up casting  n reference -> up casting) ?
+ - YES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6. Case Study
+
+
