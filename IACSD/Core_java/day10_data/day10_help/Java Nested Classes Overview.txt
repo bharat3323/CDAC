@@ -1,0 +1,115 @@
+Java Nested Classes Overview
+A nested class is any class defined inside another class. Java supports 4 types of nested classes:
+1.	Static Nested Class
+2.	Inner Class (Non-static)
+3.	Method-local Inner Class
+4.	Anonymous Inner Class
+
+
+1. Static Nested Class
+Definition: A class declared using static keword  inside another class.(just as any other static member of the outer class)
+
+- It can contain , both static & non static members.
+- It can access static members of outer class directly. 
+- Cannot access instance members of outer class directly.
+-Can be instantiated without outer class object.
+- Does not hold implicit reference to outer class(Outer.this)
+- More memory-efficient.
+
+Use case - Builder pattern, Node in Tree/Graph.
+
+Example:
+public class Outer {
+    public static class Nested {
+        void greet() { System.out.println("hello from static nested class!"); }
+    }
+}
+
+From different package - Tester class
+
+Outer.Nested n = new Outer.Nested();
+n.greet();
+
+
+
+2. Inner Class (=Non-static nested class)
+Definition: A class declared inside another class without static keyword.
+
+- Can access both instance and static members of outer class directly(including private)
+- Inner class instance cannot be created w/o outer class instance (tight coupling)
+ - strong association(composition)
+- Holds implicit reference to outer class instance(Outer.this)
+- This can increase memory usage.
+Use case	- Modelling tightly coupled objects, e.g., BankAccount.Transaction , Person.AdhaarCard
+Example:
+public class Outer {
+    private int data = 10;
+
+    public class Inner {
+        void show() { System.out.println("Data = " + data); }
+    }
+}
+In Tester class , from a different package
+
+Outer outer = new Outer();
+Outer.Inner inner = outer.new Inner(); // can be done in 1 line also
+OR
+Outer.Inner inner=new Outer().new Inner();
+
+inner.show(); 
+
+NOTE - Inner class can't contain
+ - static methods
+ - static data members (non final)
+ - static init block.
+
+
+3. Method-local Inner Class
+Definition: A class declared inside a method.
+
+- Can be used only inside the method where it is defined.
+- Can access final or effectively final local variables of method & all outer class members.
+- It's instance can be created only from within the method.
+Use case : Extremely short-lived helper class for specific method's business logic.
+
+Example:
+public class Outer {
+    void doSomething() {
+        int x = 5; // must be final or effectively final
+
+        class MethodInner {
+            void print() { System.out.println("x = " + x); }
+        }
+
+        MethodInner mi = new MethodInner();
+        mi.print();
+       
+    }
+}
+
+
+4. Anonymous Inner Class
+Definition: A class without a name , used to extend a class  or implement an interface .
+- Exists only at the point of instantiation.
+- Can access final or effectively final variables of enclosing method & all outer class members.
+- Instance is created in the inlined manner , within single java statement.
+
+	
+Use case	 - Event Listeners  (ActionListener), Custom Comparators during sorting , callbacks, one-time implementation without writing a full class.
+Example:
+Runnable r = new Runnable() {
+    @Override
+    public void run() {
+        System.out.println("Running...");
+    }
+};
+new Thread(r).start();
+
+
+Note : 
+1.	Inner class → always has reference to outer → can access outer instance fields.
+2.	Static nested class → no outer reference → cannot access non-static fields of outer directly.
+3.	Method-local inner → can only use final/effectively final local variables.
+4.	Anonymous inner → inline, one-off, can implement interface or extend class, can access outer members + final/effectively final variables.
+5.	All nested classes can be private, default , protected, or public scoped.
+

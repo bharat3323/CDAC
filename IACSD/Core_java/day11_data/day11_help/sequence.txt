@@ -1,0 +1,39 @@
+Today's topics
+1. Tight coupling vs Loose Coupling
+ - just a quick discussion
+2. Association
+  - HAS A Relationship
+3. Non static nested class - inner class example
+ BankAccount HAS-A Transactions
+
+4. Continue with Generics 
+
+5. Enter Collection Framework
+ - Overview
+ - List Functionality
+  
+Any problems noticed in non generic / raw / pre generic syntax
+
+1. Any time , to access the data from non generic type , explicit down casting is required.
+2. In case of , invalid down casting  or invalid assigments ,  javac DOES NOT detect the errors, JVM detects error . (ClassCastException)
+
+The  solution to achieve the flexibility (i.e ANY type) as well as maintaining type safety @ compile time ? 
+ Use - Generic syntax.
+
+(It's meant for informing the javac --about actual data types, so that type mismatch errors are detected at the compile time)
+Refer - "day11_help\Java Generics.txt"
+
+
+2. Collection Framework overview
+Refer - "Java Collection Framework.pdf" & "day11_help\Collection Framework\List Details.txt"
+2.1 List Features -
+2.2 List API
+2.3 List implementation classes – ArrayList<E>
+2.4 Constructors 
+2.5 Integer List
+To understand basic List operations
+
+2.5 Apply it to CMS case study.
+
+
+

@@ -1,0 +1,82 @@
+Tight Coupling means -
+
+ Classes are hard-wired to each other. Making changes into one forces us to make changes in the other.
+
+eg - 
+
+// PaymentService is tightly coupled to CreditCardPayment
+class PaymentService {
+    private CreditCardPayment payment = new CreditCardPayment();
+
+    public void checkout(double amount) {
+        payment.pay(amount);
+    }
+}
+
+class CreditCardPayment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using Credit Card");
+    }
+}
+
+Problems - 
+
+What if tomorrow you want to add PayPal or UPI payments?
+
+You will have to make changes into  PaymentService code
+
+
+Vs  Loose Coupling Example (via Interface)
+
+Use an abstraction (interface) so classes depend on specifications(contracts), not implementations.
+
+interface Payment {
+    void pay(double amount);
+}
+
+class CreditCardPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using Credit Card");
+    }
+}
+
+class UPIPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using UPI");
+    }
+}
+
+class PaymentService {
+    private Payment payment; // depends on abstraction
+
+    // supply payment method here
+    public PaymentService(Payment payment) {
+        this.payment = payment;
+    }
+
+    public void checkout(double amount) {
+        payment.pay(amount);
+    }
+}
+
+
+public class Test {
+    public static void main(String[] args) {
+        PaymentService service1 = new PaymentService(new CreditCardPayment());
+        service1.checkout(1000);
+
+        PaymentService service2 = new PaymentService(new UPIPayment());
+        service2.checkout(500);
+    }
+}
+
+Advantages - 
+
+PaymentService doesn’t care how payment is done, just that a Payment is available.
+
+Easy to extend — just add PayPalPayment implements Payment without touching PaymentService.
+
+This is loose coupling via interface.
+
+
+Real world anology - Car Stereo

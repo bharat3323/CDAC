@@ -1,0 +1,71 @@
+Today's topics
+0. Kick start the CMS (Customer management system) case study
+ - solve customer registration , with dup email check validation rule.
+
+1. Nested Classes
+2. Generics Introduction
+
+1. Objective 
+Create a class to hold(as the state) an int  value
+Add ctor n getter.
+Create a class to hold a String
+Add ctor n getter
+Create a class to hold an Emp 
+Add ctor n getter
+
+Obvious solution (kind of dumb!!!) will be 
+- create separate classes to hold different type of values
+- eg. IntHolder ,DoubleHolder, EmpHolder ,DateHolder .......
+
+Does not make sense ! 
+So instead create only 1 Holder class (eg . AnyHolder) that can hold ANY type of data
+Add ctor n getter.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+How will you do it ? 
+Is it really a good design ?
+
+Any problems noticed in non generic / raw / pre generic syntax
+
+1. Any time , to access the data from non generic type , explicit down casting is required.
+2. In case of , invalid down casting  , javac DOES NOT detect the errors, JVM detects err . (ClassCastException)
+
+The  solution to achieve the flexibility (i.e ANY type) as well as maintaining type safety @ compile time ? 
+ Use - Generic syntax.
+
+(It's meant for informing the javac --about actual data types, so that type mismatch errors are detected at the compile time)
+Refer - "day10_help\Java Generics.txt"
+
+
+2. Collection Framework overview
+Refer - "Java Collection Framework.pdf"
+2.1 List Features -
+2.2 List API
+2.3 List implementation classes – ArrayList<E>
+2.4 Constructors 
+2.5 Integer List
+To understand basic List operations
+
+2.5 Apply it to CMS case study.
+
+For testing any of the above B.L , what is it you will have to do first ?
+Every time you start the application , you will have to add bank accounts first , right ?
+So is there any easy way to jump in to testing directly ?
+Populate the data structure with sample data(valid data) , in the service layer constructor.
+Sample data –
+a1 b1 a1@gmail.com 12345 2000 1990-10-20 gold
+a2 b2 a2@gmail.com 22345 1000 1999-05-22 silver
+a3 b3 a3@gmail.com 13345 5000 1993-11-2 diamond
+a4 b4 a4@gmail.com 15345 2000 1994-01-20 gold

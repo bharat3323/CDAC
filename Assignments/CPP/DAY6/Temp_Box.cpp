@@ -1,7 +1,7 @@
 /* Class Template – Box
  Implement a class template Box<T> that stores one value of any type and provides          getValue() and setValue() methods.*/
 
- #include<iostream >
+ #include<iostream>
  using namespace std;
 
  template <class T>
@@ -45,8 +45,8 @@
 
 
  //theory
- /*
- A class template allows you to write a generic 
- class where the type is a parameter, so the same code works for 
- int , double, string, or even custom objects.
- /
+// *
+//  A class template allows you to write a generic 
+//  class where the type is a parameter, so the same code works for 
+//  int , double, string, or even custom objects.
+//  /

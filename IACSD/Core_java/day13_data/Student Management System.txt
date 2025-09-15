@@ -1,0 +1,57 @@
+Design and implement a Student Admission Management System in Java.
+(Try this definitely !)
+
+Core Classes  - 
+
+1. Student 
+-id (auto-incremented)
+- name(string)
+- email (unique)
+- marks (int)
+- course (enum)
+- admissionDate(LocalDate)
+
+2. Course (enum)
+CORE_JAVA, DBT, PYTHON , MERN, WEB_JAVA,DEV_OPS
+
+Min marks required for admission
+
+Max capacity (total seats available)
+
+
+Functionalities
+
+1. Admit Student
+Input: name, email, marks, course
+Validate:
+Marks must be ≥ minMarks of the course
+Course must have available seats
+If valid -> admit student (add to list + reduce available seats).
+Otherwise -> reject admission.
+
+2. Cancel Admission
+Input: email
+If student found -> remove from list + free up one seat in the course.
+If not found -> show error.
+
+3. Search Student by Email
+Input: email
+If student exists -> display details
+Else -> show “not found”
+
+4. List All Students
+
+5. List students by Course
+Input - course name
+
+6. Will add sorting options later....
+
+Exit
+
+Technical Requirements
+
+Use an ArrayList<Student> to store all student records.
+
+Ensure email is unique (equals)
+
+Later, the system will be refactored to use HashMap.

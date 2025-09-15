@@ -1,0 +1,10 @@
+When does Java Iterator or ListIterator , throw java.util.ConcurrentModificationException ?
+
+During iteration, if you are trying to structurally modify the List (i.e using List API - add or remove methods) , JVM aborts the iteration throwing the exception
+
+Why - In above case , the positions of the iterator becomes in consistent.
+So rather than risking inconsistent results , it aborts the iteration.
+
+This is known as fail-fast behavior of the iterators in Java.
+
+Soln - Attach Iterator n use it's own API.

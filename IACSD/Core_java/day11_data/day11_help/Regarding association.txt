@@ -1,0 +1,44 @@
+Regarding association
+
+In Object-oriented programming, one object is related to another to use functionality and service provided by that object. 
+
+BUT You can't use IS-A relationship i.e inheritance everywhere.
+
+eg - A House HAS Rooms & you can't think of IS-A relationship here , right ?
+
+Association is relationship between two separate classes , using object references.
+It represents HAS-A relationship
+Also known as Containment.
+
+Why : Code reusability
+
+Different types of Association
+
+One-to-One
+Example: A Person has one AdhaarCard.
+
+One-to-Many
+Example: A Department has many Employees.
+
+Many-to-One
+Example: Many Students belong to one University.
+
+Many-to-Many
+Example: A Student enrolls in many Courses, and each Course has many Students.
+
+Different forms of association
+
+Both Composition and Aggregation are the forms of association between two objects, but there is a subtle difference between composition and aggregation
+
+ We refer to the association between two objects as Composition when one class owns other classes and other classes can not meaningfully exist, when the owner is destroyed.
+- Also called as Part-of association
+
+For example, Human class is a composed of of several body parts including the Hand, Leg, and Heart. When a human object dies, all its body parts ceased to exist meaningfully, this is one example of Composition.
+
+Another example of Composition is Car and its part e.g. engines, wheels, etc. Individual parts of the car can not function when a car is destroyed.  
+
+While in the case of Aggregation, including objects that can exist without being part of the main object like a Player which is part of a Team, can exist without a team and can become part of other teams as well.
+
+Another example of Aggregation is Student in School class when School closed, Student still exists and then can join another School or so.  
+
+The composition is stronger form of association than Aggregation.  

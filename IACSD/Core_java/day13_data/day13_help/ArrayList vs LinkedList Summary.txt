@@ -1,0 +1,143 @@
+ArrayList vs LinkedList in Java 
+-  both are List implementation classes  but with very different performance (O)
+
+1. Basic Data Structure
+
+ArrayList
+- Backed by a dynamic resizable array (Object[]).
+
+- When it grows beyond capacity, JVM resizes it dynamically (creates new array, copies elements).
+
+LinkedList
+
+- Implemented as a doubly linked list (Contains Nodes - element, prev reference, next reference).
+
+- No resizing is involved here ( links/unlinks nodes)
+
+
+2. Memory Layout
+
+ArrayList
+
+- Uses Contiguous memory (since backed up by array)
+- Very CPU cache friendly
+
+- Uses lesser memory than LinkedList
+
+LinkedList
+ - stored in the disjoint manner
+  -  more memory overhead (2 extra references per node).
+
+ 3. Performance (Big-O)
+
+For ArrayList	
+To Access (get/set by index)
+- O(1) 
+- Supports direct indexing	
+
+To Add element at end	
+- Amortized  O(1) 
+(Amortized Time complexity means
+ - average time taken per operation over a multiple operations.)
+
+To Remove element at end	
+- O(1)
+
+Insert/remove at middle	O(n) 
+-  Since involves shifting of elements.	
+
+Insert/remove at start	O(n) 
+ - since involves shifting of all elements 
+	
+Plain Iteration	O(n)
+ - (Faster than LinkedList , since can be using cache) 
+
+Iteration with remove 
+ - O(n) 
+ - Prefer LinkedList here, if you have lot of removals !
+	
+Contains / indexOf
+- O(n)	
+- faster than LinkedList (since contiguous memory)
+
+
+LinkedList
+
+To Access (get/set by index)
+- O(n) 
+- (must traverse nodes either from begin or end)
+
+To Add/Remove element at begin / end	
+- O(1) 
+ (just link or delink node at head / tail)
+
+
+Insert/remove at middle
+- To traverse the node O(n) 
+- BUT then O(1) to link or de link
+- Faster than ArrayList
+
+
+Iteration / Traversal 
+- O(n)
+- Slower than ArrayList
+- Since involves pointer chasing
+
+ 4. Use Cases
+
+ArrayList when:
+
+You need fast random access (get(i)/set(i)).
+
+Mostly add/remove at the end.
+
+Memory efficiency and iteration speed matter.
+
+LinkedList when:
+
+You need fast insertions/deletions at the beginning or middle.
+
+Don’t need random access.
+
+Often use iterators for traversal and modification.
+
+ 5. Internals
+
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10);   // placed at elementData[0]
+list.add(20);   // placed at elementData[1]
+
+
+If capacity exceeded - grow() - new array (oldCapacity + oldCapacity/2) - copy elements.
+
+LinkedList
+LinkedList<Integer> list = new LinkedList<>();
+list.add(10);  // creates Node(prev=null, item=10, next=null)
+list.add(20);  // new Node(prev=node10, item=20, next=null)
+
+Outer class - LinkedList
+
+private static class Node<E> {
+    E item;
+    Node<E> next;
+    Node<E> prev;
+}
+
+6. Extra Features
+
+LinkedList also implements Deque 
+-  can be used as a stack or queue (FIFO/LIFO).
+
+ArrayList is purely a resizable array — no queue methods.
+
+ 7. When NOT to use
+
+Don’t use LinkedList if you just need sequential access - overhead is worse than ArrayList.
+
+Don’t use ArrayList if you need frequent insert/remove in the middle or start - shifting costs too high.
+
+In general - 
+
+Use ArrayList in 90% of cases (better performance in most scenarios & lower memory requirement).
+
+Use LinkedList if you need a Queue/Deque or do a lot of insertions/removals at ends.

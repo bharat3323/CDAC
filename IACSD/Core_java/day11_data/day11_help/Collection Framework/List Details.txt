@@ -1,0 +1,151 @@
+List<E> features
+1. List represents ordered collection --- order is significant(It remembers the order of insertion)
+2. Allows null references
+3. Allows duplicates
+4. Supports index based operation
+
+List<E> interface Methods
+1. add methods
+1.1 boolean add(E e)  - appends the element(reference) to the list
+1.2 void add(int index,E element) - 
+- inserts the element at the specified index.
+- valid range of index : 0 - (size-1) , otherwise JVM throws 
+  IndexOutOfBoundsException
+
+1.3 void addAll(Collection<E> collection) 
+ - bulk append operation , to append all the elements from ANY Collection to this List.
+
+
+Q - Which of the following are the legal options for addAll?
+Options
+1. ArrayList,LinkedList,Vector
+2. HashSet,LinkedHashSet,TreeSet
+3. HashMap,LinkedHashMap,TreeMap
+
+Ans -1 ,2
+
+
+2. Retrieve specific element from list 
+
+E get(int index)
+index ranges from : 0 -(size-1)
+Otherwise throws - 
+java.lang.IndexOutOfBoundsException
+
+3.To display list contents 
+3.1 public String toString()
+OR
+3.2 Attach explicit Iterator
+OR
+3.3 Attach for-each
+OR
+3.4 Attach for loop
+OR
+3.5 
+Attach explicit ListIterator
+
+
+4. To Search for a particular element in list
+boolean contains(Object o)
+- Returns true if element is present
+- otherwise false
+
+NOTE : It invokes internally  "equals" method on  the type of the List.
+
+Important - Argument of the contains method = type of the List
+eg : List<BankAccount> , arg - BankAccount
+List<Emp> , arg - Emp
+
+Tips for the correct working -
+1. override equals method based upon UID (PK) , in type of List.
+2. Add overloaded constructor to wrap UID.
+eg . In case of - List<Emp>
+Suppose UID - empId
+Override equals in Emp class , based on emp id n dept id
+Add overloaded constructor - based on emp id. n dept id
+Usage - empList : List<Emp> 
+sop("Enter emp id n dept id");
+Emp e=new Emp(sc.nextInt(), sc.next());
+boolean exists=empList.contains(e);
+
+
+
+5. Searching for 1st occurrence of the element in the list
+int indexOf(Object o)
+Returns index of 1st occurrence of specified element or -1 if element not found.
+
+NOTE : Based upon equals method of the type of the List
+
+
+6.Searching for last occurrence 
+int lastIndexOf(Object o)
+rets index of last occurrence of specified element  Rets -1 if element not found.
+NOTE : Based upon equals method of the type of the List
+
+
+7. To replace the element -
+E set(int index,E newElem)
+Replaces old element at specified index by new element
+Returns old element
+
+
+8. Remove methods
+8.1 Remove by index - 
+E remove(int index) 
+- Removes the element at specified index & returns removed element
+
+8.2 Remove by element
+boolean  remove(Object o) 
+- Removes the specified element 
+- Returnss true , if element is removed or otherwise false .
+- Internally invokes equals.
+
+9. conversion from collection to array
+9.1 Object[] toArray() 
+ - non generic version 
+ - rets array of objects(references)
+
+9.2 T[] toArray(T[] array)
+T = type of collection .
+Rets array of actual type.
+
+
+List implementation classes -
+1. ArrayList<E> - generic List implementation class , based upon growable array.
+
+It additionally implements - RandomAccess interface (it's the marker interface).
+It extends from AbstractList class.
+
+Add & remove operations , any where in the list , will run in O(n) - time complexity for worst case scenario. (n - size of the )
+contains , indexOf, lastIndex - O(n)
+get , set , size & iterator - will run in constant time - O(1)
+
+Constructors -
+1. ArrayList<E>()
+-Default Constructor 
+-Creates empty ArrayList , size=0, initial capacity=10
+
+2. ArrayList<E>(int initCapacity)
+- Creates empty ArrayList , size=0, specified init capa.
+eg - ArrayList<Emp> emps=new ArrayList<>(100);
+emps.add(e1);.....emps.add(e100);
+emps.add(e101);
+
+3. ArrayList<E> (Collection<E> collection)
+- Creates a list populated from ANY Collection.
+size = collection.size()
+capacity - as per JVM
+
+
+
+
+
+
+
+
+
+
+
+
+
+

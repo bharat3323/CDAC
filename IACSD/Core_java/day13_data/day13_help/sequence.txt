@@ -1,0 +1,45 @@
+1.Revise & Continue with Sorting
+2. Iterator & ListIterator
+3. ArrayList Vs. Vector 
+4. LinkedList details
+5. ArrayList Vs. LinkedList
+
+1. Solve 
+ 1.1 Sort customers as per email
+- Natural ordering
+1. public class Customer implements Comparable<Customer>{
+
+@Override
+public int compareTo(Customer anotherCustomer)
+{
+   return this.email.compareTo(anotherCustomer.email);
+}
+
+}
+//[c1,c2,c3........c50......]
+Collections.sort(customerList);
+
+2.
+ Sort customers as per reg amount
+- custom ordering 
+
+3. Sort customers as per dob & reg amount
+ - w/o touching Customer class(i.e custom ordering)
+
+
+
+Exception involved - 
+1. java.util.NoSuchElementException 
+ - Thrown by Iterator | ListIterator , while trying to access the element beyond - size range.
+Suggestion - Always use hasNext | hasPrevious before calling next | previous
+
+2. java.lang.IllegalStateException 
+- Thrown by Iterator | ListIterator , while trying to remove the element before calling previous | next.
+
+3. java.util.ConcurrentModificationException
+ - Thrown by Iterator | ListIterator , if you are using the same Iterator | ListIterator , after making structural modification(i.e changing the size of the collection)
+If you allow these concurrent changes , then position of the Iterator is inconsistent.
+So instead of giving wrong results , JVM prefers to abort the iteration throwing this exception.
+This is known as - Fail Fast Behavior of the Java Iterators.
+
+

@@ -1,0 +1,79 @@
+What is Generics 
+ - Adding type parameter .
+- Type information can be added to classes, interfaces, and methods.
+
+
+Why Java Generics?
+
+Before Java 5, there was no generic syntax.
+
+Collections and other classes could store any object type
+ - Caused type-safety issues 
+ - Needed instanceof checking and extra type casting.
+
+What is type safety ?
+
+Without generics: What will happen here ?
+
+List list = new ArrayList();
+list.add("Hello");
+list.add(123); 
+String s = list.get(1); 
+
+
+With generics: What will happen here ?
+
+List<String> list = new ArrayList<String>();
+list.add("Hello");
+list.add(123); 
+String s = list.get(0); 
+
+Here compiler will implicitly & correctly add a downcast , since it already knows the type !
+(i.e no room for errors !!!)
+
+
+Thanks to generics 
+1.  Type mismatch errors are caught early , i.e  at compile-time rather than runtime.
+2.  Explicit Type casting is no longer required
+
+Pre Generics - 
+
+String s = (String) list.get(0); // explicit cast needed
+
+With generics:
+
+String s = list.get(0); // no cast needed
+
+- Gives you lesser , safer & cleaner code. 
+
+3. By specifying type parameters, method contracts become clearer (i.e Stronger API contracts)
+Will be clear later with code sample.
+eg. AnyHolder class .
+
+4.  Code Reuse with  Generic Algorithms
+
+Generics allow writing one method/class that works with any type:
+
+public static <T> void printList(List<T> list) {
+    for (T t : list) System.out.println(t);
+}
+
+printList(can pass Integer | Double | Emp List);
+
+Without generics, you will need to add multiple overloaded methods for each type.
+
+5.  Compile-Time Checking vs Run-Time
+
+Without generics, type errors appear at runtime → more bugs.
+
+With generics, type errors appear at compile-time → safer code.
+
+6.  Supports Polymorphism with Generics
+List<Number> numbers = new ArrayList<>();
+numbers.add(10);    // Integer
+numbers.add(3.14);  // Double
+
+
+Note : Java generics' type information is erased at runtime (type erasure) → the JVM sees List<String> just as List. So this does not cause any code bloating unlike C++
+Generics are mainly a compile-time safety feature.
+JVM does not need this type information.

@@ -1,0 +1,77 @@
+Sorting in Java
+2 ways
+1. Natural Ordering - Based upon java.lang.Comparable<T> : generic i/f
+T - type of the object , to be compared
+eg - BankAccount | Customer | Product ...
+Development steps
+1.1 UDT (user defined type) implements - Comparable<T>
+eg - public class Customer implements Comparable<Customer>
+{...}
+
+1.2 Implement the abstract method
+public int compareTo(T anotherObject)
+Rets 
+< 0 : this < anotherObject , as per the sorting criteria
+= 0 : this = anotherObject , as per the sorting criteria (equals - true)
+> 0 : this > anotherObject , as per the sorting criteria
+
+1.3 Invoke sort method of Collections class
+java.util.Collections - non generic class
+public static void sort(List<T> list);
+It internally calls - compareTo of type T , in case of > 0 ret value , shuffles elements
+Internally based upon TimSort (Iterative Merge sort)
+
+Limitations of Natural Ordering 
+- You can supply only single sorting criteria , but can't change it afterwards.
+
+
+Solution - 
+2. Custom ordering (external ordering)
+Dev steps 
+2.1 Create a separate class which implements -
+java.util.Comparator<T> 
+T - type of the objects  to be compared.
+
+2.2 Implement 
+public int compare(T o1,T o2)
+Rets 
+<0 if o1 < o2 , as per sorting criteria
+=0 if o1 = o2 , as per sorting criteria
+>0 if o1 > o2 , as per sorting criteria
+
+2.3 Invoke sort method of Collections class
+java.util.Collections - non generic class
+public static void sort(List<T> list,Comparator<T> comp);
+1st arg - List to be sorted
+2nd arg - instance of the class which implements Comparator
+
+It internally calls - compare of type T , in case of > 0 ret value , shuffles elements
+Internally based upon TimSort (Iterative Merge sort)
+
+
+In custom ordering , instead of creating a separate class , create anonymous inner class - name of the class will not be supplied by the developer.
+
+syntax with the example
+
+Collections.sort(list, new Comparator<BankAccount>() 
+{
+ //implement compare method as before
+});
+
+new Comparator<BankAccount>()  => instance of the ano inner class that implements Comparator.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
