@@ -61,6 +61,8 @@ List<Student> student; //= new ArrayList<>();
 		Student stud=student.get(index);
 		System.out.println(stud);
 	}
+
+	//search by course---->in for each loop we can use == instead of equals ----enum constant
 	@Override
 	public ArrayList<Student> coursesearch(String course) throws SmsException {
 		
