@@ -1,0 +1,248 @@
+Advanced Generics 
+1. Write a static method to print contents of ANY array.
+Solve - what will happen ?
+public static  void printAnyArray(Object[] arr)
+{
+		for(Object t : arr)
+			System.out.println(t);
+}
+In Tester - after static import 
+
+		int[] ints= {1,23,4,5,6,7};
+		printAnyArray(ints);
+		System.out.println();
+		Double[] doubles= {1,2,3,4,5,6};
+		printAnyArray(doubles);
+		String[] strings= {"a","vv","cc"};
+		printAnyArray(strings);
+
+After removing the errors , what is the conclusion 
+ - Java arrays are co variant in nature
+ - Meaning when String is a subtype of Object, then String[] is considered a subtype of Object[]
+ - Flexible BUT not type safe !
+ - Just add in method arr[0]=10 , any errors ?
+
+2.Gemeric method 
+- A Method which has it's own type parameter.
+- Can it exist in a non generic class? : Yes
+- syntax
+ In generic method declaration 
+ - add type parameter between method modifier & return type
+ 
+
+Example - 
+public static <T> void printAnyArray(T[] arr)
+	{
+		for(T t : arr)
+			System.out.println(t);
+
+	}
+
+In Tester - after static import 
+		Integer[] ints= {1,23,4,5,6,7};
+		printAnyArray(ints);
+		System.out.println();
+		Double[] doubles= {1.0,3.5,4.5,5.7,6.8};
+		printAnyArray(doubles);
+		String[] strings= {"a","vv","cc"};
+		printAnyArray(strings);
+
+ - Just add in method arr[0]=10 , any errors ?
+ - Which approach is better & why ?
+
+3. What will happen if you keep both of these versions Object[] & T[] in the Utils class ?
+ - javac error
+Why 
+ - After type erasure , T[] -> Object[] , causing ambiguity !
+
+4. Solve example of Generic method
+-  Arrays.toList 
+java.util.Arrays 
+ - non generic class
+Generic method from a non generic class , Arrays
+public static <T>  List<T> asList(T... a)
+ - Creates a fixed size List<T> from supplied variable no of arguments of type T
+
+Solve 
+Use it for getting a fixed size List<Integer> 
+Use it for getting a fixed size List<String> 
+
+5.  Write a static method to print contents of ANY Set
+
+Test it TreeSet<Integer> , HashSet<Double>, LinkedHashSet<String>
+
+eg - public static void printSet(Set<Object> set) {...}
+Can You pass TreeSet<Integer> here ? NO
+Reason : 
+ - Java Collections are invariant.
+
+Meaning - Even when Integer IS-A Object , 
+Set<Integer> IS NOT a Set<Object>
+ - As a result you can't pass Set<Integer> in place of Set<Object>
+
+Even when  Manager extends Emp,
+ List<Manager> is NOT a subtype of List<Emp>
+
+Example:
+
+class Emp {}
+class Manager extends Emp {}
+
+Emp e =new Manager();
+List<Manager> managers = new ArrayList<>();
+List<Emp> emps = managers;   //what will happen ? - javac error !
+Is there any solution - Yes ! Later.....
+
+
+6.  Write a static method to print contents of ANY Set
+Hint - use generic method.
+
+Any alternative ? 
+
+7. Use wild card syntax  - ?
+ - wildcard in Java generics.
+ - acts like a placeholder
+ - It means "some unknown type" 
+ -  ? represents un bounded wild card . (After type erasure , its replaced by Object)
+ - You can restrain it with 
+  - extends : upper bound
+  - or super : lower bound
+ -  Cannot declare variables of type ?
+ - Can  only be used inside the method  declaration or during variable declaration.
+
+Example 
+public static void printAnySet(Set<?> set) {
+    for (Object o : list) {
+        System.out.println(o);
+    }
+}
+
+- You can’t add anything except null, because the actual type is unknown.
+
+Examples - Collections.shuffle
+
+8. Write  a static  method  to print taste of ANY fruit added in any List.
+Given - refer to Fruits hierarchy.
+
+Test cases 
+ArrayList <Mango> 
+Vector <Apple>
+LinkedList  <Orange>
+
+8.1 Can you use here List<Fruit> as the method argument ?
+Try it out !
+
+8.2 Can you use here List<?> as the method argument ?
+Try it out !
+
+
+8.3 Solution -  
+
+Upper Bounded Wildcard - ? extends T
+ - T or some unknown  sub type of T
+ - represents co variance 
+ -Since the exact type is not known ,the compiler does not allow adding anything (except null).
+ Eg. 
+List<? extends Number> numbers = new ArrayList<Integer>();
+numbers.add(10); // javac error
+ 
+Use case -  when the collection is acting as a producer of elements  , i.e you want to access it in read only manner.
+
+In our earlier requirement (to access taste() of Fruit ) , what is the argument to the method ?
+ - List<? extends Fruit>
+ - Here we are NOT adding any Fruit to the List
+ - We are simply accessing its taste method (read only - nothing added or written !)
+ - For accessing the taste() , all we need to know that it's a Fruit.
+ - BUT if you try to add Fruit | Mango | Apple , javac error , since it could be List<Apple> & you are adding a mango to it !
+   So to retain type safety along with this flexibility (Fruit or its subtype ) , use extends keyword.
+
+- Summarised as 
+ -  Producer Extends -  the collection is producing values for you to consume.
+
+8.4 For more practice - Solve 
+- Return  sum of numbers from any List | Set
+Test Cases 
+ ArrayList<Integer> , HashSet<Double> , TreeSet<Long>
+
+9. Contrast with ? super T (Consumer Super)
+
+Solve - Add a static method to add apples to any basket that can hold apples.
+Refer - Fruit <--- Apple <--- IndianApple,FujiApple
+
+(So technically we should be able to add IndianApples as well as FujiApples , but nothing else .)
+
+9.1 Can you ? extends Fruit here ?
+Try it out !
+
+9.2 Solution 
+ - Use lower bound : super
+ - ? super T
+  - Implies T or any of its unknown super types .
+ - represents contra - variance 
+ - Here compiler will allow you to add either T or any of its sub types .
+
+Use case - When you want to write to a collection but don’t care about the exact type for reading.
+ Sounds confusing right ?
+
+9.3 Understand with an example 
+
+- Use List<? super Apple>
+ - So user can pass : List<Apple> or List<Fruit> or List<Object> right ?
+
+public static void addApples(List<? super Apple> basket) {
+    basket.add(new Apple());  //  allowed
+    basket.add(new IndianApple());  //  allowed
+    basket.add(new FujiApple());  //  allowed
+    basket.add(new Fruit());  //  javac error
+    basket.add(new Object());  //  javac error
+    basket.add(new Mango());  //  javac error 
+
+   }
+
+Here , basket could be List<Apple> or List<Fruit> or List<Object>
+
+So you can safely add Apples, because any supertype can hold an Apple.
+ you can safely add FujiApple, because any supertype can hold an FujiApple
+ you can safely add IndianApple, because any supertype can hold an IndianApple
+
+9.4 But when basket is declared as List<? super Apple> what can I read from this List ?
+ 
+Fruit f = basket.get(0); // javac error 
+
+Why ?
+Javac only knows that technically  type of the List could be:
+- List<Apple>
+- List<Fruit>
+- List<Object>
+
+i.e one can ensure that type that you will get from here - Object
+
+When you do basket.get(0), what type can the compiler guarantee it will be?
+-  Only Object, because Object is the common supertype of all possibilities.
+
+This is Consumer Super 
+ Use Case 
+  - To add the elements in a type safe manner 
+
+ - BUT read the elements only as Object.
+
+PECS - Producer extends Consumer super.
+? extends T is used for reading. You cannot add to this collection.
+
+? super T is used for writing. You can add elements, but reading is limited to Object or the known common supertype.
+
+Example of everything together -
+
+public static <T> void copy(List<? extends T> src, List<? super T> dest) {
+    for (T element : src) {
+        dest.add(element);
+    }
+}
+
+
+
+
+Additional reading for advanced Generic syntax -
+https://howtodoinjava.com/java/generics/java-generics-what-is-pecs-producer-extends-consumer-super/ 
+
+https://medium.com/@isuru89/java-producer-extends-consumer-super-9fbb0e7dd268

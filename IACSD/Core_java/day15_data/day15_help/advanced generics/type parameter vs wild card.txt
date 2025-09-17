@@ -1,0 +1,93 @@
+? is called a wildcard in Java generics.
+It means “some unknown type” — but you can still constrain it with extends (upper bound) or super (lower bound).
+
+Unlike T, you don’t name the type, so you can’t declare variables of that type inside your method.
+
+2. Key Features of ?
+a) Unbounded Wildcard (?)
+
+Just means “any type”.
+
+void printList(List<?> list) {
+    for (Object o : list) {
+        System.out.println(o);
+    }
+}
+
+
+Accepts List<String>, List<Integer>, etc.
+
+But you can’t add anything except null, because the actual type is unknown.
+
+b) Upper-Bounded Wildcard (? extends T)
+
+Means “some unknown subtype of T”.
+
+Useful when the collection is a producer (you read values out).
+
+void readFruits(List<? extends Fruit> fruits) {
+    for (Fruit f : fruits) {   //  safe to read as Fruit
+        f.taste();
+    }
+    // fruits.add(new Apple()); javac error !
+}
+
+c) Lower-Bounded Wildcard (? super T)
+
+Means “some unknown supertype of T”.
+
+Useful when the collection is a consumer (you put values in).
+
+void addApples(List<? super Apple> basket) {
+    basket.add(new Apple());   //  safe to add Apple
+    Object obj = basket.get(0); // works
+}
+
+3. Difference from T
+
+T is a type parameter with a name -> compiler knows it consistently throughout the method.
+
+? is just a placeholder -> compiler only enforces bounds.
+
+? supports super, but T does not.
+
+4. The PECS Rule
+
+Joshua Bloch’s Effective Java book -  famous rule:
+
+Producer Extends -> If a collection produces values for you(i.e you are going to get the values from this collection):  use ? extends T.
+
+Consumer Super -> If a  collection consumes values from you(i.e you are going to add the values to this collection):  use ? super T.
+
+Example:
+
+void copy(List<? extends Number> src, List<? super Number> dest) {
+    for (Number n : src) {
+        dest.add(n);
+    }
+}
+
+
+src produces numbers -> ? extends Number.
+
+dest consumes numbers -> ? super Number.
+
+5. How to Explain Simply
+
+? = “some type, I don’t care what exactly”.
+
+? extends T = “T or some subtype of T (safe to read values as T)”.
+
+? super T = “T or some supertype of T (safe to write T into it)”.
+
+If you need to refer to the type multiple times -> use T.
+
+If you only care about “read/write” rules -> use ?.
+
+
+ So the clean way to say it in formal manner   is:
+
+"? in generics is a wildcard that means 'some unknown type'.
+Use ? extends T when you only want to read values as T.
+Use ? super T when you only want to write values of type T.
+If you need to use the type consistently in multiple places, give it a name with <T>."

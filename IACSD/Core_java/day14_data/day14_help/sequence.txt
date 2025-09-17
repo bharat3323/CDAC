@@ -1,0 +1,92 @@
+1. Any doubts / questions 
+SMS
+Display all student by course
+
+ students : ArrayList<Student>
+
+sop("Enter course name");
+Course course=Course.valueOf(sc.next().toUppercase());
+for(Student s : students)
+{
+ if(s.getCourse()==course)
+  sop(s);
+}
+
+2. What will happen ?
+
+List<Integer> list=new ArrayList<>();
+list.add(10);list.add(20);list.add(30);list.add(40);list.add(50);
+Iterator<Integer> itr=list.iterator();
+list.set(0,100);
+while(itr.hasNext())
+ sop(itr.next());
+ - no error ! o/p [100,20,30,40,50]
+
+3. What will happen ?
+
+List<Integer> list=new ArrayList<>();
+list.add(10);list.add(20);list.add(30);list.add(40);list.add(50);
+Iterator<Integer> itr=list.iterator();
+list.add(0,100);
+while(itr.hasNext())
+ sop(itr.next()); //ConcurrentModificationException
+
+4. Solve
+Display the accounts sorted as per account type & balance:int (custom ordering with anonymous inner class)
+eg . 
+Collections.sort(acctList,new Comparator<BankAccount>()
+{
+  @Override
+  public int compare(BankAccount a1,BankAccount a2) {
+    int ret=a1.getType().compareTo(a2.getType());
+    if(ret==0) {
+      return ((Integer)a1.getBalance()).compareTo(a2.getBalance());
+    }
+    return ret;
+  }
+}
+);
+Display using for-each 
+
+
+Can you use anonymous inner class , to extend from abstract as well as concrete super class ? 
+ - YES 
+eg : Fruit may be abstract or concrete (it works in wither case )
+new Fruit() {
+ @Override
+ public void taste() {....}
+}
+
+
+5. Enter Sets
+Set Features
+Different Types of Sets
+Hashing Algorithm
+The contract 
+
+While adding any element to any hashing based data structure(eg. HashSet , LinkedHashSet,HashMap, LinkedHashMap....) 
+The type of the element (or type of Key in Maps) MUST follow the contract.
+1. Mandatory part - for the correct working 
+Same objects MUST produce same hash code.
+(i.e if e1.equals(e2) -> true , then e1.hashCode() = e2.hasCode())
+
+2. Optional BUT RECOMMENDED
+Different objects SHOULD produce different hash codes (to ensure constant time performance O(1) for CRUD + searching operations)
+
+HOW ?
+1. Identify UID field/s & use them in overriding equals
+2. Using the SAME fields , ooverride hashCode.
+
+Object class API
+public int hashCode()
+- Return the address of the object in the heap.
+- hash function
+
+What is hashing ?
+ - Conversion from arbitrary sized data -> fixed size (typically an int)
+Use cases -
+1. Used in most of data structures for O(1)
+2. Used in Security (eg - password encryption)
+ SHA-256, SHA-512 ....
+
+
