@@ -1,0 +1,94 @@
+
+1. AL<? extends Emp> list = ????
+What all are legal options of RHS ?
+1. AL<Emp> : 
+2. AL<Mgr>
+3. AL<Worker>
+4. AL <SalesMgr>
+5. AL <Object>
+6. AL<Fruit>
+7. AL<Vehicle>
+Ans : 
+
+
+2. AL<? super Mgr> list = ????
+What all are legal options of RHS ?
+1. AL<Emp> : 
+2. AL<Mgr>
+3. AL<Worker>
+4. AL <SalesMgr>
+5. AL <Object>
+6. AL<Fruit>
+7. AL<Vehicle>
+Ans : 
+
+3. Solve (What will happen) - javac error or no error ?
+Given : Emp hierarchy
+Emp e =new Mgr(...);
+e=new Worker(...);
+List<Emp> emps=new ArrayList<>();
+emps.add(new Mgr(...));
+emps.add(new TempWorker(...));
+Ans - 
+
+4. Solve (What will happen) - javac error or no error ?
+
+ArrayList<Emp> emps=new ArrayList<Mgr>();
+ArrayList<Object> emps=new ArrayList<Mgr>();
+List<Emp> emps=new Vector<Worker>();
+emps=new LinkedList<SalesMgr>();
+
+
+
+5. Solve 
+List<?> anyList;
+anyList=new ArrayList<Mgr>();
+anyList=new Vector<Worker>();
+anyList=new LinkedList<SalesMgr>();
+anyList=new HashSet<>();
+anyList=new Vector<Fruit>();
+
+
+6. solve - 
+public static  void test1(List<? super Mgr> collection, Mgr... mgrs) {
+		for(Mgr e : mgrs)
+			collection.add(e);	
+}
+
+In the Tester - 
+List<Mgr> mgrs=new ArrayList<>(List.of(new Mgr(1000), new Mgr(2000)));
+GenericUtils.test1(mgrs, new Mgr(4000), new Mgr(5000));
+System.out.println(mgrs);
+
+
+IMPORTANT- 
+As per PECS - when any Collection acts as the consumer (i.e you want to add the elements to it) -user super keyword
+eg - ? super T
+Which type of elements can be actually added to this collection  - T or its sub types.
+If you try to retrieve the elements - ret type will : Object type of reference.
+
+
+? extends T - Collection acts as the producer(i.e you can only get the elements from it)
+The only element you can add to this collection - null
+
+
+7. Sove
+Fruit f=new Mango();
+f.taste();
+((Mango)f).pulp();
+
+Mango m=new Fruit();
+Mango m2=(Mango)new Fruit();
+
+
+
+
+
+
+
+
+
+
+
+
+

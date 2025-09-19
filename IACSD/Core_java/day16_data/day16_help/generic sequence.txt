@@ -1,0 +1,209 @@
+1. Arrays are covariant: Manager[] can be treated as Employee[] (but that leads to runtime exceptions - ArrayStoreException).
+
+2. Some interesting | confusing  question - what will happen ?
+List<Emp> emps=new ArrayList<>();
+1. emps.add(new Emp());
+2. emps.add(new Mgr());
+3. emps.add(new Worker());
+4. emps.add(new SalesMgr());
+5. emps.add(new Object());
+Ans - 1-4 legal , 5 -  javac error
+
+
+3. Collections are invariant: List<Manager> is not a List<Employee> — the compiler blocks it to prevent mixing. 
+
+If this was  allowed by the compiler , you will happily add a worker to it w/o javac error & code will fail @ run time
+
+Reason  :  To keep collections type-safe at compile time, Java enforces invariance.
+
+Example :
+class Employee {}
+class Manager extends Employee {}
+class Worker extends Employee {}
+
+Now suppose Java allowed covariance for generics:
+
+List<Manager> managers = new ArrayList<>();
+List<Employee> employees = managers;  //javac error ! BUT  SUPPOSE compiler allowed this
+
+Unsafe operation 1: Inserting wrong type
+employees.add(new Worker());  // allowed because employees is List<Employee>
+
+
+But managers was supposed to hold only Managers.
+Now the same list contains a worker !
+Type safety broken!!!!!!
+
+Manager m = managers.get(0);  // runtime ClassCastException (since it is a Worker !)
+
+Summary -   To keep collections ,  type-safe at compile time, Java enforces invariance.
+
+4. Example of invariance
+public static void testMe(List<Emp> emps)
+{....}
+Which of the options below are legal , for the method invocation?
+
+1. ArrayList<Emp>
+2. LinkedList<Mgr>
+3. Vector<Worker>
+4. HashSet<Emp>
+
+Ans - 1
+
+
+5. Type Erasure - 
+Generics in Java are a compile-time feature only. The compiler enforces type safety, but after compilation, the generic types are erased -> replaced with their bounds (Object if unbounded).
+
+List<String> list1 = new ArrayList<>();
+list1.add("one");
+String s = list1.get(0);
+
+What will it be after type erasure done by javac ?
+List list1 = new ArrayList();
+list1.add("one");
+String s =(String) list1.get(0);
+
+
+
+Revision Over 
+
+Enter wild card in generics
+ - ?
+- Represents ANY un known type
+- To offer flexibility with generic collections.
+- It is replaced by Object , during type erasure
+- Offers un bounded flexibility !
+
+eg . List<Object> objects=new ArrayList<Emp>();//javac error !
+ List<?> anyList=new ArrayList<Emp>();//no javac error
+anyList=new LinkedList<Fruit>();//no javac error
+anyList=new Vector<>();//no javac error
+
+
+1. Write a static method in a non generic Utils class 
+ - to display elements of any Set | List
+Test Cases - HashSet<Mgr> , LinkedList<String> , TreeSet<Double>
+ 2. For more practice 
+  - Collections.shuffle
+
+
+Bounded Wildcards
+extends - upper bound (used in co variance - super type replaced by sub type - narrowing)
+super - lower bound (user in contra variance - sub type replaced by super type - widening)
+
+? - can be replaced by ANY type
+? extends T - can be replaced by T or any of it's sub type
+Use case - Any time , you want to access the collection (i.e get elements from the collection) , use "extends"
+collection acts as a Producer of elements .
+eg - public ArrayList<E> (Collection <? extends E> collection)
+E - BankAccount
+
+It creates a populated ArrayList<BankAccount> 
+ - from ANY Collection (any List | Set)
+- from data type - BankAccount or it's sub type
+
+ArrayList API
+public boolean addAll(Collection<? extends E> collection)
+E - Emp
+ArrayList<Emp> emps=........
+What all you can use as the argument of addAll ?
+- AL | LL | Vector | HS|LHS |TS
+ - Emp | Mgr | SalesMgr |Worker |TempWorker .....
+
+collection - is acting as a Producer (i.e the refs from this Collection are appended to this ArrayList)
+Producer - extends
+
+
+Collections class API
+ - public static boolean addAll(Collection<? super T> collection, T ... elements)
+ - It allows to add var no of elements of type T or sub type 
+ to any Collection of type T or its super type.
+- Here Collection is acting as Consumer
+ - Consumer - super
+eg - Add mangoes(or its sub type) to your fruit basket
+Collections.addAll(List | Set -  Mango | Fruit | Object     , Mango ... mangoes)
+
+Solve
+- Create a method to copy collection of elements from source collection  to destination collection
+Hint - use PECS here.
+(Producer extends Consumer super)
+public static void copy(Collection<? extends T> src,Collection<? super T> dest)
+{
+  for (T element : src)
+   dest.add(element);
+}
+
+? super T - can be replaced by T or any of it's super  type
+Use case - Any time , you want to add elements to  the collection  use "super"
+collection acts as a Consumer of elements .
+- supplies contra variance 
+
+There is no "implements" keyword generics
+eg - For sorting the elements using natural ordering , what is required ?
+Type of elements MUST implement - Comparable i/f
+How to impose this rule in generics ?
+T extends Comparable
+=> T must be implementation class of Comparable
+
+
+eg . Collections class API
+public static <T extends Comparable<? super T>> void sort(List<T> list)
+
+eg - Collection.sort(acctList);//List<BankAccount>
+Rule - BankAccount MUST imple. Comaparable of type BankAccount | Object
+
+eg . T extends Employee & Comparable & Serializable
+=>T can either Employee or its sub type
+ - must implements Comparable & Serializable
+ -othewise javac error !
+
+
+2. Look at 
+ArrayList - addAll method
+Collections.addAll
+Understand - ? extends super keypword in generics 
+
+Solve -
+T : Emp 
+AL<? extends Emp> list = ????
+What all are legal options of RHS ?
+1. AL<Emp> : 
+2. AL<Mgr>
+3. AL<Worker>
+4. AL <SalesMgr>
+5. AL <Object>
+6. AL<Fruit>
+7. AL<Vehicle>
+Ans :
+
+Solve -
+T : Emp 
+AL<? super SalesMgr> list = ????
+What all are legal options of RHS ?
+1. AL<Emp> : 
+2. AL<Mgr>
+3. AL<Worker>
+4. AL <SalesMgr>
+5. AL <Object>
+6. AL<Fruit>
+7. AL<Vehicle>
+Ans :
+
+Solve for more practice - 
+Write a static method in a non generic Utils class 
+ - to display taste of all fruits from the fruit basket , represented by a List
+Test Case - ArrayList<Apple>  , LinkedList<Orange> , Vector<Mango>
+
+3. Write a static method in a non generic Utils class 
+ - to get sum of all numbers(integer | double | float | byte ..), stored in the Set .
+Test cases - HashSet<Integer> , LinkedHashSet<Double> , TreeSet<Long>
+OR
+3. Write a static method in a non generic Utils class 
+ - to get sum of salaries of employees stored in the Set .
+Test cases - ArrayList<Manager> , LinkedList<Woker> 
+
+4. Write a static method in a non generic Utils class , which can add ONLY Mangoes(i.e Mango , Alphonso,Kesar ...)  to a fruit basket: List
+ 
+
+ 
+

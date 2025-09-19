@@ -1,0 +1,65 @@
+Generics Question
+
+ 1. Given  
+public class Fruit{}
+public class Melon extends Fruit{}
+public class WaterMelon extends Melon{}
+
+Which of the following, will be legal ?
+
+1.List<? extends Fruit> fruits=new ArrayList<Fruit>();
+2.List<? extends Fruit> fruits=new ArrayList<Melon>();
+3.List<? extends Fruit> fruits=new LinkedList<WaterMelon>();
+4.List<? extends Fruit> fruits=new Vector<Object>();
+5.List<? super Melon> melons=new ArrayList<Fruit>();
+6.List<? super Melon> melons=new LinkedList<>();
+7.List<? super Melon> melons=new LinkedList<WaterMelon>();
+
+2. 
+Given  
+public class Fruit{}
+public class Melon extends Fruit{}
+public class WaterMelon extends Melon{}
+
+Which of the following, will be legal ?
+Help : API of Collection i/f : boolean addAll​(Collection<? extends E> c)
+
+1. List<Melon> melons=new ArrayList<>();
+2. HashSet<Fruit> fruits=new HashSet<>();
+3. LinkedList<WaterMelon> wMelons=new LinkedList<>();
+4. melons.addAll(fruits);
+5. melons.addAll(wMelons);
+6. fruits.addAll(melons);
+7. fruits.addAll(wMelons);
+8. wMelons.addAll(fruits);
+9. wMelons.addAll(melons);
+Ans - 1,2,3,5,6
+
+
+3. Differentiate between
+API of Collection i/f 
+- boolean addAll​(Collection<? extends E> c)
+c - src | Producer => extends => co variance 
+vs 
+API of Collections class - non generic class
+public static <E>  boolean addAll(Collection<? super E> collection , E ... elements) 
+why super keyword is used instead of extends
+E - Emp
+
+Collections.addAll (List<Emp> empList , e1,e2,e3);
+Collections.addAll (List<Emp> empList , m1,m2,m3);
+E - Mgr
+Collections.addAll (List<Mgr> mgrs , sm1,hrm2,rndm3);
+
+Collections.addAll (List<Mgr> mgrs , e1,e2,e3);
+
+
+
+
+
+
+
+
+
+
+

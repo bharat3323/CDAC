@@ -1,0 +1,119 @@
+Today's topics
+1.	Revise Functional Interfaces , lambda expressions & continue with Java 8 Functional Streams
+
+Regarding Optionals
+- Many terminal operations in Stream API 
+(eg. average , min , max , findAny, findFirst.....)
+ return the result of the type Optional
+
+In DoubleStream i/f
+OptionalDouble average()
+- Returns an Optional hodling a double value.
+
+What is it 
+java.uti.OptionalDouble 
+- A class that represents a container , which may or may not hold a value
+It's API
+-public boolean isPresent() - returns true , in case of non empty container
+- public double getAsDouble() 
+  - return a double value if present , otherwise throws NoSuchElementException , with error message - No Value Present
+Better alternative to - isPresent + getAsDouble
+double orElseThrow() 
+ - return a double value if present , otherwise throws NoSuchElementException , with error message - No Value Present 
+
+Best possible option - instead of raising system exception , throw custom exception , with clear error message
+
+double orElseThrow(Supplier exceptionSupplier) 
+- return a double value if present , otherwise throws specified exception.
+Supplier - functional i/f
+SAM - public T get()
+
+2.	Enter IO (java.io)
+-	Types of I/O streams
+-	File Handling with buffering
+
+
+Objectives
+1.	Create int[] , attach stream , display elements of the stream
+2.	Get  product list ,  attach stream , display its contents 
+-	Sequential access
+-	Parallel access
+3.	Create stream of ints between 1-100 & display all even elements.
+4.	Display all the products with specified category & price > min price
+5.	Display sum of all odd numbers within some range
+6.	When will you get – IllegalStateException ?
+7.	Display sum of prices of all the products in a map from the specified category
+8.	Display name of the least expensive product from specified category
+9.	Display average of prices of all the products in a map produced after specified date
+10.	Display name of most expensive product in the shop
+
+ 
+
+3. Enter Java I/O(Input / Output)
+Java supports handling of different devices
+eg : Keyboard(System.in), Console(System.out), File(text file n bin files) ,networking Sockets(end point of communication in distributed computing) , Pipes(virtual data pipe existing between multiple threads) etc.
+I/O Streams
+They represent data transfer to/from Java app n device
+Input stream : Reads data from device --> Java App
+Output stream : Writes data from Java App --> device
+The packages used for handling devices in Java : java.io, java.nio
+java.io : In case of any errs in read/write operation ---JVM throws : java.io.IOException
+(checked exc)
+read/write methods :blocking or non blocking ? : Represents blocking API
+Meaning : It causes the blocking of invoker thread , until read/write operation is complete.
+Inheritance hierarchy of classes in java.io
+refer : to a diagram
+
+I/O Stream -- represent data transfer (bytes/chars) from/to java app to/from device(eg : file , pipe,socket,memory,console...)
+For  reading data from data source into java  application : input stream
+For  writing data to data sink from java  application :output stream
+
+The package java.io contains - 2 types of strms
+1. Binary strms
+2. char strms
+4 abstract super classes in I/O hierarchy :  InputStream,OutputStream,Reader,Writer
+Node streams : device handling streams
+
+Buffering strms : Provides buffering (storing) of data
+
+Conversion streams
+
+Objective : 
+0.	Read data from the text file using buffer , till EOF , print it on the console
+
+1. copy text files using buffered streams
+i/p : src n dest file names
+API
+1. FileReader Constructor 
+FileReader(String fileName) throws FileNotFoundException
+
+2. BufferedReader Constructor
+BufferedReader(Reader r)
+BufferedReader(Reader r,int size)
+To chain the I/O streams for reading text data , in a buffered manner :
+BufferedReader br=new BufferedReader(new FileReader(fileName));
+Methods of BufferedReader  
+1. public String readLine() throws IOException
+Tries to read next line of data from the buffer.
+Returns null at the end of stream (buffer) condition.
+OR use Functional Programming
+2. public Stream<String> lines()
+Returns a Stream, the elements of which are lines read from this BufferedReader.
+
+API 
+1. FileWriter constructor
+FileWriter(String fileName) throws IOException
+It will create a new file if none exists or replaces the existiing file
+
+2. FileWriter constructor
+FileWriter(String fileName,boolean append) throws IOException
+It will create a new file if none exists or appends to existing file if append=true
+
+3. PrintWriter constructor
+PrintWriter(Writer w)
+Creates a new Printwriter , with a default size buffer.
+4. Methods of PrintWriter
+print , println , printf methods
+(similar to java.io.PrintStream)
+
+

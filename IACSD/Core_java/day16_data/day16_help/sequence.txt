@@ -1,0 +1,90 @@
+Today's topics
+1.	Revise advanced generic syntax
+2.	Default and static methods
+3. Functional interface ,  lambda expressions , 
+4. Default , static methods
+5. Java 8 Streams
+
+1. Refer - 
+"generic sequence.txt"
+
+2. Refer "java8_new_features.txt"
+
+
+3.	Enter functional programming
+3.1 Functional Interface
+3.2 What is Functional programming ?
+It is a style of programming 
+-	where Programmer  has to only specify : WHAT is to be done 
+In the imperative style(traditional style) 
+-	 WHAT + HOW has to be  specified by the programmer.
+Refer to Readme.
+4. Lambda expression
+(Anonymous function)
+syntax of lambda expression in Java 
+(arg list) -> {body}
+eg : s -> System.out.println(s)
+
+IMPORTANT : Can functional interface be substituted by lambda expression ? YES
+Since Functional i/f exposes SINGLE abstract behavior -that will be replaced by a lambda expression
+Objective – 1. Create functional interface n assign it to a lambda expression.
+
+2. Explore Existing higher order functions/methods
+
+Solve :  
+1.
+Display all integers from the integer list
+API :  Iterable interface -  forEach method
+public static void forEach(Consumer<? super T> action)
+Consumer is a  functional interface
+SAM : public void accept(T arg)
+T : Product | Student | Integer 
+Replace this SAM – by lambda expression
+Consumer<Integer> intConsumer=t -> sop(t);
+list.forEach(intConsumer);
+OR can directly pass lambda 
+List.forEach(t -> sop(t));
+
+
+2. Display all Products
+
+2.1 Increase the prices of all products by specified amount
+n then display list again
+3. Remove all the products of a specific category
+Collection : removeIf
+
+3.1 Remove all the products with pricee < specific price
+4. 
+Display all products (from a product map)
+Ans this 
+Is Map Iterable ? 
+Can you attach DIRECTLY a for-each loop to the map ? 
+Then how ?
+
+4. Sort the products from the list , as per balance in desc order (use  custom ordering)
+How ?
+5 Use Function literal
+Function literal is to assign anonymous function definition(i.e a lambda expression) to a variable.
+It adds simplicity / readablity to the code.
+6. Using above API(higher order funcs) , can you chain multiple operations like sorting & displaying the sorted data ? 
+OR
+Filter the elements n display filtered list.  
+
+2. Enter Java 8 Functional Streams
+Refer to <streams> : diagrams
+collections vs streams n streams basics
+Refer to "streams_sequence"
+Objectives
+1.	Create int[] , attach stream , display elements of the stream
+2.	Get  product list ,  attach stream , display its contents 
+-	Sequential access
+-	Parallel access
+3.	Create stream of ints between 1-100 & display all even elements.
+4.	Display all the products with specified category & price > min price
+5.	Display sum of all odd numbers within some range
+6.	When will you get – IllegalStateException ?
+7.	Display sum of prices of all the products in a map from the specified category
+8.	Display average of prices of all the products in a map from the specified category
+9.	Display name of most expensive product in the shop
+10.	Collect products ids in another list from products in the Map
+

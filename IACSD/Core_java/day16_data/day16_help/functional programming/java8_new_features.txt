@@ -1,0 +1,75 @@
+1. Addition of "default" keyword to add default method implementation ,  in interfaces.
+
+Java 8 onwards allows us to add non-abstract method implementations to interfaces by using the default keyword. This feature is also known as Extension Methods. 
+
+Why default keyword ?
+1. To maintain backward compatibility with earlier Java SE versions
+2. To avoid implementing new functionality in all existing implementation classes.
+eg : Java 8 added in Iterable<T> interface
+default void forEach(Consumer<? super T> action) -- as a default method implementation
+
+eg :
+
+interface Formula {
+    double calculate(double a);//public n abstract : added implicitly by javac
+	//public : added implicitly by javac
+    default double sqrt(double a,double b) {
+        return Math.sqrt(a+b);
+    }
+}
+
+Implementation classes can either inherit this default implementation OR if needed , can override the same.
+
+In case of ambiguity (due to duplicate default method implementation)
+-Javac forces the overrriding of the default method .
+ To refer to default implementation  from i/f -- use InterfaceName.super.methodName(...) syntax
+
+2  Can add static methods in java interfaces --- It's a better alternative to writing static library methods in helper class(eg --Arrays or Collections)
+
+Such static methods can't be overridden in implementation class.
+BUT can be re-declared.
+
+They have to be invoked using interface name , even in implementation or non implementation classes.(otherwise compiler error)
+
+eg :
+
+interface Formula {
+    double calculate(double a);//public n abstract : added implicitly by javac
+	//public : added implicitly by javac
+    default double sqrt(double a,double b) {
+        return Math.sqrt(a+b);
+    }
+//javac adds implicity : public
+    static boolean testMe(String mesg)
+    {
+      //some imple. logic
+    }
+}
+
+
+3. Functional interfaces ---An interface which has exactly single abstract method(SAM)  is called functional interface.
+eg Runnable,Comparable,Comparator,Iterable,Consumer,Predicate...
+New annotation introduced -- @FunctionalInterface
+(since Java SE 8)
+Added a new package : java.util.function -to store functional i/fs.
+
+Functional i/f references can be substituted by lambda expressions, method references, or constructor references.
+
+
+Solve --  Is following valid functional interface ?
+public interface A { double calc(int a,int b);}  
+public interface B extends A {} 
+public interface C extends A { void show();} 
+public interface D {}  
+public interface E extends A {default void show(){sop("in show");}
+static void test() {sop("in test");}
+} 
+
+4. Lambda Expressions
+
+Objective -- Perform add/subtract/multiply/divide ...  operations on 2 double i/ps 
+& return result.
+
+How ?
+
+refer to readme of lambda expressions.
