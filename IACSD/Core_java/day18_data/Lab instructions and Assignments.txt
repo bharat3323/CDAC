@@ -1,0 +1,951 @@
+Day 1
+1. Refer to "Installation Instructions" & complete the same.
+
+2. MUST go through "day1_help\day1_notes.rtf" and  from day1-data\day1_help
+\day1_notes 
+(only till whatever  we have covered)
+
+3. Go through  code samples from day1-data\code\src
+
+4. Solve (Hands on)
+
+4.0
+Accept 5 doubles from user (scanner)
+Print it's average.
+
+After creating PrintAverage.java (under day1_lab\src)
+Open cmd prompt from the same src folder
+To compile
+javac -d ..\bin PrintAverage.java
+cd ..\bin
+To run 
+java PrintAverage
+
+
+4.1 Write Java program - 
+Display food menu to user. User will select items from menu along with the quantity. (eg 1. Dosa 2. Samosa 3. Idli ... 0 . Generate Bill ) Assign fixed prices to food items(hard code the prices)
+When user enters 'Generate Bill' option(0) , display total bill & exit.
+
+OR
+Write Java program for the following - 
+It should  run till user enters any other option than add or sub or multiply or divide
+Prompt user to enter the input operation : (add|subtract|multiply|divide) & 2 numbers(double)
+Display the result of the operation.
+Use Scanner for accepting all inputs from user. 
+Hint : use switch-case
+
+5. Reading home work 
+Please read 
+"day 1\day1_help\day1_notes.pdf"
+
+
+
+Day 2
+
+1. MUST revise from today's sequence , day2.pdf  & mainly from 
+-  day2-data\code
+1.1 Revise :  mem pics for Java data areas(stack,heap,method area),
+1.2 Garbage collection introduction
+
+1.3 
+ Solve this (Discuss memory picture)
+Given : Box class is compiled.
+In main method  of TestBox
+Box b1=new Box(1,2,3);
+b1++;
+Box b2=b1;
+b1=new Box(3,4,5);
+//any objects marked for garbage collection ? how many ? 
+Box b3=b1;
+b2=new Box(4,5,6);
+//any objects marked for garbage collection ? how many ?
+
+
+2. Solve Tank assignment along with memory picture.
+
+What will be the output ?
+
+class Tank {
+  private int level;
+  Tank(int l)
+   {
+     level=l;
+   }
+  public void setLevel(int level1)
+  {
+    level=level1;
+  }
+  public int getLevel()
+  {
+    return level;
+  }
+}	
+
+public class Assignment {
+  public static void main(String[] args) {
+    Tank t1 = new Tank(10);
+    Tank t2 = new Tank(20);
+     s.o.p("1: t1.level: " + t1.getLevel() +
+          ", t2.level: " + t2.getLevel());
+    t1 = t2;
+    s.o.p("2: t1.level: " + t1.getLevel() +
+          ", t2.level: " + t2.getLevel());
+    t1.setLevel(27);
+     s.o.p("3: t1.level: " + t1.getLevel() +
+          ", t2.level: " + t2.getLevel());
+    t2.setLevel(t1.getLevel()+10);
+     s.o.p("4: t1.level: " + t1.getLevel() +
+          ", t2.level: " + t2.getLevel());
+  }
+}
+Are there any objects marked for GC ?
+
+3. What will happen (solve ready code samples : along with mem pics )
+day2-data\day2_help\params_passing
+3.1 TestParamPassing1.java
+3.2 TestParamPassing2.java
+
+4. Hands on
+
+Create a  class Point2D   for representing a point in x & y(int) co-ordinate system.
+(Tight encapsulation please !)
+
+4.1 Create a parameterized constructor to accept x & y co-ords.
+
+4.2 Add  show() method  --to return point's x & y co-ords
+
+
+4.3 
+Add a non static  , isEqual method to Point2D class : boolean returning method : must return true if both points are having same x,y co-ords or false otherwise.
+Hint - Ask yourself - 
+How will you invoke it from the tester ?
+Hint 
+In Tester
+
+Point2D p1=new Pont2D(....);
+Point2D p2=new Pont2D(....);
+sop(p1 +" "+p2);
+boolean status=p1.isEqual(p2);
+
+
+In Point2D class
+- x,y
+constructor
+//method declaration - isEqual
+//this=p1 , anotherPoint=p2
+boolean isEqual(Point2D anotherPoint)
+{
+ sop(this);
+ sop(anotherPoint);
+ return (this.x==anotherPoint.x) && (this.y==anotherPoint.y);
+}
+
+4.4 
+Add a non static method , calculateDistance , to calc distance between 2 points
+Hint : use distance formula.
+
+Hint - Ask yourself - 
+How will you invoke it from the tester ?
+
+
+4.5  Create a separate Driver(main)  class(for UI )  , "TestPoint" , with main(..)
+
+4.6  Accept x,y co-ordinates for 2 points & store the co-ordinates
+4.7  Display x,y co-ordinates of both of the points plotted  (using show() method)
+
+4.8  (OPTIONAL WORK)
+Find out if the points  are same or different (Hint : isEqual)
+
+Print the message accordingly. (print SAME or DIFFERENT)
+If points are not same , display distance between these 2 points.
+
+
+Day 3
+1. Complete Pending work.
+
+2. Refer to today's sequence  & notes (pdf) 
+-  to revise access specifiers , packages ,  classpath , arrays
+
+3. This assignment has to be done without IDE
+
+3.1 Modify yesterday's Point2D's assignment 
+Re factor (modify) & add Point2D class under the package - com.developers.geometry
+Add TestPoint class under the package - com.tester
+
+3.2 Make necessary changes , to remove compilation errors.
+(How to compile ?
+Compile from src
+javac -d ..\bin com\tester\TestPoint.java
+)
+
+3.3 To run the class ,
+cd ..\bin
+How will you run it ?
+java com.tester.TestPoint
+
+2.4 How will you ensure that user should be able to run com.tester.TestPoint class from anywhere?
+Hint - set CLASSPATH
+java -cp 
+OR 
+set classpath : as environment variable.
+
+
+4. Start the IDE (STS 4.30 : Eclipse IDE with Spring plug in)
+Use workspace as the same <code> folder
+
+4.1 Edit JRE
+Window -> Preferences -> Type JRE in search box -> Installed JREs -> Choose JDK 21
+(Refer to - "day3-data\help\day3_help\diagrams\screenshot-1.png")
+
+4.2 Import day3_ide , in your workspace , to revise 
+- arrays of primitive type & array of references
+- for-each loop
+- for vs for-each loop
+
+How to import existing project in Eclipse IDE ?
+File -> import -> General -> Existing project from Workspace 
+-> Browse to project folder -> check the check box : Copy project in the workspace  -> Finish.
+(refer - screenshot-2.png)
+
+5. Can you use for-each loop , to double box widths for the boxes having volume < 100 ? 
+
+
+6. Optional assignment - Do it in IDE
+
+6.1 Copy  earlier Point2D class .
+
+6.2    Create a driver / tester   class(for UI)  , in the "tester" package "TestPoints" , with main(..)
+
+1. Prompt user , how many points to plot? 
+Create suitable array. (Hint : array of references)
+
+2. Show following options
+
+Options : 
+1. Plot a point
+Inputs : array index , x  ,y
+Check boundary conditions  & also check if some point is already plotted at the same index , if not then store the point details.
+In case of any errors , display suitable error message.
+
+2.   Display x,y co-ordinates of all the points plotted so far ,using for-each loop.
+
+0. Exit 
+
+
+
+Day 4 
+
+
+1. import day4.1 in your workspace.
+ 1.1  Refer to TestStatic.java , with day 3 pdf 
+        - to revise static keyword.
+ 1.2  Refer to TestConstrInvocation.java
+        - to revise constr invocation in multi level inheritance hierarchy.
+
+2.  import day4.2 in your workspace.
+ - Refer to Person , Student , Facult classes.
+ - revise super keyword (for super class constr invocation)
+ - method overriding
+ - Refer to testers
+  - Test1.java (direct referencing)
+  - Test2.java (indirect referencing) , up casting & dynamic method dispatch
+
+2.1 Complete pending tasks (complete optinal tasks of Day 3 first)
+
+3. Optional assignment for  Inheritance, Polymorphism, Casting (Bank Account System)
+By the end of this assignment, you will be able to
+- Apply inheritance to model real-world entities.
+- Use method overriding and polymorphism.
+- Perform upcasting , downcasting .
+
+Problem Statement
+
+A bank(eg HDFC)  offers support for creating  different types of accounts to its customers:
+
+Saving Account  -> applicable for earning interest.
+
+Current Account ->  allows overdraft facility.
+
+Bank Account (common parent) -> defines general features of all accounts.
+
+You are required to build a simple banking system using Java OOP concepts.
+
+Assignments
+Q1. Basic Inheritance
+
+Create a class BankAccount with:
+
+Fields: accountNumber (int), balance (double) , customer name (String) , phone number (String)
+
+Add suitable constructor
+
+Methods:
+
+deposit(double amount)
+
+withdraw(double amount) (should not allow negative balance by default)
+
+getAccountSummary() - returns complete details of the account , in string format
+
+getBalance() - returns account balance.
+
+Create subclasses:
+
+SavingAccount -> add interestRate field and method applyInterest().
+
+CurrentAccount ->  add overdraftLimit field and method useOverdraftFacility().
+
+SavingAccount -> should not allow any negative balance in  withdraw operation .It should fail in such case.
+
+CurrentAccount -> should  allow any negative balance, in withdraw operation .It should not fail till it exceeds the overdraft limit. After overdraft limit is exceeded then withdraw operation should fail.
+
+
+Task: Write a TestBanking class , with main() that creates one saving and one current account, performs deposits and withdrawals, and prints account summary.
+You can hard code the values (no need to add Scanner today !)
+
+
+
+Day 5
+
+1. import day5.1 in your workspace
+1.1 Open EventOrganizerApp.java
+ - Trace the flow , line by line , to revise array of references , inheritance , upcasting , downcasting & instanceof checking
+
+
+1.2 IMPORTANT
+If you are still not comfortable with building new logic , you can solve Event Organizer assignment , on your own from scratch.
+
+- Problem statement
+ - Create Menu based Java application  , to organize an event  for  Students , Faculties (later can add Guest Speaker , Center Head , Alumni etc....)
+
+Initially solve 1-4 options.
+
+1. Prompt user for the event capacity.
+2 Create suitable data structure to hold the participant details
+3 Options
+1. Register Student -
+i/p : student details
+
+2. Register Faculty -
+i/p : faculty details
+
+3. Display all participant details (use  for-each)
+
+4. Display specific participant details
+i/p : seat no
+
+5. Student Evaluation By Faculty
+i/p : faculty seat no , student name , student grade (A+ , A , B+ , B , C+ , C)
+
+6. Feedback submission By student
+i/p : student seat no , faculty name, feedback comment
+
+0. Exit
+
+
+
+
+2. Try n solve Banking assignment
+- refer to assignment help
+
+
+Optional Work - 
+Run time Polymorphism with Upcasting
+
+Write a Tester - TestBank
+Given - This bank can support max accounts = 100.
+
+Options
+1. Open Saving account
+User i/p - accountNumber , balance  , customer name  , phone number , interest rate
+
+2. Open Current account
+User i/p - accountNumber , balance  , customer name  , phone number ,overdraftLimit 
+
+3. Display account summary
+User i/p - account number
+
+4. Deposit
+User i/p - account number , amount
+
+5. Withdraw
+User i/p - account number , amount
+
+
+Day 6
+No new assignments !!!!!
+Please use this weekend to catch up with revision and pending work.
+
+Revise today's work first.
+1. import day6.1 
+ - Refer TestShapes.java 
+ - revise dynamic initialization of array .
+ - mainly why was downcasting & instanceof required.
+
+2. import day6.2
+ - Refer TestShapes.java 
+ - Revise abstract methods 
+ - Abstract class
+ - Notice the clean code , using abstraction.
+
+3. import day6.3 , to revise interfaces.
+ - Refer to TestPayments
+ - revise array of interface type of references (Payment[])
+ - revise upcasting , downcasting & instance of checking , in interface & implementation class examples.
+
+4. import day6.4 , to check
+ - Will there be a diamond issue , with multiple interfaces ?
+ (package p1)
+ - multiple inheritance with interfaces
+ (package p2)
+
+
+Day 7
+1. import day7.1 in your workspace.
+- Revise basics of exception handling
+ - including try , catch , finally , throw , throws , try-with-resources & custom exceptions
+
+2. Refer to the Banking assignment
+In the saving account class , you must be already checking for minimum balance condition (or balance < 0) right ?
+ - You are currently returning a boolean , indicating success or failure.
+ - Meaning you have to check status & change the flow of execution.
+- No more !!!!!
+
+Modify
+Problem Statement
+Your withdraw method should throw a custom exception
+ - InsufficientBalanceException
+ - Create it as a checked exception n throw this exception in case of the error.
+- This will help you to apply exception handling to banking scenario.
+- Take the reference of Vehicle Speed scenario.
+
+
+Day 8
+1. import day8.1 , to revise 
+ - immutable strings
+ - == vs equals
+ - literal vs non literal strings
+ - Go through important String class methods
+ - charAt,compareTo,contains,isEmpty , isBlank,copyValueOf,format,getBytes,toCharArray,toLowerCase,indexOf,lastIndexOf,split,replace,startsWith,endsWith,length,intern,trim,strip,stripLeading,stripTrailing
+
+- StringBuilder vs String
+- StringBuilder constructors & methods
+- trick questions
+
+
+-  revise
+ - Date / Time handling in Java
+ - java.util.Date class & its methods
+ - For parsing n formatting
+  - java.text.SimpleDateFormat & DateFormat class methods
+
+
+
+2. Hands on
+Refer to Day 5 Banking assignment.
+(It was array based , with different options - to open saving or current account account , show a/c summary , withdraw , deposit ...)
+
+In open account case (either saving or current)
+ - You are accepting account no from User.
+ - Add new validation rule.
+  - accounts with duplicate account no , should not get added.
+
+Hint -Override  equals method in BankAccount class.
+
+
+OR
+
+ When should be 2 bank accounts considered same ? if the account nos are same right ?
+ Test with Object's equals method
+ Any problem ?
+Solution ?
+
+
+Day 9
+
+1. import day8.1 in your workspace(you can delete earlier one .)
+Refer date_handling\Test2.java
+- to revise legacy API
+
+2. import day9.1 in your workspace
+2.1 Refer to package : date_time 
+ Test1.java
+- to revise modern API for date (LocalDate)
+
+2.2 Refer to package : enums
+ - Color.java , TestEnum.java
+- Refer to Color.jad (de compiled code)
+- Revise enums completely.
+
+2.3 Refer to package - wrappers
+Refer to - TestWrapper.java
+ - revise auto boxing ,auto un boxing , along with trick questions
+
+2.4 Refer to package : com.banking.core
+
+BankAccount.java
+Refer to package : com.banking.testing
+
+- TestEquals.java
+
+- TestEquals2.java
+
+Understand what is the use of @Override , instanceof & downcasting
+
+3. **Mandatory** hands on
+
+Refer to Day 5 Banking assignment.
+
+Create a Main class (Tester)
+
+Create BankAccount[] : accounts
+
+Add only 1 option (minimum requirement)
+
+* Open Saving Account
+* Accept account no. 
+* Invoke validation rule from BankValidations class.
+* In case of dup account no , the validation rule should throw the custom exception 
+-> delegate it to Tester --> handle it from Tester's : catch all block
+* Take lab faculty's help (if required !)
+
+Day 10
+
+Please follow all the instructions below
+
+1. import day10.1
+Revise Customer Management System (CMS) in top down manner
+1.1 Open TestCMS.java
+Trace the flow (use Ctrl + Mouse Click -> open implementation in IDE)  completely
+
+1.2 Revise 
+ - Service Layer
+ - ValidationRules 
+ - Custom Exception class
+ - Core classes (Customer & enum)
+
+
+1.3 Revise nested classes 
+- Refer "day10_data\day10_help\Java Nested Classes Overview.txt"
+
+1.4 import day10.2 
+- Refer to AnyHolder & Tester.java
+- Identify the dis advantages here !
+- try to draw memory picture of this code in Tester.
+
+1.5 Refer to 
+ - "day10_data \day10_help\Java Generics.txt" 
+ We will discuss it tomorrow , in detail .
+ 
+ 
+
+
+2. Hands on lab work
+Re factor , your banking assignment using these layers
+
+2.1 BankingTester
+2.2 BankingService
+- openSavingAccount 
+- openCurrentAccount
+2.3 BankingServiceImpl
+ - create bank account[].
+ - In opening account method - 
+  - invoke validation rules(call method of BankingValidations)
+   In case of success , create bank account & add its reference to the array.
+   Otherwise delegate the exception to the caller(Tester)
+ 
+3. BankingValidations
+ Add single method (preferably !) to call different validation rules.
+  Validation rules - 
+  - dup account no (has to based on equals)
+  - if its a saving account , initial balance > MIN BALANCE
+
+4. Custom exception
+
+5. Core classes 
+ - BankAccount
+(If you want , you can add a field accountType : enum - AccountType
+SAVING , CURRENT)
+
+
+Day 11
+
+1. import day10.2 ,
+Revise - Java Generics from 
+ - generics.AnyHolder.java & its Tester.java
+ - Refer - "day11_help\Java Generics.txt"
+
+2. import day11.1
+ Revise non static nested class & association
+ com.banking.core.BankAccount.java & com.banking.tester.TestBank.java
+ Refer - "day11_help\Regarding association.txt"
+
+3. Revise Collection Framework Overview
+ - From its pdf.
+ - "day11_help\Collection Framework\Collection Framework Overview.png"
+ -  "day11_help\Collection Framework\List Details.txt"
+
+  Code - lists.IntegerList.java
+
+4. IMPORTANT
+import day11_lab in your workspace
+We have started implementing Banking assignment , based upon ArrayList.
+ 
+Day 12
+1. import day12_cms in your workspace.
+ Trace the code flow from 
+ Tester -> Business Logic Layer (Service layer) -> Validation Rules
+ 1.1 Go through all of the options , to understand which API to use when.
+
+This is mandatory for everyone ! 
+I have attached in today's data 
+ - CMS management problem statement again.
+
+
+
+2. Solve banking assignment completely.(Mandatory)
+- Using the layers
+Tester - Service Layer - Validation Rules - Core classes , enums .
+Options
+1. Open account
+(You can add 2 separate options for saving & current)
+2. Withdraw
+3. Deposit
+4. Transfer funds 
+i/p - src account no , dest account no , transfer amount
+5.Close account
+i/p - account no
+
+6. Apply Interest to all saving accounts.
+
+7. Display phone numbers for customers with specified account type , having balance > specific value.
+i/p - account type , min balance .
+
+8. Try this
+Display the accounts sorted as per account nos.
+
+9. Delete all current accounts.
+
+0. Exit.
+
+
+Day 13
+1. import day13_cms 
+- revise soring options 
+ - Natural Ordering (Comparable)
+ - Custom Ordering (Comparator)
+ - Custom Ordering (Comparator) ,  Using  anonymous inner class.
+
+2. import day13.1
+ - revise Iterator & ListIterator
+
+3. Revise from Java Docs
+ - Fail Fast Iterators (from ArrayList docs)
+
+4. Hands on
+
+4.1 Display the accounts sorted as per account nos(natural ordering)
+4.2 Display the accounts sorted as per account type & balance (custom ordering with ano inner class)
+4.3 Display the accounts sorted as per customer dob & balance (custom ordering with ano inner class)
+4.4  Delete all  accounts with balance < specified balance.
+i/p - min balance.
+
+
+
+5. Optional work
+Using LinkedList 
+Create generic Queue<T> 
+- add , remove , print
+
+Stack<T>
+ - push , pop, print
+
+
+Day 14
+
+1. import day14_lab
+Refer - Product.java & TestProducts.java
+1.1 Given - 2 products are equal if & only if
+ *  - product id  is same.
+
+1.2 Add these products from TestProduct , in a HashSet.
+ Expected o/p 
+ - products - 1-4 should get added & 5th product should not get added
+ - ensure constant time performance.
+
+2. import day14_lab2
+Refer - Product.java & TestProducts.java
+2.1 Given - 2 products are equal if & only if
+   - product id  & category is same (composite criteria)
+
+2.2 Add these products from TestProduct , in a HashSet.
+ Expected o/p 
+ - products - 1,2,4,5  should get added & 3rd  product should not get added.
+ - ensure constant time performance.
+
+
+ In the individual labs 
+1. import day14.1 
+ - revise different type of sets.
+ - revise hashtable (internal data structure) & algorithm
+ - re hashing & load factor
+
+2. Complete pending work.
+
+Day 15
+1. import day15_cms
+ - Revise Map & HashMap API
+ - complete case study implementation (minus sort by values)
+
+2. import day15_generics
+ 2.1  Revise co variance of arrays . 
+How ?
+ Solve -  Write a static method to print contents of ANY array.
+First try with Object[] , identify dis advantages & replace it by T[] , with generic methods
+
+Solve - Usr Arrays.asList 
+ - to created fixed size List of Strings
+ - add duplicate strings .
+ - Create another data structure , which will remove these dups
+ - display the same.
+
+2.2 Confirm type erasure .
+How - Keep both methods in the Utils class 
+print(Object[]) & print (T[])
+ Observe & conclude.
+
+2.3 Revise invariance of Java collections
+How - Write a static method to print contents of ANY List
+Try first with List<Object> .
+Will it work ? NO - since List<Object> can't be substituted by List<Fruit> | List<Integer> | List<Emp?
+
+So what is the solution ?
+Try writing it as a generic method , with List<T> 
+- will work.
+
+2.4 Signinficance of "?"
+ - wild card in generic syntax.
+ - It can be substituted by ANY java type.
+ Try this in the tester
+ - Consider Fruit hierarchy (code supplied !)
+List<Fruit> fruits;
+List<Apple> apples=new ArrayList<>);
+fruits=apples;
+List<Object> objects;
+objects=apples;
+What will happen ?
+List<T> someList;
+someList=apples;
+
+Now try List<?> anyList;
+anyList=apples;
+anyList=new LinkedList<Mango>();
+anyList=new Vector<Orange>();
+anyList=new HashSet<Apple>();
+
+After type erasure - ? will be replaced by ......
+
+Mandatory Reading H.W
+- "day15_help\advanced generics\Regarding Type Erasure in Generics.txt"
+- "day15_help\advanced generics\Advanced Generics.txt" 
+  (Till point 7)
+
+
+3. Complete pending work
+
+4. Optional exercise
+ - Try to add student details in the HashMap.(add hard coded details here. 
+   Check how will put & putIfAbsent differ , in case of duplicate keys )
+ - Try to find a student by the email
+ - You can try it in a simple small demo.
+  (No layers !)
+
+
+
+Day 16
+1. import day16.1 project, in your workspace.
+Keep your workspace folder & daywise data folder separate.
+Otherwise , you will face issues while importing !
+
+1. 
+Solve -
+T : Emp 
+AL<? extends Emp> list = ????
+What all are legal options of RHS ?
+1. AL<Emp> : 
+2. AL<Mgr>
+3. AL<Worker>
+4. AL <SalesMgr>
+5. AL <Object>
+6. AL<Fruit>
+7. AL<Vehicle>
+Ans :1,2,3,4
+
+2. Solve -
+T : Emp 
+AL<? super SalesMgr> list = ????
+What all are legal options of RHS ?
+1. AL<Emp> : 
+2. AL<Mgr>
+3. AL<Worker>
+4. AL <SalesMgr>
+5. AL <Object>
+6. AL<Fruit>
+7. AL<Vehicle>
+Ans : 1,2 ,4,5
+
+3. Create an interface (non generic) - Utils 
+Write a static method in a non generic Utils i/f
+ - to display taste of all fruits from the fruit basket , represented by a List
+Test Case - ArrayList<Apple>  , LinkedList<Orange> , Vector<Mango>......
+Refer - <fruits> package in day16.1 project.
+
+3. Write a static method in a non generic Utils interface 
+ - to get sum of all numbers(integer | double | float | byte ..), stored in the Set .
+Test cases - HashSet<Integer> , LinkedHashSet<Double> , TreeSet<Long>
+OR
+3. Write a static method in a non generic Utils class 
+ - to return sum of salaries of employees stored in the List .
+Test cases - ArrayList<Manager> , LinkedList<Woker> 
+Refer - com.app.core package for Emp & its sub types.
+OR
+Write a static method in a non generic Utils interface 
+- to return least element(minimum) from ANY List.
+Test cases - ArrayList<Integer> , Vector<String> , LinkedList<LocalDate>....
+public static <T extends Comparable<? super T>> T minElement(List<T> list)
+{
+ T minElem =list.get(0);
+ for(T elem : list)
+  {
+    if (elem.compareTo(minElem) < 0)
+     minElem=elem;
+  }
+  return minElem;
+}
+
+
+
+
+
+4. Write a static method in a non generic Utils interface , which can add ONLY Mangoes(i.e Mango , Alphonso,Kesar ...)  to a fruit basket: List
+Test cases - ArrayList<Fruit> .
+
+5. Enter Functional programming
+import day16.2 in your workspace.
+revise code samples
+Test1.java
+Test2.java
+Test3.java
+
+6. Solve 
+6.1 Remove the products from the Map - whose category is specified
+i/p - category name
+
+
+6.2 Get product list .
+Sort the products as per their manufacture date - using functional programming
+Display the sorted list.
+
+7. Solve 
+Get product map .
+Sort the products as per their product id  - ?????
+Display the products sorted as per ids.
+
+8. Get product map .
+Sort the products as per their price  - ?????
+Display the products sorted as per price.
+
+
+
+
+Day 17
+1. import day17.1 
+ - to revise Functional streams API in Java
+
+2. import day17.2 
+ - to revise text file handling
+
+3. 
+Hands on - 
+For more practice with Java 8 functional streams -  
+
+ New Scenario - Student HAS-A Address & Student HAS-A Subject
+Create new java project day17_lab
+Copy - codes from - 
+"day17_data\day17_help\extra help\ready code2"
+(core classes & utils for sample data)
+
+Solve 
+
+3.0 Display all student details from the student map.
+
+3.1 Display  details of the students from  specified subject 
+
+3.2 Print sum of  gpa of students of all students from the specified state
+i/p : name of the state
+
+3.3 Print name of specified subject  topper
+i/p : subject name
+
+3.4 Print number  of  failures for the specified subject chosen  from user.
+i/p : subject name
+(failure is GPA < 5.0 , out of 1-10)
+
+3.5 Display names of students enrolled in a specified subject , securing marks > specified marks
+i/p : subject name , marks
+
+3.6 Suppose a particular subject faculty is unavailable for few days. So you have to infor the students of specified subjec. 
+Collect the specified subject students into the list n display it.
+i/p : subject name
+
+3.7 Display  student details for specified subject , sorted as per DoB
+
+3.8 Find any student with GPA above 8
+(Should run as short circuit operation, meaning the moment you come across any student with GPA > 8 , the streams should stop iterating & return the result immediately)
+
+3.9 Print names of home cities (no dups please !) of all Students 
+map.values().stream()
+.map(s -> s.getAddress().getCity())
+.distinct()
+.forEach(city -> sop(city));
+
+
+Print subject specific topper's name
+Subject subject=Subject.valueOf(sc.next().toUpperCase());
+Comparator<Student> gpaComparator=(s1,s2) -> ((Double)s1.getGPA()).compareTo(s2.getGPA()); 
+String topperName=map.values().stream()
+.filter(s -> s.getSubject() ==subject)
+.max(gpaComparator)
+.orElseThrow(() -> new StudentHandlingException("No students for this subjet yet !!!!!")).getName();
+
+
+Day 18
+
+1. import day18_serial 
+ -Revise serialization using  ObjectOutputStream
+ - writeObject method
+
+2. import day18_deserial , to revise de-serialization
+- It will give you compiler errors (red cross in IDE)
+- Here you will have to create a JAR (as shown) & add it to the class path.
+- I am attaching in today's contents that sample JAR.(But try creating it yourself ,at least once)
+
+3. Mandatory hands on 
+ - Add persistence to any of the existing application
+(eg - in CMS or in bank account or in student management)
+What is expected ?
+- When you start the application , prompt user file name
+- Read data .(in.readObject)
+- First time there won't be any file , it will give you exception.
+- catch that exception & creaet empty map/list there.
+
+-At the end of application , (in exit option)
+ - store the details(out.writeObject)
+
+4. Go through ,
+ Multi threading notes & diagrams.
+
+5. Complete pending work.
+
+
+

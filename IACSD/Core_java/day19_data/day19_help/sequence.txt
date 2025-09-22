@@ -1,0 +1,72 @@
+Debugger , road map - core java
+
+
+
+1. Revise state transitions of threads
+2. Revise extends Thread scenario
+3. Replace extends Thread by implements scenario
+4. how to ensure that there are no orphan threads in the application ?
+5. sleep & interrupt demo
+
+6. Create a multi threaded app to solve these objective in a parallel manner
+6.1 Accept range of numbers from User (scanner)
+6.2 Print all even numbers
+6.3 Print squares of odd numbers in the range.
+6.4 Print square roots of all numbers in the range
+6.5 Ensure no orphans
+
+
+7. Practical use case of threads.
+Create a multi threaded app to solve these objective in a parallel manner
+1. Get a map of student details with sample (hard coded) data
+2. Sort the students details as per birth date n save the sorted results (on SEPARATE  lines) in the 1st text file 
+3. Sort the student details as per subject name n gpa  n save the sorted results (on separate lines) in the 2nd text file 
+4. Store the roll no , name n gpa of all the students , from the specified city , sorted in desc order of GPA n save it in the 3rd text file
+5. Ensure no orphans.
+
+8. Race Condition
+- understand the problem & solve it .
+
+9. Cloning 
+- to create clone of the original object.
+API 
+Object class method 
+protected Object clone() throws CloneNotSupportedException
+
+What will happen , if you directly use
+Emp e=new Emp(....);
+Obejct clonedEmp=e.clone();
+--JVM  throws CloneNotSupportedException
+
+Rule - The class MUST implement a marker i/f - java.lang.Cloneable
+(empty i/f) , to allow cloning of the object.
+
+Typically 
+-override clone method , in your class
+- Apply co variance (narrowing from the super type) , to avoid later down casting.
+- widen the access specifier from protected to public , so that clone() method can be called from anywhere.
+
+eg - In Emp class - 
+@Override
+public Emp clone() throws CloneNotSupportedException
+{
+ (Emp)super.clone();
+}
+By default - creates field by field copy (shallow copy)
+
+For deep copy , programmer has to clone the entire object graph.
+
+
+
+
+
+
+Important rule regarding method overriding or implemeting abstract method &  exception handling
+Overriding | Implementing form of the method can not 
+- add any NEW or BROADER , CHECKED exceptions
+
+
+Important Rule regarding inner class | lambda expression & local variables
+Method local inner class | ano inner class | a lambda expression 
+CAN NOT access a local varibale unless it's final or effectively final !
+

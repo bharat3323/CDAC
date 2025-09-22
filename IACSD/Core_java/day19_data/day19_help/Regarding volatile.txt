@@ -1,0 +1,15 @@
+What is the volatile keyword?
+
+The volatile keyword in Java is used to mark a variable as "stored in main memory." 
+
+This means that every time a thread accesses a volatile variable, it reads it from the main memory, and every time it writes to the variable, it writes to the main memory. 
+
+This prevents threads from caching the value of the variable, ensuring visibility across all threads.
+
+Refer - TestVolatile.java
+First run the code as it is , observe n conlude
+
+Now  add volatile keyword - to the boolean flag , again observe n conclude
+
+
+

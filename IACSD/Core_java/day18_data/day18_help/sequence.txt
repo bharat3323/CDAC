@@ -1,0 +1,254 @@
+Today's topics
+ Revise java.io overview
+ Collections+I/O
+ File class API
+ Binary Files
+ Serialization & De Serialization
+ Enter Multi Threading
+ 
+
+
+1. Revise java.io overview
+Solve - Accept src & dest file names . Copy data from src -> dest
+Java App <---- BR <---- FR(src text file)
+Java App ---> PW ---> FW  (dest text file)
+try (sc;
+BR br=new BR(new FR(sc.nextLine());
+PW pw=new PW(new FW(sc.nextLine()));
+) {
+   br.lines() //Stream<String>
+   forEach(line -> pw.println(line));
+    
+}//pw.close , fw.close , br.close , fr.close , sc.close
+
+
+2. Solve 
+Customer details are present in the Map - customerMap : HashMap
+sort them as per dob n store these sorted details in text file , using buffer
+
+eg - try (sc,PW pw=new PW(new FW(sc.nextLine()))
+{
+ Comparator<Customer> dobComp=(c1,c2) -> c1.getDob().compareTo(c2.getDob());
+ customerMap.values()
+ .stream()
+ .sorted(dobComp) //Stream<Customer> - sorted as per dob
+ .forEach(c -> pw.println(c));
+}//close
+
+3. 
+Regarding - java.io.File
+- A class representing abstract path to a file or a folder.
+Constructor
+public File(String path)
+eg . File path=new File(sc.nextLine());
+Methods for checking , its attributes-
+public boolean exists()
+public boolean isFile() | isDirectory()
+public boolean canRead() | canWrite | canExecute
+
+4. Solve - Store | Restore the product details , in a portable , machine independdent (binary) manner in a binary file.
+
+File Handling Binary streams
+1. java.io.FileInputStream - binary i/p stream to read data from any binary file (node stream)
+Constructor
+FileInputStream(String fileName) throws FileNotFoundException
+FileInputStream(File file) throws FileNotFoundException
+Methods -
+public int read() throws IOException
+public int read(byte[] bytes) throws IOException
+public int read(byte[] bytes,int offset , int length)  throws IOException
+
+2. java.io.FileOutputStream - binary o/p stream to write data to any binary file (node stream)
+Constructor
+FileOutputStream(String fileName) throws IOException
+FileOutputStream(String fileName,boolean append) throws IOException
+FileOutputStream(File file) throws IOException
+Method  - write methods
+
+3. For buffering (i.e storing bin data) , for better performance
+- During bin file read
+ - BufferedInputStream(InputStream in)
+
+During bin file write 
+ - BufferedOutputStream(OutputStream in)
+
+Instead of performing the conversions (from primitive types or strings  -> binary) , use readily available conversion streams
+
+java.io.DataOutputStream - class
+- Represents mixed data conversion stream
+- Contains the methods for conversions
+- from primitive types or strings  -> binary
+- implements DataOutput i/f
+
+Constructor
+DataOutputStream(OutputStream out)
+Methods -
+public void writeInt(int i) throws IOException
+public void writeDouble(double i) throws IOException
+public void writeLong(long i) throws IOException
+...
++
+public void writeUTF(String s) throws IOException
+
+eg - try (sc;
+DOS out=new DOS(new BOS(new FOS(sc.nextLine())))
+)
+{
+   productList.forEach (p -> {
+     out.writeInt(p.getId());
+     out.writeUTF(p.getName());
+     out.writeDouble(p.getPrice());
+     out.writeUTF(p.getCategory().name());
+     ......
+
+     
+   });
+}//close
+
+
+
+
+
+Solve - Restore the same.
+API -
+java.io.DataInputStream - class
+- Represents mixed data stream , to convert from binary -> prim types or strings
+-implements DataInput i/f
+-Ctor
+public DataInputStream(InputStream in)
+Methods 
+public int readInt() throws IOException
+public long readLong() throws IOException
+public float readFloat() throws IOException
+public String readUTF() throws IOException
+.........
+
+solve -
+ Restore data from bin file -> product list
+
+try(sc, DIS in=new DIS(new BIS(new FIS(sc.nextLine()))))
+{
+   List<Product> productList=new AL<>();
+   while(true)  
+   { 
+     Product p=new   Product(in.readInt(),in.readUTF(),in.readDouble(),Category.valueOf(in.readUTF())...);
+    productList.add(p);
+
+   }
+}catch EOFException - end of file
+catch-all
+
+
+5. What is the need of Object Streams in Java ? 
+- automatic persistence (i.e to save | restore state of the objects in binary , automatically)
+ 
+Without these , a developer has to use Data I/O streams n convert each data member to binary using writeInt / readInt , writeUTF/readUTF etc.....
+
+API - 
+java.io.ObjectOutputStream - class
+implements - DataOutput , ObjectOutput
+
+Constructor 
+
+public ObjectOutputStream(OutputStream out) throws IOException
+- Creates ObjectOutputStream instance , by wrapping the binary output stream
+It performs the job of serialization.
+What is serialization ?
+ - Conversion of state of Java objects -> binary
+State - non static & non transient data members.
+
+
+eg - To store data in a bin file
+OOS out=new OOS(new FOS(fileName));
+Methods 
+public void writeInt(int i) throws IOException
+writeBoolean , writeUTF .... : from DataOutput i/f
++
+from ObjectOutput i/f
+public void writeObject(Object o) throws IOException , NotSerializableException
+
+Serialization = Conversion from the object -> binary
+What exactly is converted ? 
+state of the object
+State = non static & non transient data members.
+
+What happens internally during Serialization? 
+
+JVM checks the serializability of entire object graph.
+Any time it comes across a non serializable object 
+- aborts the serialization
+- throws NotSerializableException.
+
+It's completely based upon Java reflection.
+
+Using Reflection API - 
+JVM checks if the class of the object has implemented - java.io.Serializable i/f
+If yes - allows the conversion , otherwise throws the exception.
+
+java.io.Serializable - Marker | Tag or empty i/f
+i.e doesn't contain any data or methods.
+
+It works 
+- run time marker 
+-informs the JVM whether to allow or not to allow the serialization
+
+
+De-Serialization 
+ - From binary stream ---> Java Object
+
+API - ObjectInputStream - class
+- implements DataInput , ObjectInput
+Constructor 
+public ObjectInputStream(InputStream in)
+
+Methods 
+public int readInt() throws IOException
+public double readDouble() throws IOException
+public String readUTF() throws IOException
+...
++
+public Object readObject() throws 
+- ClassNotFoundException - if JVM's classloader can't find the required class
+- InvalidClassException - in case of mismatch between  the SerialVersionUID (between the  computed and received from bin stream)
+- IOException - in case of error in reading. 
+
+What are the pre requisites of de-serialization?
+1. state (retrieved from bin stream - file)
+2. behavior (.class files - typically distributed in JAR file format)
+3. metadata information regarding fully qualified name of the class - is read from bi n stream.
+
+What is SerialVersionUID ?
+It's a public static long number , generated by IDE using serialver tool (from JDK/bin folder)
+(serialver.exe)
+
+It is computed based upon  the metadata of the class
+eg - access specifiers , data members etc.
+
+JVM adds this SerialVerUID in the bin stream , during serialization (per every serializable class)
+
+JVM re computes this serial ver UID during de-serial n matches it with the incoming one.
+The main purpose is to check the compatibility of the classes used during ser n de-serial.
+
+transient - keyword in java .
+Applicable to data members(field)
+Meaning - It's meant for JVM , to skip(ignore) a field during serialization.
+
+
+During de-serialialization
+ - static & transient data members 
+- are initialized to their default values.
+
+Use case - to store partial state of the serializable java object.
+
+
+What is the recommended practice for generating serial ver UID ?
+Choose default serial ver UID  or generated serial ver UID ?
+Ans - choose default serial ver UID 
+(eg 1L or 2L - programmer supplied - as per the class versions)
+
+- to avoid compiler mismatches , across different JDK vendors - suggestion is you should generate UID n use.
+It is then you responsibility to manage the changes in classes.
+
+
+Enter Multi threading in Java
+- Refer to multi threading diagrams & notes. 
