@@ -211,12 +211,6 @@ Refer to the overview diagram.
 
 
 
-
-
-
-
-
-
 2.7 finally - a keyword in exception handling.
 It represents a block which is  always executed
 (i.e in case of no exception as well as exception or even before a method returns) 

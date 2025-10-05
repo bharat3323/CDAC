@@ -9,8 +9,11 @@ long long ipow(int x, int n) {
 
 int main() {
     long long num;
-    if (!(cin >> num)) return 0;
-    if (num < 0) { cout << "Not Armstrong\n"; return 0; }
+    if (!(cin >> num)) 
+    return 0;
+    if (num < 0)
+     { cout << "Not Armstrong\n"; return 0; 
+    }
     long long temp = num;
     int digits = 0;
     do { digits++; temp /= 10; } while (temp);

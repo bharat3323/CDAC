@@ -63,54 +63,49 @@ public class CMSServiceImpl implements CMSService {
 		Customer completeDetails = customers.get(index);
 		if (!completeDetails.getPassword().equals(password))
 			throw new CMSHandlingException("Invalid Password !!!!");
-		//=> successful login
+		// => successful login
 		return completeDetails;
 	}
 
 	@Override
-	public String changePassword(String email, 
-			String oldPassword, String newPass) 
-					throws CMSHandlingException {
+	public String changePassword(String email,
+			String oldPassword, String newPass)
+			throws CMSHandlingException {
 		Customer validCustomer = signIn(email, oldPassword);
-		//=> login successful
+		// => login successful
 		validCustomer.setPassword(newPass);
-		return "Password updated !";		
+		return "Password updated !";
 	}
 
 	@Override
-	public String unsubscribeCustomer
-	(String email) throws CMSHandlingException{
+	public String unsubscribeCustomer(String email) throws CMSHandlingException {
 		/*
-		 * Ask yourself - delete - delete by PK 
+		 * Ask yourself - delete - delete by PK
 		 * - YES -> remove(index) | remove(o)
 		 * - no -> other options...to be discussed later....
 		 */
-		Customer c=new Customer(email);
-		if(customers.remove(c))
+		Customer c = new Customer(email);
+		if (customers.remove(c))
 			return "Customer un subscribed!";
 		throw new CMSHandlingException("Un Subscription Failed - email doesn't exist!!!!!");
 	}
 
 	@Override
 	public void searchByPlanAndDate(String plan, String date) {
-		ServicePlan myPlan=ServicePlan.valueOf(plan);
-		LocalDate dob=LocalDate.parse(date);//yyyy-MM-dd
-		for(Customer c : customers)
-		{
-			if(c.getPlan().equals(myPlan) && c.getDob().isAfter(dob)) {
-				System.out.println(c.getFirstName()+" "+c.getLastName());
+		ServicePlan myPlan = ServicePlan.valueOf(plan);
+		LocalDate dob = LocalDate.parse(date);// yyyy-MM-dd
+		for (Customer c : customers) {
+			if (c.getPlan().equals(myPlan) && c.getDob().isAfter(dob)) {
+				System.out.println(c.getFirstName() + " " + c.getLastName());
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void sortCustomersByEmail() {
 		Collections.sort(customers);
-			
+
 	}
-	
-	
-	
 
 }

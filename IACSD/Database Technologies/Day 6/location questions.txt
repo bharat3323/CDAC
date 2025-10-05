@@ -1,0 +1,20 @@
+Create a table
+Location(loc_id, lname,address)
+Server (sid,sname,configuration,lid, adminid)
+Admin(adminid,username,password,mobile,name)
+
+1. display all server-name, location of the server
+2. display all server-name, admin-name, admin mobile
+3. display all server which are managed by admin rohit
+4. display all server and the locations, 
+for which admin is rohit
+5. display all admins, for whome no server is assigned
+6. display all servers and admin details, and also 
+display admins for whom no server is assigned
+7. display  servers, admins and location of the server
+8. to display all admins for whom no server is assigned
+also display locations at which no server is placed
+9. display all servers for which no location is assigned
+10. display all servers, for which no location is assigned,
+whose admin is namrata
+

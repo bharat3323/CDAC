@@ -42,9 +42,9 @@ public class CMSServiceImpl implements CMSService {
 		 * copy all customer details from list -> map
 		 */
 		for (Customer c : customers) {
-			 System.out.println("added "+customerMap.putIfAbsent(c.getEmail(), c));
+			System.out.println("added " + customerMap.putIfAbsent(c.getEmail(), c));
 		}
-//		System.out.println("Populated customer map " + customerMap);
+		// System.out.println("Populated customer map " + customerMap);
 
 	}
 
@@ -66,17 +66,17 @@ public class CMSServiceImpl implements CMSService {
 	@Override
 	public Customer signIn(String email, String password) throws CMSHandlingException {
 		// create dummy customer instance to wrap UID
-//		Customer c = new Customer(email);
-//		// indexOf
-//		int index = customers.indexOf(c);
-//		if (index == -1) // => invalid email
-//			throw new CMSHandlingException("Invalid Email !!!!");
-//		// => email found ,get customer details from list
-//		Customer completeDetails = customers.get(index);
-//		if (!completeDetails.getPassword().equals(password))
-//			throw new CMSHandlingException("Invalid Password !!!!");
-//		// => successful login
-//		return completeDetails;
+		// Customer c = new Customer(email);
+		// // indexOf
+		// int index = customers.indexOf(c);
+		// if (index == -1) // => invalid email
+		// throw new CMSHandlingException("Invalid Email !!!!");
+		// // => email found ,get customer details from list
+		// Customer completeDetails = customers.get(index);
+		// if (!completeDetails.getPassword().equals(password))
+		// throw new CMSHandlingException("Invalid Password !!!!");
+		// // => successful login
+		// return completeDetails;
 		Customer c = customerMap.get(email);
 		if (c == null)
 			throw new CMSHandlingException("Invalid Email !!!!");
@@ -135,29 +135,29 @@ public class CMSServiceImpl implements CMSService {
 	public void sortCustomersByRegAmount() {
 		// sort customers - method of Collections class
 		// public static void sort(List<T> list, Comparator<T> comparator)
-	//	Collections.sort(customers, new CustomerRegAmountComparator());
+		// Collections.sort(customers, new CustomerRegAmountComparator());
 		System.out.println("TO DO - Not yet implemented !!!!!");
 	}
 
 	@Override
 	public void sortCustomersByDobAndRegAmount() {
 		// Solving using anonymous inner class
-//		Collections.sort(customers, new Comparator<Customer>() { // class begins
-//			@Override
-//			public int compare(Customer c1, Customer c2) {
-//				System.out.println("in ano inner class - compare");
-//				int ret = c1.getDob().compareTo(c2.getDob());
-//				if (ret == 0) {
-//					// => dobs are same , compare reg amount
-//					return ((Integer) c2.getRegAmount()).compareTo(c1.getRegAmount());
-//				}
-//				return ret;
-//			}
-//		}// class ends
-//		);// java statement over
-//			// new Comparator<Customer>
-//			// -> instance of class which implements Comparator
-//
+		// Collections.sort(customers, new Comparator<Customer>() { // class begins
+		// @Override
+		// public int compare(Customer c1, Customer c2) {
+		// System.out.println("in ano inner class - compare");
+		// int ret = c1.getDob().compareTo(c2.getDob());
+		// if (ret == 0) {
+		// // => dobs are same , compare reg amount
+		// return ((Integer) c2.getRegAmount()).compareTo(c1.getRegAmount());
+		// }
+		// return ret;
+		// }
+		// }// class ends
+		// );// java statement over
+		// // new Comparator<Customer>
+		// // -> instance of class which implements Comparator
+		//
 		System.out.println("TO DO - Not yet implemented !!!!!");
 
 	}

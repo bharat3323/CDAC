@@ -1,0 +1,276 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db                 |
+| db5                |
+| hospital           |
+| iacsd0925          |
+| information_schema |
+| jsp                |
+| mysql              |
+| performance_schema |
+| springjdbc         |
+| sys                |
+| table_1            |
+| temp               |
+| youtube_api        |
++--------------------+
+13 rows in set (0.15 sec)
+
+mysql> use iacsd0925
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_iacsd0925 |
++---------------------+
+| dept                |
+| emp                 |
+| salgrade            |
++---------------------+
+3 rows in set (0.03 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.01 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|     7 | SCOTT_ | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+15 rows in set (0.01 sec)
+
+mysql> select  Date_sub
+    -> where 
+    -> ^C
+mysql> 
+mysql> select date_sub(curdate(),interval 3 months);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'months)' at line 1
+mysql> select date_sub(curdate(),interval 3 month);
++--------------------------------------+
+| date_sub(curdate(),interval 3 month) |
++--------------------------------------+
+| 2025-06-24                           |
++--------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(date_sub(curdate(),interval 3 month))%'%Y-%M-01');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> ^C
+mysql> select DATE_FORMAT(date_sub(curdate(),interval 3 month),'%Y-%M-01';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select DATE_FORMAT(date_sub(curdate(),interval 3 month),'%Y-%M-01');
++--------------------------------------------------------------+
+| DATE_FORMAT(date_sub(curdate(),interval 3 month),'%Y-%M-01') |
++--------------------------------------------------------------+
+| 2025-June-01                                                 |
++--------------------------------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> ^C
+mysql> 
+    -> ^C
+mysql> 
+mysql> LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 3 MONTH);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 3 MONTH)' at line 1
+mysql> SELECT LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 3 MONTH));
++------------------------------------------------+
+| LAST_DAY(DATE_SUB(CURDATE(),INTERVAL 3 MONTH)) |
++------------------------------------------------+
+| 2025-06-30                                     |
++------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DISTINCT hiredate 
+    -> from emp;
++------------+
+| hiredate   |
++------------+
+| 1982-12-09 |
+| 1980-12-17 |
+| 1981-02-20 |
+| 1981-02-22 |
+| 1981-04-02 |
+| 1981-09-28 |
+| 1981-05-01 |
+| 1981-06-09 |
+| 1981-11-17 |
+| 1981-09-08 |
+| 1983-01-12 |
+| 1981-12-03 |
+| 1982-01-23 |
++------------+
+13 rows in set (0.01 sec)
+
+mysql> SELECT DISTINCT hiredate 
+    -> ^C
+mysql> select EMPNO ENAME JOB HIREDATE
+    -> FROM EMP
+    -> WHERE DATE_FORMAT(HIREDATE,'%W)='MONDAY';
+    '> ^C
+mysql> SELECT EMPNO,ENAME,JOB,HIREDATE
+    -> FROM EMP
+    -> WHERE DATE_FORMAT(HIREDATE,'%W')='MONDAY';
++-------+--------+----------+------------+
+| EMPNO | ENAME  | JOB      | HIREDATE   |
++-------+--------+----------+------------+
+|  7654 | MARTIN | SALESMAN | 1981-09-28 |
++-------+--------+----------+------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT EMPNO,ENAME,JOB,HIREDATE
+    -> ^C
+mysql> SELECT DATE_FORMAT(CURDATE()),'%Y-%01-01';
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'DATE_FORMAT'
+mysql> SELECT DATE_FORMAT(CURDATE()),'%Y-%1-01';
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'DATE_FORMAT'
+mysql> SELECT DATE_FORMAT(CURDATE()),'%Y-%M-01';
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'DATE_FORMAT'
+mysql> SELECT DATE_FORMAT(CURDATE(),'%Y-%M-01');
++-----------------------------------+
+| DATE_FORMAT(CURDATE(),'%Y-%M-01') |
++-----------------------------------+
+| 2025-September-01                 |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT(CURDATE(),'%Y-%01-01');
++------------------------------------+
+| DATE_FORMAT(CURDATE(),'%Y-%01-01') |
++------------------------------------+
+| 2025-01-01                         |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYNAME(DATE_FORMAT(CURDATE(),'%Y-%01-01'));
++---------------------------------------------+
+| DAYNAME(DATE_FORMAT(CURDATE(),'%Y-%01-01')) |
++---------------------------------------------+
+| Wednesday                                   |
++---------------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT DAYNAME(DATE_FORMAT(CURDATE(),'%Y-%01-01')lastday);
+ERROR 1583 (42000): Incorrect parameters in the call to native function 'dayname'
+mysql> SELECT DAYNAME(lastday(DATE_FORMAT(CURDATE(),'%Y-%01-01'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT DAYNAME(LAST_DAY(DATE_FORMAT(CURDATE(), '%Y-01-01')));
++-------------------------------------------------------+
+| DAYNAME(LAST_DAY(DATE_FORMAT(CURDATE(), '%Y-01-01'))) |
++-------------------------------------------------------+
+| Friday                                                |
++-------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYNAME(LAST_DAY(DATE_FORMAT(CURDATE(),)));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')))' at line 1
+mysql> SELECT DAYNAME(LAST_DAY(DATE_FORMAT(CURDATE(), '%Y-01-01')));
++-------------------------------------------------------+
+| DAYNAME(LAST_DAY(DATE_FORMAT(CURDATE(), '%Y-01-01'))) |
++-------------------------------------------------------+
+| Friday                                                |
++-------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYNAME(LAST_DAY(DATE_FORMAT(CURDATE(), '%Y-12-01')));
++-------------------------------------------------------+
+| DAYNAME(LAST_DAY(DATE_FORMAT(CURDATE(), '%Y-12-01'))) |
++-------------------------------------------------------+
+| Wednesday                                             |
++-------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff(curdate(),2001-08-12);
++--------------------------------+
+| datediff(curdate(),2001-08-12) |
++--------------------------------+
+|                           NULL |
++--------------------------------+
+1 row in set, 1 warning (0.01 sec)
+
+mysql> select datediff(curdate(),'2001-08-12');
++----------------------------------+
+| datediff(curdate(),'2001-08-12') |
++----------------------------------+
+|                             8809 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff('2001-08-12',curdate());
++----------------------------------+
+| datediff('2001-08-12',curdate()) |
++----------------------------------+
+|                            -8809 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff('2001-08-12',curdate());
++----------------------------------+
+| datediff('2001-08-12',curdate()) |
++----------------------------------+
+|                            -8809 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff(curdate(),'2001-08-12');
++----------------------------------+
+| datediff(curdate(),'2001-08-12') |
++----------------------------------+
+|                             8809 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff((curdate(),'2001-08-12'))/365;
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select floor(datediff(curdate()/365,'2001-08-12')/365);
++-------------------------------------------------+
+| floor(datediff(curdate()/365,'2001-08-12')/365) |
++-------------------------------------------------+
+|                                            NULL |
++-------------------------------------------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> select floor(datediff((curdate(),'2001-08-12'))/365);
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select floor(datediff((curdate(),'2001-08-12'))/365);
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select floor(datediff((curdate(),'2001-08-12')))/365;
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select floor(datediff((curdate(),'2001-08-12'))/365);
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select floor(datediff((curdate(),'2001-08-12'))/365;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select floor(datediff((curdate(),'2001-08-12')/365);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select floor(datediff(curdate(),'2001-08-12')/365);
++---------------------------------------------+
+| floor(datediff(curdate(),'2001-08-12')/365) |
++---------------------------------------------+
+|                                          24 |
++---------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> Terminal close -- exit!

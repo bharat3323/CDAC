@@ -15,23 +15,23 @@ import com.cms.custom_exceptions.CMSHandlingException;
 
  */
 public class CMSValidations {
-//add a single method to validate all inputs
+	// add a single method to validate all inputs
 	public static Customer validateAllInputs(String firstName, String lastName, String email, String password,
 			int regAmount, String dob, String plan,
-			Map<String,Customer> customers) 
-					throws CMSHandlingException {
+			Map<String, Customer> customers)
+			throws CMSHandlingException {
 		validateEmail(email);
 		checkForDuplicate(email, customers);
 		ServicePlan validPlan = parseAndValidatePlanAndAmount(plan, regAmount);
-		return new Customer(firstName, lastName, email, 
+		return new Customer(firstName, lastName, email,
 				password, regAmount, LocalDate.parse(dob),
 				validPlan);
 	}
 
 	// add a static method to check for dup , customer 's email
-	public static void checkForDuplicate(String email, 
-			Map<String,Customer> map) throws CMSHandlingException {
-		 if(map.containsKey(email)) {	
+	public static void checkForDuplicate(String email,
+			Map<String, Customer> map) throws CMSHandlingException {
+		if (map.containsKey(email)) {
 			throw new CMSHandlingException("Email is dup !!!!!!");
 		}
 
@@ -45,12 +45,11 @@ public class CMSValidations {
 	}
 
 	// add a static methd to validate a plan & reg amount
-	public static ServicePlan parseAndValidatePlanAndAmount
-	(String plan, int regAmount) throws IllegalArgumentException
-	,CMSHandlingException{
+	public static ServicePlan parseAndValidatePlanAndAmount(String plan, int regAmount)
+			throws IllegalArgumentException, CMSHandlingException {
 		// parse string -> enum
 		ServicePlan servicePlan = ServicePlan.valueOf(plan.toUpperCase());
-		// => parsing successful , now check if reg amount is correct or not 
+		// => parsing successful , now check if reg amount is correct or not
 		if (servicePlan.getPlanCost() != regAmount)
 			throw new CMSHandlingException("Reg amount doesn't match with the plan cost!!!!!!");
 		return servicePlan;

@@ -1,0 +1,219 @@
+product(pid,pname,qty,price,mfgdate,expdate,type,cid)
+prod_supp(prodid,suppid)
+category(catid,cname,cdesc)
+supplier(sid,sname,address,mobile)
+
+
+create table category(cid int primary key,
+cname varchar(20),
+cdesc varchar(20));
+
+create table supplier(sid int primary key,
+sname varchar(20),
+address varchar(20),
+mobile char(15));
+
+create table product(pid int primary key,
+pname varchar(20),
+qty int check(qty>0),
+price double(10,2),
+mfgdate date,
+expdate date,
+type varchar(20),
+cid int,
+constraint f_cid1 foreign key(cid) references category(cid)
+on delete set null
+on update cascade);
+
+
+
+
+create table prod_supp(
+prodid int,
+suppid int,
+primary key(prodid,suppid),
+constraint f_p11 foreign key(prodid) references product(pid)
+on delete cascade
+on update cascade,
+constraint f_s11 foreign key(suppid) references supplier(sid)
+on delete cascade
+on update cascade)
+
+insert into category values(1,'chips','very crunchy');
+insert into category values(2,'cold drinks','Thanda cool cool');
+insert into category values(3,'biscuits','very crunchy sweet');
+insert into category values(4,'chocolates','yummy');
+insert into category values(5,'snacks','very tasty');
+insert into category values(6,'furniture','very elegant');
+
+insert into supplier values(11,'Rohit','Pune','2222');
+insert into supplier values(12,'Sonam','mumbai','2323');
+insert into supplier values(13,'Reshama','kolhapur','3333');
+insert into supplier values(14,'Ashu','mumbai','4444');
+insert into supplier values(15,'Saniya','Pune','55555');
+
+insert into product values(21,'lays',23,40.00,'2020-12-11','2021-02-03','perishable',1);
+insert into product values(22,'pringle',50,100.00,'2021-12-11','2022-02-03','perishable',1);
+insert into product values(23,'pespsi',33,50.00,'2021-12-11','2022-01-03','perishable',2);
+insert into product values(24,'cocacola',35,50.00,'2021-12-11','2022-01-03','perishable',2);
+insert into product values(25,'khajoor',44,200.00,'2022-12-11',null,'perishable',5);
+
+insert into product values(26,'chair',37,5000.00,'2021-12-11',null,'nonperishable',6);
+insert into product values(27,'table',33,7500.00,'2021-12-11',null,'nonperishable',6);
+
+
+
+insert into prod_supp values(21,11);
+insert into prod_supp values(21,12);
+insert into prod_supp values(22,11);
+insert into prod_supp values(22,13);
+insert into prod_supp values(24,11);
+insert into prod_supp values(25,12);
+
+
+1. find all products which expires in year 2022
+select * from product 
+where year(expdate) = 2022;
+
+2. list all categories for which no products exists
+
+select c.cid,c.cname,p.pname 
+from category c left join product p
+on c.catid = p.cid
+where pname is null;
+
+or 
+select * from category c 
+where not exists (select * from product p 
+where p.cid = c.catid);
+
+3. list all suppliers who stays in same city where Rohit stays.
+select * from supplier w
+here address in 
+(select address from supplier where sname='Rohit');
+
+4. list all supplier who have not supplied any product yet.
+select * from supplier s
+where not exists ( select * from prod_supp ps where ps.suppid = s.sid);
+
+or 
+
+select * from supplier s
+left join prod_supp ps 
+on ps.suppid = s.sid;
+where ps.suppid is null;
+
+ 
+
+5. find all products of chips category
+select * from product 
+where cid = (select catid from category where cname='chips');
+
+6. list pid,pname,cid,cname,cdesc for all products
+
+select p.pid,p.pname,c.cid,c.cname,c.cdesc
+from product p, category c
+where p.cid = c.catid;
+or 
+select p.pid,p.pname,c.cid,c.cname,c.cdesc
+from product p inner join category c
+on p.cid = c.catid;
+
+7. list pid, pname,sid,sname for all products
+select p.pid,p.pname,s.sid,s.sname from product p,supplier s,prod_supp k 
+where k.prod_id=p.pid and k.suppid=s.sid;
+or 
+select p.pid,p.pname,s.sid,s.sname 
+from product p inner join prod_supp k on k.prodid=p.pid inner supplier s 
+on k.suppid=s.sid ;
+
+
+8. list pid,pname,sid,sname,cid,cname for all products
+select p.pid,p.pname,s.sid,s.sname,c.cid,c.cname
+from product p inner join prod_supp ps
+on p.pid = ps.prodid
+inner join supplier s
+on ps.suppid = s.sid
+inner join category c
+on c.catid = p.cid;
+
+9. display all categories for which no products are there and display suppliers who do not supply any item
+
+select c.catid , c.cname , null 'SUPP ID' , null 'SUPP NAME' from category c
+where not exists (select * from product p
+		  where p.cid = c.catid)
+
+UNION
+
+select null , null , s.sid , s.sname from supplier s
+where not exists (select * from prod_supp ps
+		  where ps.suppid = s.sid);
+
+or 
+
+select c.catid , c.cname , null 'SUPP ID' , null 'SUPP NAME' 
+from category c left join product p on p.cid = c.catid
+where p.pname is null
+
+UNION
+
+select null , null , s.sid , s.sname 
+from supplier s left join prod_supp ps
+on ps.suppid = s.sid
+where ps.prodid is null;
+
+
+10. list all products which have been manufactured in November
+ select * from product where monthname(mfgdate) ='November';
+
+11. list all perishable product with category either chips or cold drink
+select * from product 
+where cid in (select cid from category where cname in ('chips','cold drinks')) and type = 'perishable';
+
+12. list all nonperishable products
+select * from product where type='nonperishable';
+
+13. list all products supplied by suppliers who stays in pune.
+select * from product where pid in(select prodid from prod_supp 
+where suppid in(select sid from supplier where address='pune'));
+
+14. list all products supplied by suppliers with name starts with r or s
+select * from product where pid in(select prodid from prod_supp 
+where suppid in(select sid from supplier where sname regexp '^[rs]'));
+
+
+15. list all categories with product price is >=30 and <=100
+---nested query is better approach
+select * from category where catid in (select cid from product where price between 30 and 100);
+
+or
+select * from product p , category c where p.cid =c.catid and p.price between 30 and 100;
+
+
+16. list all products of categories chips and cold drinks
+select p.pname from product p where p.cid in (select c.catid from category c 
+where c.name in ("chips","cold drinks"));
+
+17. list  all products with price < pringles and > chair
+
+select * from products
+where price not between (select price from product where pname='pringles')
+and (select price from product where pname='chair');
+
+18. list all products which will expire in 12 months from manufacture date
+select * from product
+where timestampdiff(month , expdate , mfgdate) <= 12;
+
+19. display the pairs of product names, qty of first product < qty of 2nd product
+select p.pid,p.pname,p.qty,p1.pid,p1.pname,p1.qty
+ from product p , product p1
+  where p.qty<p1.qty;
+
+20. display pairs of supplier who stays in same city.
+select * from supplier s, supplier s1
+ where s.address = s1.address and s.sid<s1.sid;
+
+
+
+
+
