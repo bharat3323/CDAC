@@ -15,6 +15,12 @@ public interface ShoeService {
 
 	void searchExpensive()throws ShoeException;
 
+	void updatePriceOnBrand(String brand, double newprice);
+
+	void RemoveShoeNotInGallary();
+
+	void SortOrderByDes();
+
 	
 
 }

@@ -20,6 +20,12 @@ public class Shoe {
 		this.availableIngallary = availableIngallary;
 		this.shoe_type = shoe_type;
 	}
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 	public int getShoe_id() {
 		return shoe_id;
 	}
@@ -58,9 +64,10 @@ public class Shoe {
 	}
 	@Override
 	public String toString() {
-		return "Shoe [shoe_id=" + shoe_id + ", name=" + name + ", rating=" + rating + ", price=" + price
-				+ ", availableIngallary=" + availableIngallary + ", shoe_type=" + shoe_type + "]";
-	} 
+		return "Shoe [shoe_id=" + shoe_id + ", name=" + name + ", brand=" + brand + ", rating=" + rating + ", price="
+				+ price + ", availableIngallary=" + availableIngallary + ", shoe_type=" + shoe_type + "]";
+	}
+	
 	
 	
 	
